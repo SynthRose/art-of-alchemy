@@ -1,0 +1,16 @@
+{
+	"item.artofalchemy.icon_item": "Mysterious Sigil",
+	"item.artofalchemy.azoth": "Azoth",
+	"item.artofalchemy.materia_omega": "Materia (Ω)",
+	"item.artofalchemy.materia_s": "Materia (S)",
+	"item.artofalchemy.materia_a": "Materia (A)",
+	"item.artofalchemy.materia_b": "Materia (B)",
+	"item.artofalchemy.materia_c": "Materia (C)",
+	"item.artofalchemy.materia_d": "Materia (D)",
+	"item.artofalchemy.materia_e": "Materia (E)",
+	"item.artofalchemy.materia_f": "Materia (F)",
+	
+	"block.artofalchemy.calcination_furnace": "Calcination Furnace",
+	
+	"itemGroup.artofalchemy.alchemy": "Art of Alchemy"
+}

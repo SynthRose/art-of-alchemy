@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"RGR",
+		"CFC",
+		"CCC"
+	],
+	"key": {
+		"R": { "item":"minecraft:redstone" },
+		"G": { "item":"minecraft:glowstone_dust" },
+		"F": { "item":"minecraft:furnace" },
+		"C": {  "tag":"c:concrete" }
+	},
+	"result": {
+		"item": "artofalchemy:calcination_furnace"
+	}
+}

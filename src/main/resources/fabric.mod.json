@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "artofalchemy",
+  "version": "0.0.0-alpha",
+  "name": "Art of Alchemy",
+  "description": "An alchemical mod for everyone's favorite block game.",
+  "authors": [
+    "SynthRose"
+  ],
+  "contributors": [],
+  "contact": {
+    "sources": "https://github.com/SynthRose/art-of-alchemy"
+  },
+  "license": "MIT",
+  "icon": "assets/artofalchemy/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.synthrose.artofalchemy.ArtOfAlchemy"
+    ],
+    "client": [
+      "net.synthrose.artofalchemy.ArtOfAlchemyClient"
+    ],
+    "server": []
+  },
+  "mixins": [],
+  "depends": {
+  	"libgui": ">=1.7.0",
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}
