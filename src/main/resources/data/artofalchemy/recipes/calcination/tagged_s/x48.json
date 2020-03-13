@@ -1,0 +1,10 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "artofalchemy:calcination_s/x48"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_s",
+  	"count": 48
+  }
+}

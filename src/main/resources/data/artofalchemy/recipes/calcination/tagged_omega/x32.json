@@ -1,0 +1,10 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "artofalchemy:calcination_omega/x32"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_omega",
+  	"count": 32
+  }
+}

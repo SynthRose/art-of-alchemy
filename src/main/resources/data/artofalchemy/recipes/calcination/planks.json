@@ -1,0 +1,9 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "minecraft:planks"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_e"
+  }
+}

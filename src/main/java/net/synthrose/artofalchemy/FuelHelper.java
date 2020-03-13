@@ -11,7 +11,11 @@ public class FuelHelper {
 	}
 	
 	public static boolean isFuel(ItemStack stack) {
-		return isFuel(stack.getItem());
+		if (stack.isEmpty()) {
+			return false;
+		} else {
+			return isFuel(stack.getItem());
+		}
 	}
 	
 	public static int fuelTime(Item item) {

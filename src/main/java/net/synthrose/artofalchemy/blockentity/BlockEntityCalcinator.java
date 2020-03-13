@@ -12,12 +12,13 @@ import net.minecraft.util.math.MathHelper;
 import net.synthrose.artofalchemy.FuelHelper;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
-import net.synthrose.artofalchemy.item.Items;
+import net.synthrose.artofalchemy.recipe.RecipeCalcination;
+import net.synthrose.artofalchemy.recipe.Recipes;
 
 public class BlockEntityCalcinator extends BlockEntity
 	implements ImplementedInventory, Tickable, PropertyDelegateHolder {
 	
-	private int OPERATION_TIME = 20;
+	private int OPERATION_TIME = 100;
 	
 	private int fuel = 0;
 	private int maxFuel = 20;
@@ -76,40 +77,39 @@ public class BlockEntityCalcinator extends BlockEntity
 		return fuel > 0;
 	}
 	
-	private boolean canCraft() {
+	private boolean canCraft(RecipeCalcination recipe) {
 		ItemStack inSlot = items.get(0);
 		ItemStack outSlot = items.get(2);
-		ItemStack outStack = new ItemStack(Items.MATERIA_F, 1);
 		
-		if (inSlot.isEmpty()) {
+		if (recipe == null || inSlot.isEmpty() || inSlot.getCount() < recipe.getCost()) {
 			return false;
-		} else if (outSlot.isEmpty()) {
-			return true;
-		} else if (outSlot.getItem() == outStack.getItem()) {
-			if (outSlot.getCount() <= outSlot.getMaxCount() - outStack.getCount()) {
+		} else {
+			ItemStack outStack = recipe.getOutput();
+			if (outSlot.isEmpty()) {
 				return true;
+			} else if (outSlot.getItem() == outStack.getItem()) {
+				if (outSlot.getCount() <= outSlot.getMaxCount() - outStack.getCount()) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
 				return false;
 			}
-		} else {
-			return false;
 		}
 	}
 	
-	private void doCraft() {
+	// Be sure to check canCraft() first!
+	private void doCraft(RecipeCalcination recipe) {
 		ItemStack inSlot = items.get(0);
 		ItemStack outSlot = items.get(2);
-		ItemStack outStack = new ItemStack(Items.MATERIA_F, 1);
+		ItemStack outStack = recipe.getOutput();
 		
-		if (!canCraft()) {
-			return;
+		inSlot.decrement(recipe.getCost());
+		if (outSlot.isEmpty()) {
+			items.set(2, outStack.copy());
 		} else {
-			inSlot.decrement(1);
-			if (outSlot.isEmpty()) {
-				items.set(2, outStack.copy());
-			} else {
-				outSlot.increment(outStack.getCount());
-			}
+			outSlot.increment(outStack.getCount());
 		}
 	}
 	
@@ -159,34 +159,51 @@ public class BlockEntityCalcinator extends BlockEntity
 		}
 		
 		if (!world.isClient()) {
+			ItemStack inSlot = items.get(0);
 			ItemStack fuelSlot = items.get(1);
-					
-			if (!isActive()) {
-				if (!fuelSlot.isEmpty() && FuelHelper.isFuel(fuelSlot) && canCraft()) {
-					maxFuel = FuelHelper.fuelTime(fuelSlot);
-					fuel += maxFuel;
-					fuelSlot.decrement(1);
-				} else if (progress != 0) {
-					progress = 0;
-				}
-			}
 			
-			if (isActive() && canCraft()) {
-				if (progress < maxProgress) {
-					progress++;
+			if (!inSlot.isEmpty() && (isActive() || FuelHelper.isFuel(fuelSlot))) {
+				RecipeCalcination recipe = world.getRecipeManager()
+						.getFirstMatch(Recipes.CALCINATION, this, world).orElse(null);
+				boolean craftable = canCraft(recipe);
+				
+				if (!isActive()) {
+					if (FuelHelper.isFuel(fuelSlot) && craftable) {
+						maxFuel = FuelHelper.fuelTime(fuelSlot);
+						fuel += maxFuel;
+						fuelSlot.decrement(1);
+						dirty = true;
+					} else if (progress != 0) {
+						progress = 0;
+						dirty = true;
+					}
 				}
-				if (progress >= maxProgress) {
-					progress -= maxProgress;
-					doCraft();
+				
+				if (isActive() && craftable) {
+					if (progress < maxProgress) {
+						progress++;
+					}
+					if (progress >= maxProgress) {
+						progress -= maxProgress;
+						doCraft(recipe);
+					}
+					dirty = true;
+				}
+				
+				if (!craftable && progress != 0) {
+					progress = 0;
+					dirty = true;
 				}
 			} else if (progress != 0) {
 				progress = 0;
+				dirty = true;
 			}
 			
 			if (isActive() != wasActive) {
 				dirty = true;
 				world.setBlockState(pos, world.getBlockState(pos).with(BlockCalcinator.LIT, isActive()));
 			}
+			
 		}
 		
 		if (dirty) {

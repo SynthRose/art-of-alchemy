@@ -3,6 +3,7 @@ package net.synthrose.artofalchemy.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -14,11 +15,11 @@ import net.synthrose.artofalchemy.block.Blocks;
 
 public class RecipeCalcination implements Recipe<Inventory> {
 	
-	private Identifier id;
-	private String group;
-	private Ingredient input;
-	private ItemStack output;
-	private int cost;
+	protected Identifier id;
+	protected String group;
+	protected Ingredient input;
+	protected ItemStack output;
+	protected int cost;
 	
 	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, int cost) {
 		this.id = id;
@@ -36,6 +37,10 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	@Override
 	public ItemStack craft(Inventory inv) {
 		return output.copy();
+	}
+	
+	public Ingredient getInput() {
+		return input;
 	}
 	
 	@Override

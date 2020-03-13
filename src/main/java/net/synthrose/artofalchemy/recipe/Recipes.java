@@ -21,13 +21,13 @@ public class Recipes {
 		return Registry.register(Registry.RECIPE_TYPE, new Identifier(ArtOfAlchemy.MOD_ID, name),
 			new RecipeType<T>() {
 				public String toString() {
-					return name;
+					return ArtOfAlchemy.MOD_ID + ":" + name;
 				}
 			});
 	}
 	
 	public static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String name, S serializer) {
-		return Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(ArtOfAlchemy.MOD_ID), serializer);
+		return Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(ArtOfAlchemy.MOD_ID, name), serializer);
 	}
 
 }

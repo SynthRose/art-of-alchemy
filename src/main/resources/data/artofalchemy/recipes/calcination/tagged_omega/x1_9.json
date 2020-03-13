@@ -1,0 +1,11 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "artofalchemy:calcination_omega/x1_9"
+  },
+  "cost": 9,
+  "result": {
+  	"item": "artofalchemy:materia_omega",
+  	"count": 1
+  }
+}

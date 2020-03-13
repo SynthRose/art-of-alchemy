@@ -1,0 +1,11 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "artofalchemy:calcination_c/x1_9"
+  },
+  "cost": 9,
+  "result": {
+  	"item": "artofalchemy:materia_c",
+  	"count": 1
+  }
+}

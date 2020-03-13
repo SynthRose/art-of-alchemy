@@ -1,0 +1,10 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "tag": "minecraft:logs"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_e",
+  	"count": 4
+  }
+}

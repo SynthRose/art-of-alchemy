@@ -27,7 +27,8 @@ public class ArtOfAlchemy implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        log(Level.INFO, "Humankind cannot gain anything without first giving something in return. To obtain, something of equal value must be lost.");
+        log(Level.INFO, "Humankind cannot gain anything without first giving something in return. "
+        		+ "To obtain, something of equal value must be lost.");
         
         Items.registerItems();
         Blocks.registerBlocks();
