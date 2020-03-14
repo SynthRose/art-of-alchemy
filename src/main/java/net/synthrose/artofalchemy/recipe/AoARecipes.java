@@ -11,10 +11,16 @@ public class AoARecipes {
 	
 	public static RecipeType<RecipeCalcination> CALCINATION;
 	public static RecipeSerializer<RecipeCalcination> CALCINATION_SERIALIZER;
+	
+	public static RecipeType<RecipeDissolution> DISSOLUTION;
+	public static RecipeSerializer<RecipeDissolution> DISSOLUTION_SERIALIZER;
 
 	public static void registerRecipes() {
 		CALCINATION = register("calcination");
 		CALCINATION_SERIALIZER = register("calcination", new SerializerCalcination());
+		
+		DISSOLUTION = register("dissolution");
+		DISSOLUTION_SERIALIZER = register("dissolution", new SerializerDissolution());
 	}
 	
 	public static <T extends Recipe<?>> RecipeType<T> register(String name) {

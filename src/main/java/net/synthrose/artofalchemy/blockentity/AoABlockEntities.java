@@ -9,11 +9,14 @@ import net.synthrose.artofalchemy.block.AoABlocks;
 
 public class AoABlockEntities {
 	
-	public static final BlockEntityType<?> CALCINATION_FURNACE = BlockEntityType.Builder.create(
+	public static final BlockEntityType<?> CALCINATOR = BlockEntityType.Builder.create(
 			BlockEntityCalcinator::new, AoABlocks.CALCINATOR).build(null);
+	public static final BlockEntityType<?> DISSOLVER  = BlockEntityType.Builder.create(
+			BlockEntityDissolver::new, AoABlocks.DISSOLVER).build(null);
 
 	public static void registerBlockEntities() {
-		register("calcination_furnace", CALCINATION_FURNACE);
+		register("calcination_furnace", CALCINATOR);
+		register("dissolution_chamber", DISSOLVER);
 	}
 	
 	public static void register(String name, BlockEntityType<? extends BlockEntity> blockEntity) {

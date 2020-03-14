@@ -32,16 +32,20 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 	
 	public static DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static BooleanProperty LIT = Properties.LIT;
-	public static final Identifier ID = Registry.BLOCK.getId(AoABlocks.CALCINATOR);
 	public static final Settings SETTINGS = FabricBlockSettings
 			.of(Material.STONE)
 			.hardness(5.0f).resistance(6.0f)
 			.build();
 
+	public static Identifier getId() {
+		return Registry.BLOCK.getId(AoABlocks.CALCINATOR);
+	}
+	
 	public BlockCalcinator() {
 		super(SETTINGS);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
+	
 	
 	@Override
 	protected void appendProperties(Builder<Block, BlockState> builder) {
@@ -72,7 +76,7 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 		
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity != null && blockEntity instanceof BlockEntityCalcinator) {			
-			ContainerProviderRegistry.INSTANCE.openContainer(ID, player,
+			ContainerProviderRegistry.INSTANCE.openContainer(getId(), player,
 					(packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
 		}
 		

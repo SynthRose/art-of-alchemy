@@ -73,8 +73,6 @@ public class RendererFluid {
 		
 		FluidRenderHandlerRegistry.INSTANCE.register(still, renderHandler);
 		FluidRenderHandlerRegistry.INSTANCE.register(flowing, renderHandler);
-		
-		
 	}
 	
 	public static void setupFluidRendering(Fluid still, Fluid flowing, Identifier texture) {

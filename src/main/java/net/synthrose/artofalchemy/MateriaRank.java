@@ -29,7 +29,7 @@ public enum MateriaRank {
 		}
 	}
 	
-	public int tier() {
+	public int getTier() {
 		return tier;
 	}
 }

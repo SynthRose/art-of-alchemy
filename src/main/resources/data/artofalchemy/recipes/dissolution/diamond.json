@@ -1,0 +1,10 @@
+{
+    "type": "artofalchemy:dissolution",
+    "ingredient": {
+        "item":"minecraft:diamond"
+    },
+    "result": {
+        "diana": 144,
+        "ceres": 72
+    }
+}

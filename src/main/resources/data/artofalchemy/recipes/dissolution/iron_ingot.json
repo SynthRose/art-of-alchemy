@@ -1,0 +1,9 @@
+{
+    "type": "artofalchemy:dissolution",
+    "ingredient": {
+        "item":"minecraft:iron_ingot"
+    },
+    "result": {
+        "mars": 144
+    }
+}

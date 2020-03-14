@@ -9,18 +9,17 @@ import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.BlockContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
+import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class ControllerCalcinator extends CottonCraftingController {
 
 	public ControllerCalcinator(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
-		super(RecipeType.SMELTING, syncId, playerInventory,
+		super(AoARecipes.CALCINATION, syncId, playerInventory,
 				getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
-		
 		
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);

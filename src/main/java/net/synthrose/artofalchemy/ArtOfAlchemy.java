@@ -32,8 +32,8 @@ public class ArtOfAlchemy implements ModInitializer {
         		+ "To obtain, something of equal value must be lost.");
         
         AoAFluids.registerFluids();
-        AoAItems.registerItems();
         AoABlocks.registerBlocks();
+        AoAItems.registerItems();
         AoABlockEntities.registerBlockEntities();
         AoAGuis.registerContainers();
         AoARecipes.registerRecipes();

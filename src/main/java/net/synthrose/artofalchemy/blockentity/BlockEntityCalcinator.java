@@ -1,8 +1,9 @@
 package net.synthrose.artofalchemy.blockentity;
 
-import org.apache.logging.log4j.Level;
-
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
@@ -11,7 +12,6 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
-import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.FuelHelper;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
@@ -19,7 +19,7 @@ import net.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntityCalcinator extends BlockEntity
-	implements ImplementedInventory, Tickable, PropertyDelegateHolder {
+	implements ImplementedInventory, Tickable, PropertyDelegateHolder, BlockEntityClientSerializable {
 	
 	private int OPERATION_TIME = 100;
 	
@@ -73,10 +73,10 @@ public class BlockEntityCalcinator extends BlockEntity
 	};
 	
 	public BlockEntityCalcinator() {
-		super(AoABlockEntities.CALCINATION_FURNACE);
+		super(AoABlockEntities.CALCINATOR);
 	}
 	
-	private boolean isActive() {
+	private boolean isBurning() {
 		return fuel > 0;
 	}
 	
@@ -172,10 +172,10 @@ public class BlockEntityCalcinator extends BlockEntity
 
 	@Override
 	public void tick() {
-		boolean wasActive = isActive();
+		boolean wasBurning = isBurning();
 		boolean dirty = false;
 		
-		if (wasActive) {
+		if (wasBurning) {
 			fuel = MathHelper.clamp(fuel - 2, 0, maxFuel);
 			dirty = true;
 		}
@@ -184,12 +184,12 @@ public class BlockEntityCalcinator extends BlockEntity
 			ItemStack inSlot = items.get(0);
 			ItemStack fuelSlot = items.get(1);
 			
-			if (!inSlot.isEmpty() && (isActive() || FuelHelper.isFuel(fuelSlot))) {
+			if (!inSlot.isEmpty() && (isBurning() || FuelHelper.isFuel(fuelSlot))) {
 				RecipeCalcination recipe = world.getRecipeManager()
 						.getFirstMatch(AoARecipes.CALCINATION, this, world).orElse(null);
 				boolean craftable = canCraft(recipe);
 				
-				if (!isActive()) {
+				if (!isBurning()) {
 					if (FuelHelper.isFuel(fuelSlot) && craftable) {
 						maxFuel = FuelHelper.fuelTime(fuelSlot);
 						fuel += maxFuel;
@@ -201,13 +201,14 @@ public class BlockEntityCalcinator extends BlockEntity
 					}
 				}
 				
-				if (isActive() && craftable) {
+				if (isBurning() && craftable) {
 					if (progress < maxProgress) {
 						progress++;
 					}
 					if (progress >= maxProgress) {
 						progress -= maxProgress;
 						doCraft(recipe);
+						sync();
 					}
 					dirty = true;
 				}
@@ -221,9 +222,9 @@ public class BlockEntityCalcinator extends BlockEntity
 				dirty = true;
 			}
 			
-			if (isActive() != wasActive) {
+			if (isBurning() != wasBurning) {
 				dirty = true;
-				world.setBlockState(pos, world.getBlockState(pos).with(BlockCalcinator.LIT, isActive()));
+				world.setBlockState(pos, world.getBlockState(pos).with(BlockCalcinator.LIT, isBurning()));
 			}
 			
 		}
@@ -236,6 +237,18 @@ public class BlockEntityCalcinator extends BlockEntity
 	@Override
 	public PropertyDelegate getPropertyDelegate() {
 		return delegate;
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public void fromClientTag(CompoundTag tag) {
+		fromTag(tag);
+	}
+	
+	@Override
+	@Environment(EnvType.CLIENT)
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return toTag(tag);
 	}
 	
 }

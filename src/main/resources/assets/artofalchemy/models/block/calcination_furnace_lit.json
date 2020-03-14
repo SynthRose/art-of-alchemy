@@ -1,9 +1,7 @@
 {
-	"parent": "block/orientable_with_bottom",
+	"parent": "artofalchemy:block/calcination_furnace",
 	"textures": {
 		"front": "artofalchemy:block/calcination_furnace_lit_front",
-		"side": "artofalchemy:block/calcination_furnace_side",
-		"top": "artofalchemy:block/calcination_furnace_lit_top",
-		"bottom": "artofalchemy:block/blank_stone"
+		"top": "artofalchemy:block/calcination_furnace_lit_top"
 	}
 }

@@ -1,0 +1,7 @@
+{
+	"parent": "artofalchemy:block/dissolution_chamber",
+	"textures": {
+		"particle": "artofalchemy:block/dissolution_chamber_lit_side",
+		"side": "artofalchemy:block/dissolution_chamber_lit_side"
+	}
+}
