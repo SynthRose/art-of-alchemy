@@ -1,7 +1,8 @@
 package net.synthrose.artofalchemy.gui;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -28,6 +29,9 @@ import net.synthrose.artofalchemy.blockentity.BlockEntityDissolver;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class ControllerDissolver extends CottonCraftingController {
+	
+	protected List<EssentiaType> essentiaList;
+	protected WListPanel<EssentiaType, WPlainPanel> essentiaPanel;
 
 	public ControllerDissolver(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
 		super(AoARecipes.DISSOLUTION, syncId, playerInventory,
@@ -87,8 +91,10 @@ public class ControllerDissolver extends CottonCraftingController {
 			dynLabels.put(essentia, dynLabel);
 		}
 		
-		WListPanel<EssentiaType, WPlainPanel> essentiaPanel = new WListPanel<EssentiaType, WPlainPanel>(
-			Arrays.asList(EssentiaType.values()),
+		List<EssentiaType> list = buildList(ctx);
+		
+		essentiaPanel = new WListPanel<EssentiaType, WPlainPanel>(
+			list,
 			() -> {
 				return new WPlainPanel();
 			},
@@ -99,7 +105,7 @@ public class ControllerDissolver extends CottonCraftingController {
 				
 				WDynamicLabel dynLabel = dynLabels.get(essentia);
 				dynLabel.setParent(panel);
-				panel.add(dynLabel, 6, 0);
+				panel.add(dynLabel, 8, 0);
 			}
 		);
 		root.add(essentiaPanel, 6, 1, 3, 4);
@@ -107,6 +113,50 @@ public class ControllerDissolver extends CottonCraftingController {
 		root.add(this.createPlayerInventoryPanel(), 0, 5);
 		
 		root.validate(this);
+	}
+	
+	public void refreshEssentia(BlockContext ctx) {
+		updateList(essentiaList, ctx);
+		essentiaPanel.layout();
+	}
+	
+	protected Map<EssentiaType, Integer> getEssentia(BlockContext ctx) {
+		return ctx.run( (world, pos) -> {
+			BlockEntity be = world.getBlockEntity(pos);
+			if (be != null && be.getType() == AoABlockEntities.DISSOLVER) {
+				return ((BlockEntityDissolver) be).getEssentia();
+			} else {
+				return new HashMap<EssentiaType, Integer>();
+			}
+		}, null);
+	}
+	
+	protected List<EssentiaType> buildList(BlockContext ctx) {
+		List<EssentiaType> list = new ArrayList<EssentiaType>();
+		Map<EssentiaType, Integer> essentia = getEssentia(ctx);
+		for (EssentiaType type : essentia.keySet()) {
+			if (essentia.get(type) > 0) {
+				list.add(type);
+			}
+		}
+		list.sort((type1, type2) -> {
+			return essentia.get(type2) - essentia.get(type1);
+		});
+		return list;
+	}
+	
+	protected void updateList(List<EssentiaType> list, BlockContext ctx) {
+		Map<EssentiaType, Integer> essentia = getEssentia(ctx);
+		for (EssentiaType type : essentia.keySet()) {
+			if (essentia.get(type) > 0 && !list.contains(type)) {
+				list.add(type);
+			} else if (essentia.getOrDefault(type, 0) <= 0 && list.contains(type)) {
+				list.remove(type);
+			}
+		}
+		list.sort((type1, type2) -> {
+			return essentia.get(type2) - essentia.get(type1);
+		});
 	}
 
 }
