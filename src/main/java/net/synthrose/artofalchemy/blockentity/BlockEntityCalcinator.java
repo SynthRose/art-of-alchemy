@@ -1,5 +1,7 @@
 package net.synthrose.artofalchemy.blockentity;
 
+import org.apache.logging.log4j.Level;
+
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -9,11 +11,12 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
+import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.FuelHelper;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
 import net.synthrose.artofalchemy.recipe.RecipeCalcination;
-import net.synthrose.artofalchemy.recipe.Recipes;
+import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntityCalcinator extends BlockEntity
 	implements ImplementedInventory, Tickable, PropertyDelegateHolder {
@@ -70,7 +73,7 @@ public class BlockEntityCalcinator extends BlockEntity
 	};
 	
 	public BlockEntityCalcinator() {
-		super(BlockEntities.CALCINATION_FURNACE);
+		super(AoABlockEntities.CALCINATION_FURNACE);
 	}
 	
 	private boolean isActive() {
@@ -85,10 +88,19 @@ public class BlockEntityCalcinator extends BlockEntity
 			return false;
 		} else {
 			ItemStack outStack = recipe.getOutput();
+			int count;
+			
+			if (inSlot.isDamageable()) {
+				float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
+				count = ((int) (damageRatio * outStack.getCount()));
+			} else {
+				count = outStack.getCount();
+			}
+			
 			if (outSlot.isEmpty()) {
 				return true;
 			} else if (outSlot.getItem() == outStack.getItem()) {
-				if (outSlot.getCount() <= outSlot.getMaxCount() - outStack.getCount()) {
+				if (outSlot.getCount() <= outSlot.getMaxCount() - count) {
 					return true;
 				} else {
 					return false;
@@ -104,13 +116,23 @@ public class BlockEntityCalcinator extends BlockEntity
 		ItemStack inSlot = items.get(0);
 		ItemStack outSlot = items.get(2);
 		ItemStack outStack = recipe.getOutput();
+		int count;
 		
-		inSlot.decrement(recipe.getCost());
+		if (inSlot.isDamageable()) {
+			float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
+			count = ((int) (damageRatio * outStack.getCount()));
+		} else {
+			count = outStack.getCount();
+		}
+		
 		if (outSlot.isEmpty()) {
 			items.set(2, outStack.copy());
+			items.get(2).setCount(count);
 		} else {
-			outSlot.increment(outStack.getCount());
+			outSlot.increment(count);
 		}
+		
+		inSlot.decrement(recipe.getCost());
 	}
 	
 	@Override
@@ -164,7 +186,7 @@ public class BlockEntityCalcinator extends BlockEntity
 			
 			if (!inSlot.isEmpty() && (isActive() || FuelHelper.isFuel(fuelSlot))) {
 				RecipeCalcination recipe = world.getRecipeManager()
-						.getFirstMatch(Recipes.CALCINATION, this, world).orElse(null);
+						.getFirstMatch(AoARecipes.CALCINATION, this, world).orElse(null);
 				boolean craftable = canCraft(recipe);
 				
 				if (!isActive()) {

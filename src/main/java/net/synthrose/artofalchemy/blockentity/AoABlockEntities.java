@@ -5,12 +5,12 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
-import net.synthrose.artofalchemy.block.Blocks;
+import net.synthrose.artofalchemy.block.AoABlocks;
 
-public class BlockEntities {
+public class AoABlockEntities {
 	
 	public static final BlockEntityType<?> CALCINATION_FURNACE = BlockEntityType.Builder.create(
-			BlockEntityCalcinator::new, Blocks.CALCINATOR).build(null);
+			BlockEntityCalcinator::new, AoABlocks.CALCINATOR).build(null);
 
 	public static void registerBlockEntities() {
 		register("calcination_furnace", CALCINATION_FURNACE);

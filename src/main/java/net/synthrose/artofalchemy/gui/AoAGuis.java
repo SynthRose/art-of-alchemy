@@ -7,19 +7,19 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.screen.BlockContext;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
 
-public class Guis {
+public class AoAGuis {
 
 	public static void registerContainers() {
 		ContainerProviderRegistry.INSTANCE.registerFactory(BlockCalcinator.ID, (syncId, id, player, buf) ->
-    	new ControllerCalcinator(syncId, player.inventory,
-    	BlockContext.create(player.world, buf.readBlockPos())));
+    		new ControllerCalcinator(syncId, player.inventory,
+    		BlockContext.create(player.world, buf.readBlockPos())));
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static void registerScreens() {
         ScreenProviderRegistry.INSTANCE.registerFactory(BlockCalcinator.ID, (syncId, id, player, buf) ->
-    	new ScreenCalcinator(new ControllerCalcinator(syncId, player.inventory,
-    	BlockContext.create(player.world, buf.readBlockPos())), player));
+    		new ScreenCalcinator(new ControllerCalcinator(syncId, player.inventory,
+    		BlockContext.create(player.world, buf.readBlockPos())), player));
 	}
 
 }

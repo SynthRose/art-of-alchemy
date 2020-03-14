@@ -3,7 +3,6 @@ package net.synthrose.artofalchemy.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -11,7 +10,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.synthrose.artofalchemy.block.Blocks;
+import net.synthrose.artofalchemy.block.AoABlocks;
 
 public class RecipeCalcination implements Recipe<Inventory> {
 	
@@ -59,12 +58,12 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	
 	@Override
 	public RecipeType<?> getType() {
-		return Recipes.CALCINATION;
+		return AoARecipes.CALCINATION;
 	}
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return Recipes.CALCINATION_SERIALIZER;
+		return AoARecipes.CALCINATION_SERIALIZER;
 	}
 	
 	@Override
@@ -82,7 +81,7 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public ItemStack getRecipeKindIcon() {
-		return new ItemStack(Blocks.CALCINATOR);
+		return new ItemStack(AoABlocks.CALCINATOR);
 	}
 
 }

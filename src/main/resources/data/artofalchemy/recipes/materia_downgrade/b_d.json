@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item":"artofalchemy:materia_b" },
+		{ "item":"artofalchemy:materia_d" }
+	],
+	"result": {
+		"item": "artofalchemy:materia_c",
+		"count": 2
+	}
+}

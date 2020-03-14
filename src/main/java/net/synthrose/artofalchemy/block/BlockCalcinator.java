@@ -1,9 +1,11 @@
 package net.synthrose.artofalchemy.block;
 
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -30,11 +32,14 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 	
 	public static DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static BooleanProperty LIT = Properties.LIT;
-	public static final Identifier ID = Registry.BLOCK.getId(Blocks.CALCINATOR);
-	
+	public static final Identifier ID = Registry.BLOCK.getId(AoABlocks.CALCINATOR);
+	public static final Settings SETTINGS = FabricBlockSettings
+			.of(Material.STONE)
+			.hardness(5.0f).resistance(6.0f)
+			.build();
 
-	public BlockCalcinator(Settings settings) {
-		super(settings);
+	public BlockCalcinator() {
+		super(SETTINGS);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
 	

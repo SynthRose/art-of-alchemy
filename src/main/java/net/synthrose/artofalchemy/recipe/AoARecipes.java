@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
 
-public class Recipes {
+public class AoARecipes {
 	
 	public static RecipeType<RecipeCalcination> CALCINATION;
 	public static RecipeSerializer<RecipeCalcination> CALCINATION_SERIALIZER;

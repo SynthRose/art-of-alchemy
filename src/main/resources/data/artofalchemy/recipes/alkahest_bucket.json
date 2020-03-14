@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item":"minecraft:water_bucket" },
+		{ "item":"minecraft:bucket"},
+		{ "item":"minecraft:redstone" },
+		{ "item":"minecraft:glowstone_dust" },
+		{ "item":"minecraft:gunpowder" },
+		{ "item":"minecraft:lapis_lazuli"}
+	],
+	"result": {
+		"item": "artofalchemy:alkahest_bucket"
+	}
+}
