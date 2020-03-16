@@ -1,7 +1,5 @@
 package net.synthrose.artofalchemy.gui;
 
-import java.util.function.Supplier;
-
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.WBar;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
@@ -12,6 +10,7 @@ import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.BlockContext;
 import net.minecraft.text.TranslatableText;
@@ -48,6 +47,7 @@ public class ControllerDissolver extends CottonCraftingController {
 		WBar tankBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/tank_empty.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/tank_full.png"),
 				0, 1, Direction.UP);
+		tankBar.withTooltip("gui." + ArtOfAlchemy.MOD_ID + ".alkahest_tooltip");
 		root.add(tankBar, 0, 1, 2, 3);
 		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
@@ -60,10 +60,18 @@ public class ControllerDissolver extends CottonCraftingController {
 		title.setAlignment(Alignment.CENTER);
 		root.add(title, 0, 0, 9, 1);
 		
-		Supplier<String> mBSupplier = () -> { return Integer.toString(propertyDelegate.get(0)); };
-		WDynamicLabel mBLabel = new WDynamicLabel(mBSupplier);
-		mBLabel.setAlignment(Alignment.CENTER);
-		root.add(mBLabel, 0, 4, 2, 1);
+		WDynamicLabel alert = new WDynamicLabel(() -> {
+			switch (propertyDelegate.get(4)) {
+			case 2:
+				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".alkahest_warning");
+			case 3:
+				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".buffer_warning");
+			default:
+				return "";
+			}
+		}, 0xFF5555);
+		alert.setAlignment(Alignment.CENTER);
+		root.add(alert, 0, -1, 9, 1);
 		
 		EssentiaContainer essentia = getEssentia(ctx);
 		essentiaPanel = new WEssentiaPanel(essentia);

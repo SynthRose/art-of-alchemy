@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" A ",
+		"GBG",
+		" Q "
+	],
+	"key": {
+		"B": { "item":"minecraft:bucket" },
+		"A": { "item":"artofalchemy:azoth" },
+		"G": { "item":"minecraft:red_stained_glass" },
+		"Q": { "item":"minecraft:quartz" }
+	},
+	"result": {
+		"item": "artofalchemy:essentia_vessel_mars"
+	}
+}

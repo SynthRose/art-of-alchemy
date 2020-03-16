@@ -26,7 +26,7 @@ public class AoARecipes {
 		return Registry.register(Registry.RECIPE_TYPE, ArtOfAlchemy.id(name),
 			new RecipeType<T>() {
 				public String toString() {
-					return ArtOfAlchemy.MOD_ID + ":" + name;
+					return ArtOfAlchemy.id(name).toString();
 				}
 			});
 	}

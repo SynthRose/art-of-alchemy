@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "artofalchemy:essentia_vessel",
+    "artofalchemy:essentia_vessel_mercury",
+    "artofalchemy:essentia_vessel_venus",
+    "artofalchemy:essentia_vessel_tellus",
+    "artofalchemy:essentia_vessel_mars",
+    "artofalchemy:essentia_vessel_jupiter",
+    "artofalchemy:essentia_vessel_saturn",
+    "artofalchemy:essentia_vessel_uranus",
+    "artofalchemy:essentia_vessel_neptune",
+    "artofalchemy:essentia_vessel_apollo",
+    "artofalchemy:essentia_vessel_diana",
+    "artofalchemy:essentia_vessel_ceres",
+    "artofalchemy:essentia_vessel_pluto",
+    "artofalchemy:essentia_vessel_void"
+  ]
+}

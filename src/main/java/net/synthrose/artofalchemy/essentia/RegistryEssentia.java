@@ -8,7 +8,7 @@ import net.synthrose.artofalchemy.ArtOfAlchemy;
 
 public class RegistryEssentia extends SimpleRegistry<Essentia> {
 
-	public static final RegistryEssentia INSTANCE = create(new Identifier(ArtOfAlchemy.MOD_ID, "essentia"));
+	public static final RegistryEssentia INSTANCE = create(ArtOfAlchemy.id("essentia"));
 	
 	public void forEach(BiConsumer<Essentia, Identifier> function) {
 		forEach((essentia) -> {

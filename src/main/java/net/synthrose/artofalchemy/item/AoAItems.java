@@ -56,10 +56,10 @@ public class AoAItems {
 		});
 		
 		// Register essentia vessels; add-on essentia buckets will be registered to THEIR namespace
-//		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
-//			Identifier itemId = new Identifier(id.getNamespace(), "essentia_vessel_" + id.getPath());
-//			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(defaults(), essentia)));
-//		});
+		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
+			Identifier itemId = new Identifier(id.getNamespace(), "essentia_vessel_" + id.getPath());
+			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(defaults(), essentia)));
+		});
 		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
 				new ItemEssentiaVessel(defaults(), null)));
 	}

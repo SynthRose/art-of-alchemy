@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item":"artofalchemy:essentia_vessel" }
+	],
+	"result": {
+		"item": "artofalchemy:essentia_vessel"
+	}
+}

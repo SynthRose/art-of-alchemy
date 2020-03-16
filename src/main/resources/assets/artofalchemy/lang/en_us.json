@@ -1,7 +1,6 @@
 {
 	"item.artofalchemy.icon_item": "Mysterious Sigil",
 	"item.artofalchemy.azoth": "Azoth",
-	"item.artofalchemy.essentia_vessel": "Essentia Vessel",
 	
 	"item.artofalchemy.materia_omega": "Ω-Rank Materia",
 	"item.artofalchemy.materia_s": "S-Rank Materia",
@@ -57,6 +56,7 @@
 	"fluid.artofalchemy.essentia_pluto": "Pluto Essentia",
 	"fluid.artofalchemy.essentia_void": "Void Essentia",
 	
+	"essentia.artofalchemy": "Essentia",
 	"essentia.artofalchemy.mercury": "Mercury",
 	"essentia.artofalchemy.venus": "Venus",
 	"essentia.artofalchemy.tellus": "Tellus",
@@ -70,6 +70,26 @@
 	"essentia.artofalchemy.ceres": "Ceres",
 	"essentia.artofalchemy.pluto": "Pluto",
 	"essentia.artofalchemy.void": "Void",
+	
+	"item.artofalchemy.essentia_vessel": "Essentia Vessel",
+	"item.artofalchemy.essentia_vessel.tooltip_infinite": "Infinite",
+	"item.artofalchemy.essentia_vessel.tooltip_empty": "Empty",
+	"item.artofalchemy.essentia_vessel.tooltip_mixed": "Mixed (%d/%d)",
+	"item.artofalchemy.essentia_vessel.tooltip_mixed_unlim": "Mixed (%d)",
+	"item.artofalchemy.essentia_vessel.tooltip_single": "%s (%d/%d)",
+	"item.artofalchemy.essentia_vessel.tooltip_single_unlim": "%s (%d)",
+	"item.artofalchemy.essentia_vessel.tooltip_component": "%s: %d",
+	"item.artofalchemy.essentia_vessel.tooltip_component_inf": "%s",
+	"item.artofalchemy.essentia_vessel.tooltip_unlocked": "Unlocked",
+	"item.artofalchemy.essentia_vessel.tooltip_input": "Input Only",
+	"item.artofalchemy.essentia_vessel.tooltip_output": "Output Only",
+	"item.artofalchemy.essentia_vessel.tooltip_locked": "Locked",
+	"item.artofalchemy.essentia_vessel.tooltip_pulled": "Pulled %d essentia",
+	"item.artofalchemy.essentia_vessel.tooltip_pushed": "Pushed %d essentia",
+	
+	"gui.artofalchemy.alkahest_tooltip": "Alkahest §7(%d/%d)",
+	"gui.artofalchemy.alkahest_warning": "Needs alkahest!",
+	"gui.artofalchemy.buffer_warning": "Essentia buffer is full!",
 	
 	"block.artofalchemy.calcination_furnace": "Calcination Furnace",
 	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",

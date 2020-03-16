@@ -1,0 +1,11 @@
+{
+    "type": "artofalchemy:dissolution",
+    "ingredient": {
+        "item":"minecraft:nether_star"
+    },
+    "result": {
+        "artofalchemy:void": 180,
+        "artofalchemy:apollo": 360,
+        "artofalchemy:diana": 90
+    }
+}

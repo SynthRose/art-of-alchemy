@@ -1,6 +1,8 @@
 package net.synthrose.artofalchemy.essentia;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import com.google.gson.JsonObject;
@@ -49,6 +51,19 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 			tag.putInt(RegistryEssentia.INSTANCE.getId(essentia).toString(), get(essentia));
 		}
 		return tag;
+	}
+	
+	public List<Essentia> sortedList() {
+		List<Essentia> list = new ArrayList<>();
+		for (Essentia key : keySet()) {
+			if (get(key) > 0) {
+				list.add(key);
+			}
+		}
+		list.sort((item1, item2) -> {
+			return get(item2) - get(item1);
+		});
+		return list;
 	}
 	
 	// Mutating addition for a single essentia type. Can go negative - try not to break things.

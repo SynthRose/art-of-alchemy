@@ -2,8 +2,12 @@ package net.synthrose.artofalchemy.essentia;
 
 import java.util.HashSet;
 import java.util.Map.Entry;
+
+import blue.endless.jankson.annotation.Nullable;
+
 import java.util.Set;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -38,11 +42,12 @@ public class EssentiaContainer {
 				}
 			}
 			if (tag.contains("capacity")) {
-				if (tag.getString("capacity") == "unlimited") {
+				if (tag.getString("capacity").equals("unlimited")) {
 					this.setUnlimitedCapacity();
 				} else {
 					this.setCapacity(tag.getInt("capacity"));
 				}
+				
 			}
 			if (tag.contains("infinite")) {
 				this.setInfinite(tag.getBoolean("infinite"));
@@ -54,9 +59,32 @@ public class EssentiaContainer {
 				this.setInput(tag.getBoolean("input"));
 			}
 			if (tag.contains("output")) {
-				this.setInput(tag.getBoolean("output"));
+				this.setOutput(tag.getBoolean("output"));
 			}	
 		}
+	}
+	
+	@Nullable
+	public static EssentiaContainer of(ItemStack item) {
+		EssentiaContainer container;
+		if (item.hasTag() && item.getTag().contains("contents")) {
+			container = new EssentiaContainer(item.getTag().getCompound("contents"));
+		} else {
+			container = null;
+		}
+		return container;
+	}
+	
+	public ItemStack in(ItemStack item) {
+		CompoundTag tag;
+		if (item.hasTag()) {
+			tag = item.getTag();
+		} else {
+			tag = new CompoundTag();
+		}
+		tag.put("contents", toTag());
+		item.setTag(tag);
+		return item;
 	}
 	
 	public EssentiaStack getContents() {
@@ -96,6 +124,10 @@ public class EssentiaContainer {
 		this.capacity = null;
 		return this;
 	}
+	
+	public boolean hasUnlimitedCapacity() {
+		return this.capacity == null;
+	}
 
 	public boolean isInput() {
 		return input;
@@ -124,7 +156,7 @@ public class EssentiaContainer {
 		return this;
 	}
 	
-	public boolean getWhitelistEnabled() {
+	public boolean isWhitelistEnabled() {
 		return whitelistEnabled;
 	}
 	
@@ -161,7 +193,7 @@ public class EssentiaContainer {
 	
 	public int getCount(Essentia essentia) {
 		if (essentia != null) {
-			return contents.get(essentia);
+			return contents.getOrDefault(essentia, 0);
 		} else {
 			return 0;
 		}
@@ -311,7 +343,7 @@ public class EssentiaContainer {
 				if (this.whitelisted(key) && other.whitelisted(key)) {
 					int transferAmt = value;
 					if (other.capacity != null) {
-						transferAmt = Math.min(transferAmt, other.capacity);
+						transferAmt = Math.min(transferAmt, other.getCapacity() - other.getCount());
 					}
 					if (!this.infinite) {
 						transferAmt = Math.min(transferAmt, this.getCount(key));
@@ -350,7 +382,7 @@ public class EssentiaContainer {
 			list.add(StringTag.of(RegistryEssentia.INSTANCE.getId(essentia).toString()));
 		}
 		tag.put("whitelist", list);
-		tag.putBoolean("whitelist_enabled", getWhitelistEnabled());
+		tag.putBoolean("whitelist_enabled", isWhitelistEnabled());
 		tag.putBoolean("infinite", isInfinite());
 		if (capacity == null) {
 			tag.putString("capacity", "unlimited");
@@ -358,7 +390,7 @@ public class EssentiaContainer {
 			tag.putInt("capacity", getCapacity());
 		}
 		tag.putBoolean("input", isInput());
-		tag.putBoolean("output", isInput());
+		tag.putBoolean("output", isOutput());
 		return tag;
 	}
 	

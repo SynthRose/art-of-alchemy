@@ -1,0 +1,10 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "tag":"artofalchemy:essentia_vessel" },
+		{ "item":"minecraft:red_dye" }
+	],
+	"result": {
+		"item": "artofalchemy:essentia_vessel_mars"
+	}
+}

@@ -2,6 +2,7 @@ package net.synthrose.artofalchemy.render;
 
 import java.util.Map.Entry;
 
+import net.arno.client.api.ItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -45,7 +46,8 @@ public class AoARenderers {
         	}, entry.getValue());
     	}
     	
-    	//ItemRendererRegistry.INSTANCE.register(AoAItems.ESSENTIA_VESSEL, RendererItemEssentiaVessel::new);
+    	ItemRendererRegistry.INSTANCE.register(AoAItems.ESSENTIA_VESSELS.get(null),
+    			RendererItemEssentiaVessel::new);
     	
 	}
 

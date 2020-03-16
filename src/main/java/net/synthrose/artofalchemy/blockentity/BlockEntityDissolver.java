@@ -21,13 +21,13 @@ import net.synthrose.artofalchemy.recipe.AoARecipes;
 public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,
 	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia {
 	
-	private final int OPERATION_TIME = 100;
 	private final int TANK_SIZE = 4000;
-	
+	private final double SPEED_MOD = 2.0;
 	private int alkahest = 0;
 	private int maxAlkahest = TANK_SIZE;
 	private int progress = 0;
-	private int maxProgress = OPERATION_TIME;
+	private int maxProgress = 100;
+	private int status = 0;
 	private boolean lit = false;
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
@@ -39,7 +39,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		
 		@Override
 		public int size() {
-			return 4;
+			return 5;
 		}
 		
 		@Override
@@ -57,6 +57,9 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			case 3:
 				maxProgress = value;
 				break;
+			case 4:
+				status = value;
+				break;
 			}
 		}
 		
@@ -71,6 +74,8 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 				return progress;
 			case 3:
 				return maxProgress;
+			case 4:
+				return status;
 			default:
 				return 0;
 			}
@@ -119,20 +124,41 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		return setAlkahest(alkahest + amount);
 	}
 	
+	private boolean updateStatus(int status) {
+		if (this.status != status) {
+			this.status = status;
+			markDirty();
+		}
+		return (status == 0);
+	}
+	
 	private boolean canCraft(RecipeDissolution recipe) {
 		ItemStack inSlot = items.get(0);
 		
 		if (recipe == null || inSlot.isEmpty()) {
-			return false;
+			return updateStatus(1);
 		} else {
 			EssentiaStack results = recipe.getEssentia();
+			
+			maxProgress = (int) (results.getCount() / SPEED_MOD);
+			if (maxProgress < 20) {
+				maxProgress = 20;
+			}
 			
 			if (inSlot.isDamageable()) {
 				double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
 				results.multiply(factor);
 			}
 			
-			return essentia.canAcceptIgnoreIO(results);
+			if (results.getCount() > alkahest) {
+				return updateStatus(2);
+			} else {
+				if (!essentia.canAcceptIgnoreIO(results)) {
+					return updateStatus(3);
+				} else {
+					return updateStatus(0);
+				}
+			}
 		}
 	}
 	
@@ -155,6 +181,8 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.putInt("alkahest", alkahest);
 		tag.putInt("progress", progress);
+		tag.putInt("max_progress", maxProgress);
+		tag.putInt("status", status);
 		tag.put("essentia", essentia.getContents().toTag());
 		Inventories.toTag(tag, items);
 		return super.toTag(tag);
@@ -166,9 +194,10 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		Inventories.fromTag(tag, items);
 		alkahest = tag.getInt("alkahest");
 		progress = tag.getInt("progress");
+		maxProgress = tag.getInt("max_progress");
+		status = tag.getInt("status");
 		essentia.setContents(new EssentiaStack(tag.getCompound("essentia")));
 		maxAlkahest = TANK_SIZE;
-		maxProgress = OPERATION_TIME;
 	}
 
 	@Override
@@ -190,7 +219,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			ItemStack inSlot = items.get(0);
 			boolean canWork = false;
 			
-			if (!inSlot.isEmpty() && hasAlkahest()) {
+			if (inSlot.isEmpty()) {
+				updateStatus(1);
+			} else if (!hasAlkahest()) {
+				updateStatus(2);
+			} else {
 				RecipeDissolution recipe = world.getRecipeManager()
 						.getFirstMatch(AoARecipes.DISSOLUTION, this, world).orElse(null);
 				canWork = canCraft(recipe);

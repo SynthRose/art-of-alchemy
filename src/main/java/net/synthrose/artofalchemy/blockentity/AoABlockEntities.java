@@ -9,9 +9,9 @@ import net.synthrose.artofalchemy.block.AoABlocks;
 public class AoABlockEntities {
 	
 	public static final BlockEntityType<?> CALCINATOR = BlockEntityType.Builder.create(
-			BlockEntityCalcinator::new, AoABlocks.CALCINATOR).build(null);
+		BlockEntityCalcinator::new, AoABlocks.CALCINATOR).build(null);
 	public static final BlockEntityType<?> DISSOLVER  = BlockEntityType.Builder.create(
-			BlockEntityDissolver::new, AoABlocks.DISSOLVER).build(null);
+		BlockEntityDissolver::new, AoABlocks.DISSOLVER).build(null);
 
 	public static void registerBlockEntities() {
 		register("calcination_furnace", CALCINATOR);

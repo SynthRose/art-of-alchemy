@@ -5,6 +5,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.synthrose.artofalchemy.item.ItemEssentiaVessel;
 
 public class RendererItemEssentiaVessel extends ItemRenderer<ItemEssentiaVessel> {
@@ -15,7 +16,7 @@ public class RendererItemEssentiaVessel extends ItemRenderer<ItemEssentiaVessel>
 	
 	@Override
 	public void render(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-	
+//		EssentiaContainer container = EssentiaContainer.of(stack);
 	}
 	
 //	@Override
