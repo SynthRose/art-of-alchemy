@@ -1,13 +1,15 @@
 # Art of Alchemy
 An alchemical mod for Minecraft 1.16.x / Fabric.
 
-## Mod Requirements
+## Mod Requirements & Acknowledgments
 To use this mod, you will need:
 
 * Minecraft 20w10a
 * The [Fabric](https://fabricmc.net/) mod loader
 * The [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 * CottonMC's [LibGUI](https://www.curseforge.com/minecraft/mc-mods/libgui)
+
+ItemStack renderer mixin courtesy of vini2003. 
 
 ## The World of Alchemy
 At the heart of alchemy is the practice of transmutation. The ability to transmute substances into other,
@@ -39,11 +41,10 @@ recombined in a Conjunction Table - with a bit of experience - to create new sub
 
 ## To-Do / Idea List
 
-* Essentia Tank
+* Essentia Tank (IN PROGRESS)
 * Conjunction Table
 * Transmutation recipes for vanilla items
 * Alchemical formulae and journals
-* Proper essentia namespaces (?)
 * Utilize [Fluidity API](https://github.com/grondag/fluidity) (?)
 * Projection Bench or Philosopher's Stone, for upgrading materia (?)
 * Memorization Spire, for storing experience (?)
