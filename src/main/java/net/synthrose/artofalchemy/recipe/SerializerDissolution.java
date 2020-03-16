@@ -1,7 +1,5 @@
 package net.synthrose.artofalchemy.recipe;
 
-import java.util.Map;
-
 import com.google.gson.JsonObject;
 
 import net.minecraft.nbt.CompoundTag;
@@ -10,8 +8,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.PacketByteBuf;
-import net.synthrose.artofalchemy.EssentiaSerializer;
-import net.synthrose.artofalchemy.EssentiaType;
+import net.synthrose.artofalchemy.essentia.EssentiaStack;
 
 public class SerializerDissolution implements RecipeSerializer<RecipeDissolution> {
 
@@ -20,7 +17,7 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		String group = JsonHelper.getString(json, "group", "");
 		Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 		JsonObject essentiaObj = JsonHelper.getObject(json, "result");
-		Map<EssentiaType, Integer> essentia = EssentiaSerializer.jsonToMap(essentiaObj);
+		EssentiaStack essentia = new EssentiaStack(essentiaObj);
 		return new RecipeDissolution(id, group, input, essentia);
 	}
 
@@ -29,7 +26,7 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		String group = buf.readString(32767);
 		Ingredient input = Ingredient.fromPacket(buf);
 		CompoundTag essentiaTag = buf.readCompoundTag();
-		Map<EssentiaType, Integer> essentia = EssentiaSerializer.tagToMap(essentiaTag);
+		EssentiaStack essentia = new EssentiaStack(essentiaTag);
 		return new RecipeDissolution(id, group, input, essentia);
 	}
 
@@ -37,7 +34,7 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 	public void write(PacketByteBuf buf, RecipeDissolution recipe) {
 		buf.writeString(recipe.group);
 		recipe.input.write(buf);
-		buf.writeCompoundTag(EssentiaSerializer.mapToTag(recipe.essentia));
+		buf.writeCompoundTag(recipe.essentia.toTag());
 	}
 	
 

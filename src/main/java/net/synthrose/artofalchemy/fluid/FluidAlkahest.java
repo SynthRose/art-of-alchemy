@@ -90,6 +90,19 @@ abstract class FluidAlkahest extends BaseFluid {
 			builder.add(LEVEL);
 		}
 		
+//		@Override
+//		protected boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid,
+//				Direction direction) {
+//			if (AoAFluids.ESSENTIA_FLUIDS.containsValue(fluid) ||
+//				AoAFluids.ESSENTIA_FLUIDS_FLOWING.containsValue(fluid) ||
+//				AoAFluids.ALKAHEST == fluid ||
+//				AoAFluids.ALKAHEST_FLOWING == fluid) {
+//				return true;
+//			} else {
+//				return super.canBeReplacedWith(state, world, pos, fluid, direction);
+//			}
+//		}
+		
 		@Override
 		public int getLevel(FluidState state) {
 			return state.get(LEVEL);

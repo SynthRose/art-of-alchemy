@@ -12,19 +12,19 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.synthrose.artofalchemy.EssentiaType;
+import net.synthrose.artofalchemy.essentia.Essentia;
 import net.synthrose.artofalchemy.fluid.AoAFluids;
 
 public class BlockEssentia extends FluidBlock {
 	
 	public static final Settings SETTINGS = Settings.copy(Blocks.WATER);
-	protected static EssentiaType essentia;
+	protected static Essentia essentia;
 	
-	public BlockEssentia(EssentiaType essentia) {
+	public BlockEssentia(Essentia essentia) {
 		super(AoAFluids.ESSENTIA_FLUIDS.get(essentia), SETTINGS);
 	}
 	
-	public EssentiaType getEssentia() {
+	public Essentia getEssentia() {
 		return essentia;
 	}
 	

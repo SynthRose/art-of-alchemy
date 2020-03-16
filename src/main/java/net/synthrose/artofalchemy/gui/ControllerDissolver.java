@@ -1,9 +1,5 @@
 package net.synthrose.artofalchemy.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
@@ -13,8 +9,6 @@ import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
-import io.github.cottonmc.cotton.gui.widget.WListPanel;
-import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,20 +16,24 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.BlockContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
-import net.synthrose.artofalchemy.EssentiaType;
-import net.synthrose.artofalchemy.blockentity.AoABlockEntities;
-import net.synthrose.artofalchemy.blockentity.BlockEntityDissolver;
+import net.synthrose.artofalchemy.essentia.EssentiaContainer;
+import net.synthrose.artofalchemy.essentia.HasEssentia;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class ControllerDissolver extends CottonCraftingController {
 	
-	protected List<EssentiaType> essentiaList;
-	protected WListPanel<EssentiaType, WPlainPanel> essentiaPanel;
-
+	BlockPos pos;
+	WEssentiaPanel essentiaPanel;
+	
 	public ControllerDissolver(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
 		super(AoARecipes.DISSOLUTION, syncId, playerInventory,
 				getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+		
+		pos = ctx.run((world, pos) -> {
+			return pos;
+		}, null);
 		
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);
@@ -67,96 +65,31 @@ public class ControllerDissolver extends CottonCraftingController {
 		mBLabel.setAlignment(Alignment.CENTER);
 		root.add(mBLabel, 0, 4, 2, 1);
 		
-		Map<EssentiaType, WSprite> sprites = new HashMap<>();
-		for (EssentiaType essentia : EssentiaType.values()) {
-			WSprite sprite = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID,
-					"textures/gui/essentia_banner/" + essentia.getName() +".png"));
-			sprites.put(essentia, sprite);
-		}
-		
-		Map<EssentiaType, WDynamicLabel> dynLabels = new HashMap<>();
-		for (EssentiaType essentia : EssentiaType.values()) {
-			WDynamicLabel dynLabel = new WDynamicLabel(() -> {
-				Integer amount = ctx.run( (world, pos) -> {
-					BlockEntity be = world.getBlockEntity(pos);
-					if (be.getType() == AoABlockEntities.DISSOLVER) {
-						return ((BlockEntityDissolver) be).getEssentia(essentia);
-					} else {
-						return 0;
-					}
-				}, 0);
-				return amount.toString();
-			});
-			dynLabel.setAlignment(Alignment.RIGHT);
-			dynLabels.put(essentia, dynLabel);
-		}
-		
-		List<EssentiaType> list = buildList(ctx);
-		
-		essentiaPanel = new WListPanel<EssentiaType, WPlainPanel>(
-			list,
-			() -> {
-				return new WPlainPanel();
-			},
-			(EssentiaType essentia, WPlainPanel panel) -> {				
-				WSprite sprite = sprites.get(essentia);
-				sprite.setParent(panel);
-				panel.add(sprite, -4, -1, 54, 18);
-				
-				WDynamicLabel dynLabel = dynLabels.get(essentia);
-				dynLabel.setParent(panel);
-				panel.add(dynLabel, 8, 0);
-			}
-		);
+		EssentiaContainer essentia = getEssentia(ctx);
+		essentiaPanel = new WEssentiaPanel(essentia);
 		root.add(essentiaPanel, 6, 1, 3, 4);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5);
 		
 		root.validate(this);
+		
 	}
 	
-	public void refreshEssentia(BlockContext ctx) {
-		updateList(essentiaList, ctx);
-		essentiaPanel.layout();
+	public void updateEssentia(int essentiaId, EssentiaContainer essentia, BlockPos pos) {
+		if (pos.equals(this.pos)) {
+			essentiaPanel.updateEssentia(essentia);
+		}
 	}
-	
-	protected Map<EssentiaType, Integer> getEssentia(BlockContext ctx) {
-		return ctx.run( (world, pos) -> {
+
+	private static EssentiaContainer getEssentia(BlockContext ctx) {
+		return ctx.run((world, pos) -> {
 			BlockEntity be = world.getBlockEntity(pos);
-			if (be != null && be.getType() == AoABlockEntities.DISSOLVER) {
-				return ((BlockEntityDissolver) be).getEssentia();
+			if (be instanceof HasEssentia) {
+				return ((HasEssentia) be).getContainer(0);
 			} else {
-				return new HashMap<EssentiaType, Integer>();
+				return new EssentiaContainer();
 			}
-		}, null);
-	}
-	
-	protected List<EssentiaType> buildList(BlockContext ctx) {
-		List<EssentiaType> list = new ArrayList<EssentiaType>();
-		Map<EssentiaType, Integer> essentia = getEssentia(ctx);
-		for (EssentiaType type : essentia.keySet()) {
-			if (essentia.get(type) > 0) {
-				list.add(type);
-			}
-		}
-		list.sort((type1, type2) -> {
-			return essentia.get(type2) - essentia.get(type1);
-		});
-		return list;
-	}
-	
-	protected void updateList(List<EssentiaType> list, BlockContext ctx) {
-		Map<EssentiaType, Integer> essentia = getEssentia(ctx);
-		for (EssentiaType type : essentia.keySet()) {
-			if (essentia.get(type) > 0 && !list.contains(type)) {
-				list.add(type);
-			} else if (essentia.getOrDefault(type, 0) <= 0 && list.contains(type)) {
-				list.remove(type);
-			}
-		}
-		list.sort((type1, type2) -> {
-			return essentia.get(type2) - essentia.get(type1);
-		});
+		}, new EssentiaContainer());
 	}
 
 }

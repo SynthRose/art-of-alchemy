@@ -4,7 +4,7 @@
         "item":"minecraft:diamond"
     },
     "result": {
-        "diana": 144,
-        "ceres": 72
+        "artofalchemy:diana": 144,
+        "artofalchemy:ceres": 72
     }
 }

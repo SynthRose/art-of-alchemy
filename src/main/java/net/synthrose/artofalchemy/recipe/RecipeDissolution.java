@@ -1,6 +1,5 @@
 package net.synthrose.artofalchemy.recipe;
 
-import java.util.Map;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,18 +11,17 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.synthrose.artofalchemy.EssentiaType;
 import net.synthrose.artofalchemy.block.AoABlocks;
+import net.synthrose.artofalchemy.essentia.EssentiaStack;
 
 public class RecipeDissolution implements Recipe<Inventory> {
 	
 	protected Identifier id;
 	protected String group;
 	protected Ingredient input;
-	protected Map<EssentiaType, Integer> essentia;
+	protected EssentiaStack essentia;
 	
-	public RecipeDissolution(Identifier id, String group, Ingredient input,
-			Map<EssentiaType, Integer> essentia) {
+	public RecipeDissolution(Identifier id, String group, Ingredient input, EssentiaStack essentia) {
 		this.id = id;
 		this.group = group;
 		this.input = input;
@@ -44,7 +42,7 @@ public class RecipeDissolution implements Recipe<Inventory> {
 		return input;
 	}
 	
-	public Map<EssentiaType, Integer> getEssentia() {
+	public EssentiaStack getEssentia() {
 		return essentia;
 	}
 	

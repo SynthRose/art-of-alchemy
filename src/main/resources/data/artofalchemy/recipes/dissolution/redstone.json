@@ -4,7 +4,7 @@
         "item":"minecraft:redstone"
     },
     "result": {
-        "mercury": 48,
-        "venus": 24
+        "artofalchemy:mercury": 48,
+        "artofalchemy:venus": 24
     }
 }

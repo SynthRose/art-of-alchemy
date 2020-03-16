@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.synthrose.artofalchemy.EssentiaType;
 import net.synthrose.artofalchemy.blockentity.BlockEntityDissolver;
 import net.synthrose.artofalchemy.item.AoAItems;
 
@@ -74,36 +74,32 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 		
 		ItemStack inHand = player.getStackInHand(hand);
 		
-		if (world.isClient) {
-			return ActionResult.SUCCESS;
-		}
-		
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity != null && blockEntity instanceof BlockEntityDissolver) {
 			BlockEntityDissolver dissolver = (BlockEntityDissolver) blockEntity;
-			dissolver.getEssentia(EssentiaType.MERCURY);
 			if (inHand.getItem() == AoAItems.ALKAHEST_BUCKET && dissolver.addAlkahest(1000)) {
 				if (!player.abilities.creativeMode) {
 					player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 				}
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			} else if (inHand.getItem() == Items.BUCKET && dissolver.addAlkahest(-1000)) {
-				if (!player.abilities.creativeMode) {
-					inHand.decrement(1);
-					if (inHand.isEmpty()) {
-						player.setStackInHand(hand, new ItemStack(AoAItems.ALKAHEST_BUCKET));
-					} else {
-						player.dropItem(new ItemStack(AoAItems.ALKAHEST_BUCKET), false);
-					}
+				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY,
+						SoundCategory.BLOCKS, 1.0F, 1.0F);
+				return ActionResult.SUCCESS;
+			} else if (AoAItems.ESSENTIA_VESSELS.containsValue(inHand.getItem())) {
+				ItemUsageContext itemContext = new ItemUsageContext(player, hand, hit);
+				ActionResult itemResult = inHand.useOnBlock(itemContext);
+				if (itemResult != ActionResult.PASS) {
+					return itemResult;
 				}
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			} else {
+			}
+			if (!world.isClient()) {
 				ContainerProviderRegistry.INSTANCE.openContainer(getId(), player,
 						(packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
 			}
+			return ActionResult.SUCCESS;
+		} else {
+			return ActionResult.PASS;
 		}
 		
-		return ActionResult.SUCCESS;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package net.synthrose.artofalchemy.fluid;
+package net.synthrose.artofalchemy.render;
 
 import java.util.function.Function;
 

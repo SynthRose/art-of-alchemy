@@ -1,11 +1,6 @@
 package net.synthrose.artofalchemy.blockentity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -14,27 +9,32 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
-import net.synthrose.artofalchemy.EssentiaSerializer;
-import net.synthrose.artofalchemy.EssentiaType;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockDissolver;
+import net.synthrose.artofalchemy.essentia.EssentiaContainer;
+import net.synthrose.artofalchemy.essentia.HasEssentia;
+import net.synthrose.artofalchemy.network.AoANetworking;
+import net.synthrose.artofalchemy.essentia.EssentiaStack;
 import net.synthrose.artofalchemy.recipe.RecipeDissolution;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
-public class BlockEntityDissolver extends BlockEntity
-	implements ImplementedInventory, Tickable, PropertyDelegateHolder, BlockEntityClientSerializable {
+public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,
+	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia {
 	
-	private int OPERATION_TIME = 100;
-	private int TANK_SIZE = 4000;
+	private final int OPERATION_TIME = 100;
+	private final int TANK_SIZE = 4000;
 	
 	private int alkahest = 0;
 	private int maxAlkahest = TANK_SIZE;
 	private int progress = 0;
 	private int maxProgress = OPERATION_TIME;
 	private boolean lit = false;
-	private Map<EssentiaType, Integer> essentia = new HashMap<>();
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
+	protected final EssentiaContainer essentia = new EssentiaContainer()
+		.setCapacity(TANK_SIZE)
+		.setInput(false)
+		.setOutput(true);
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
 		
 		@Override
@@ -82,6 +82,20 @@ public class BlockEntityDissolver extends BlockEntity
 		super(AoABlockEntities.DISSOLVER);
 	}
 	
+	@Override
+	public EssentiaContainer getContainer(int id) {
+		if (id == 0) {
+			return essentia;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public int getNumContainers() {
+		return 1;
+	}
+	
 	public boolean hasAlkahest() {
 		return alkahest > 0;
 	}
@@ -90,26 +104,11 @@ public class BlockEntityDissolver extends BlockEntity
 		return alkahest;
 	}
 	
-	public Map<EssentiaType, Integer> getEssentia() {
-		return essentia;
-	}
-	
-	public int getEssentia(EssentiaType type) {
-		return essentia.getOrDefault(type, 0);
-	}
-	
-	public int getTotalEssentia() {
-		int sum = 0;
-		for (int amount : essentia.values()) {
-			sum += amount;
-		}
-		return sum;
-	}
-	
 	public boolean setAlkahest(int amount) {
 		if (amount >= 0 && amount <= maxAlkahest) {
 			alkahest = amount;
 			world.setBlockState(pos, world.getBlockState(pos).with(BlockDissolver.FILLED, alkahest > 0));
+			markDirty();
 			return true;
 		} else {
 			return false;
@@ -126,50 +125,29 @@ public class BlockEntityDissolver extends BlockEntity
 		if (recipe == null || inSlot.isEmpty()) {
 			return false;
 		} else {
-			Map<EssentiaType, Integer> results = recipe.getEssentia();
-			int totalEssentia = 0;
+			EssentiaStack results = recipe.getEssentia();
 			
 			if (inSlot.isDamageable()) {
-				double multiplier = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
-				for (EssentiaType type : results.keySet()) {
-					results.put(type, (int) (multiplier * results.get(type)));
-				}
+				double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
+				results.multiply(factor);
 			}
 			
-			for (int amount : results.values()) {
-				totalEssentia += amount;
-			}
-			
-			return (totalEssentia <= alkahest && totalEssentia + getTotalEssentia() <= TANK_SIZE);
+			return essentia.canAcceptIgnoreIO(results);
 		}
 	}
 	
 	// Be sure to check canCraft() first!
 	private void doCraft(RecipeDissolution recipe) {
 		ItemStack inSlot = items.get(0);
-		Map<EssentiaType, Integer> results = recipe.getEssentia();
-		int totalEssentia = 0;
+		EssentiaStack results = recipe.getEssentia();
 		
 		if (inSlot.isDamageable()) {
-			double multiplier = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
-			for (EssentiaType type : results.keySet()) {
-				results.put(type, (int) (multiplier * results.get(type)));
-			}
+			double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
+			results.multiply(factor);
 		}
 		
-		for (int amount : results.values()) {
-			totalEssentia += amount;
-		}
-		
-		for (EssentiaType type : results.keySet()) {
-			if (essentia.containsKey(type)) {
-				essentia.put(type, essentia.get(type) + results.get(type));
-			} else {
-				essentia.put(type, results.get(type));
-			}
-		}
-		
-		alkahest -= totalEssentia;
+		essentia.addEssentia(results);
+		alkahest -= results.getCount();
 		inSlot.decrement(1);
 	}
 	
@@ -177,7 +155,7 @@ public class BlockEntityDissolver extends BlockEntity
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.putInt("alkahest", alkahest);
 		tag.putInt("progress", progress);
-		tag.put("essentia", EssentiaSerializer.mapToTag(essentia));
+		tag.put("essentia", essentia.getContents().toTag());
 		Inventories.toTag(tag, items);
 		return super.toTag(tag);
 	}
@@ -188,7 +166,7 @@ public class BlockEntityDissolver extends BlockEntity
 		Inventories.fromTag(tag, items);
 		alkahest = tag.getInt("alkahest");
 		progress = tag.getInt("progress");
-		essentia = EssentiaSerializer.tagToMap(tag.getCompound("essentia"));
+		essentia.setContents(new EssentiaStack(tag.getCompound("essentia")));
 		maxAlkahest = TANK_SIZE;
 		maxProgress = OPERATION_TIME;
 	}
@@ -228,11 +206,12 @@ public class BlockEntityDissolver extends BlockEntity
 					if (progress >= maxProgress) {
 						progress -= maxProgress;
 						doCraft(recipe);
+						AoANetworking.sendEssentiaPacket(world, pos, 0, essentia);
 						if (alkahest <= 0) {
 							world.setBlockState(pos, world.getBlockState(pos).with(BlockDissolver.FILLED, false));
 						}
-						sync();
 					}
+					dirty = true;
 				}
 			}
 			
@@ -256,17 +235,27 @@ public class BlockEntityDissolver extends BlockEntity
 	public PropertyDelegate getPropertyDelegate() {
 		return delegate;
 	}
+	
+	@Override
+	public void markDirty() {
+		super.markDirty();
+		if (!world.isClient()) {
+			sync();
+		}
+	}
 
 	@Override
-	@Environment(EnvType.CLIENT)
 	public void fromClientTag(CompoundTag tag) {
 		fromTag(tag);
 	}
 
 	@Override
-	@Environment(EnvType.CLIENT)
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
+	}
+	
+	public void sendPacket() {
+		
 	}
 	
 }

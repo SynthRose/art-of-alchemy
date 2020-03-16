@@ -1,0 +1,134 @@
+package net.synthrose.artofalchemy.essentia;
+
+import java.util.HashMap;
+import java.util.Set;
+
+import com.google.gson.JsonObject;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Identifier;
+
+@SuppressWarnings("serial")
+public class EssentiaStack extends HashMap<Essentia, Integer> {
+	
+	public EssentiaStack() {
+		super();
+	}
+	
+	public EssentiaStack(JsonObject obj) {
+		obj.entrySet().forEach((entry) -> {
+			Essentia essentia = RegistryEssentia.INSTANCE.get(new Identifier(entry.getKey()));
+			if (essentia != null) {
+				put(essentia, entry.getValue().getAsInt());
+			}
+		});
+	}
+	
+	public EssentiaStack(CompoundTag tag) {
+		if (tag != null) {
+			tag.getKeys().forEach((key) -> {
+				Essentia essentia = RegistryEssentia.INSTANCE.get(new Identifier(key));
+				if (essentia != null) {
+					put(essentia, tag.getInt(key));
+				}
+			});
+		}
+	}
+
+	public int getCount() {
+		int sum = 0;
+		for (int amount : values()) {
+			sum += amount;
+		}
+		return sum;
+	}
+	
+	public CompoundTag toTag() {
+		CompoundTag tag = new CompoundTag();
+		for (Essentia essentia : keySet()) {
+			tag.putInt(RegistryEssentia.INSTANCE.getId(essentia).toString(), get(essentia));
+		}
+		return tag;
+	}
+	
+	// Mutating addition for a single essentia type. Can go negative - try not to break things.
+	public void multiply(Essentia essentia, int scalar) {
+		this.put(essentia, this.getOrDefault(essentia, 0) * scalar);
+	}
+	public void multiply(Essentia essentia, double scalar) {
+		this.put(essentia, (int) (this.getOrDefault(essentia, 0) * scalar));
+	}
+	
+	// Mutating scalar multiplication. Can go negative - try not to break things.
+	public void multiply(int scalar) {
+		this.forEach(this::multiply);
+	}
+	public void multiply(double scalar) {
+		this.forEach(this::multiply);
+	}
+	
+	// Non-mutating scalar multiplication. Can go negative - try not to break things.
+	public EssentiaStack multiply(EssentiaStack inStack, int scalar) {
+		EssentiaStack outStack = new EssentiaStack();
+		inStack.forEach((essentia, amount) -> {
+			outStack.put(essentia, amount * scalar);
+		});
+		return outStack;
+	}
+	
+	// Mutating addition for a single essentia type.
+	public void add(Essentia essentia, int amount) {
+		this.put(essentia, this.getOrDefault(essentia, 0) + amount);
+	}
+	
+	// Mutating addition.
+	public void add(EssentiaStack other) {
+		other.forEach(this::add);
+	}
+	
+	// Non-mutating addition.
+	public static EssentiaStack add(EssentiaStack stack1, EssentiaStack stack2) {
+		EssentiaStack outStack = new EssentiaStack();
+		Set<Essentia> union = stack1.keySet();
+		union.addAll(stack2.keySet());
+		union.forEach((essentia) -> {
+			outStack.put(essentia, stack1.getOrDefault(essentia, 0) + stack2.getOrDefault(essentia, 0));
+		});
+		return outStack;
+	}
+	
+	// Mutating subtraction for a single essentia type.
+	public void subtract(Essentia essentia, int amount) {
+		this.put(essentia, Math.max(0, this.getOrDefault(essentia, 0) - amount));
+	}
+	
+	// Mutating subtraction.
+	public void subtract(EssentiaStack other) {
+		other.forEach(this::subtract);
+	}
+	
+	// Non-mutating subtraction.
+	public static EssentiaStack subtract(EssentiaStack stack1, EssentiaStack stack2) {
+		EssentiaStack outStack = new EssentiaStack();
+		Set<Essentia> union = stack1.keySet();
+		union.addAll(stack2.keySet());
+		union.forEach((essentia) -> {
+			int amount = Math.min(0, stack1.getOrDefault(essentia, 0) - stack2.getOrDefault(essentia, 0));
+			outStack.put(essentia, amount);
+		});
+		return outStack;
+	}
+	
+	// Returns true if this stack contains at least as much essentia of all types as the argument.
+	public boolean contains(EssentiaStack other) {
+		Set<Essentia> union = this.keySet();
+		union.addAll(other.keySet());
+		for (Essentia essentia : union) {
+			if (this.getOrDefault(essentia, 0) < other.getOrDefault(essentia, 0)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+}

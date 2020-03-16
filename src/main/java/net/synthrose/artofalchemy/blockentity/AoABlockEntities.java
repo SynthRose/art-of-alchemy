@@ -2,7 +2,6 @@ package net.synthrose.artofalchemy.blockentity;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.block.AoABlocks;
@@ -20,7 +19,7 @@ public class AoABlockEntities {
 	}
 	
 	public static void register(String name, BlockEntityType<? extends BlockEntity> blockEntity) {
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(ArtOfAlchemy.MOD_ID, name), blockEntity);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, ArtOfAlchemy.id(name), blockEntity);
 	}
 
 }

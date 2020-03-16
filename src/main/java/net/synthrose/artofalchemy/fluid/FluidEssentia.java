@@ -14,19 +14,19 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.WorldView;
-import net.synthrose.artofalchemy.EssentiaType;
 import net.synthrose.artofalchemy.block.AoABlocks;
+import net.synthrose.artofalchemy.essentia.Essentia;
 import net.synthrose.artofalchemy.item.AoAItems;
 
 abstract class FluidEssentia extends BaseFluid {
 	
-	protected final EssentiaType essentia;
+	protected final Essentia essentia;
 	
-	public FluidEssentia(EssentiaType essentia) {
+	public FluidEssentia(Essentia essentia) {
 		this.essentia = essentia;
 	}
 	
-	public EssentiaType getEssentiaType() {
+	public Essentia getEssentiaType() {
 		return essentia;
 	}
 
@@ -95,9 +95,22 @@ abstract class FluidEssentia extends BaseFluid {
 	
 	public static class Flowing extends FluidEssentia {
 		
-		public Flowing(EssentiaType essentia) {
+		public Flowing(Essentia essentia) {
 			super(essentia);
 		}
+		
+//		@Override
+//		protected boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid,
+//				Direction direction) {
+//			if (AoAFluids.ESSENTIA_FLUIDS.containsValue(fluid) ||
+//				AoAFluids.ESSENTIA_FLUIDS_FLOWING.containsValue(fluid) ||
+//				AoAFluids.ALKAHEST == fluid ||
+//				AoAFluids.ALKAHEST_FLOWING == fluid) {
+//				return true;
+//			} else {
+//				return super.canBeReplacedWith(state, world, pos, fluid, direction);
+//			}
+//		}
 
 		@Override
 		protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
@@ -119,7 +132,7 @@ abstract class FluidEssentia extends BaseFluid {
 	
 	public static class Still extends FluidEssentia {
 		
-		public Still(EssentiaType essentia) {
+		public Still(Essentia essentia) {
 			super(essentia);
 		}
 
