@@ -3,10 +3,15 @@ package net.synthrose.artofalchemy.item;
 import java.util.HashSet;
 import java.util.List;
 
+import blue.endless.jankson.annotation.Nullable;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
@@ -14,8 +19,10 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.synthrose.artofalchemy.essentia.Essentia;
@@ -33,6 +40,17 @@ public class ItemEssentiaVessel extends Item {
 	public ItemEssentiaVessel(Settings settings, Essentia type) {
 		super(settings.maxCount(1));
 		TYPE = type;
+		this.addPropertyGetter(new Identifier("level"), new ItemPropertyGetter() {
+			@Environment(EnvType.CLIENT)
+			public float call(ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
+				EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
+				double level = contents.getCount();
+				if (!contents.hasUnlimitedCapacity()) {
+					level /= contents.getCapacity();
+				}
+				return (float) MathHelper.clamp(level, 0.0, 1.0);
+			}
+		});
 	}
 	
 	public ItemEssentiaVessel(Settings settings) {
@@ -43,12 +61,21 @@ public class ItemEssentiaVessel extends Item {
 		return false;
 	}
 	
-	public EssentiaContainer getContainer(ItemStack stack) {
+	@Override
+	public ItemStack getStackForRender() {
+		return new ItemStack(AoAItems.ESSENTIA_VESSELS.get(null));
+	}
+	
+	public static EssentiaContainer getContainer(ItemStack stack) {
 		EssentiaContainer container = EssentiaContainer.of(stack);
+		Essentia type = null;
+		if (stack.getItem() instanceof ItemEssentiaVessel) {
+			type = ((ItemEssentiaVessel) stack.getItem()).TYPE;
+		}
 		if (container == null) {
 			container = new EssentiaContainer().setCapacity(DEFAULT_SINGLE_CAPACITY);
-			if (TYPE != null) {
-				container.whitelist(TYPE).setWhitelistEnabled(true);
+			if (type != null) {
+				container.whitelist(type).setWhitelistEnabled(true);
 				container.setCapacity(DEFAULT_MULTI_CAPACITY);
 			}
 		}

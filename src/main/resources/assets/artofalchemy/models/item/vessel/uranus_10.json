@@ -1,0 +1,9 @@
+
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "artofalchemy:item/vessel/liquid_10",
+    "layer1": "artofalchemy:item/vessel/frame_single",
+    "layer2": "artofalchemy:item/vessel/overlay_uranus"
+  }
+}

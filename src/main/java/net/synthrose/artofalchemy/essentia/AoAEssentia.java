@@ -12,7 +12,7 @@ public class AoAEssentia {
 	public static final Essentia JUPITER = new Essentia(0xE98765);
 	public static final Essentia SATURN = new Essentia(0xD2D88C);
 	public static final Essentia URANUS = new Essentia(0x00B3AD);
-	public static final Essentia NEPTUNE = new Essentia(0x00B3AD);
+	public static final Essentia NEPTUNE = new Essentia(0x283B78);
 	public static final Essentia APOLLO = new Essentia(0xDCB500);
 	public static final Essentia DIANA = new Essentia(0x5BB0F0);
 	public static final Essentia CERES = new Essentia(0x5D3E22);

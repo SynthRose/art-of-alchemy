@@ -1,0 +1,26 @@
+
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "artofalchemy:item/vessel/liquid_14",
+  	"layer1": "artofalchemy:item/vessel/frame_single",
+    "layer2": "artofalchemy:item/vessel/overlay_saturn"
+  },
+  "overrides": [
+    { "predicate": { "level": 0.0000000 }, "model": "artofalchemy:item/vessel/saturn_0" },
+    { "predicate": { "level": 0.0666667 }, "model": "artofalchemy:item/vessel/saturn_1" },
+    { "predicate": { "level": 0.1333333 }, "model": "artofalchemy:item/vessel/saturn_2" },
+    { "predicate": { "level": 0.2000000 }, "model": "artofalchemy:item/vessel/saturn_3" },
+    { "predicate": { "level": 0.2666667 }, "model": "artofalchemy:item/vessel/saturn_4" },
+    { "predicate": { "level": 0.3333333 }, "model": "artofalchemy:item/vessel/saturn_5" },
+    { "predicate": { "level": 0.4000000 }, "model": "artofalchemy:item/vessel/saturn_6" },
+    { "predicate": { "level": 0.4666667 }, "model": "artofalchemy:item/vessel/saturn_7" },
+    { "predicate": { "level": 0.5333333 }, "model": "artofalchemy:item/vessel/saturn_8" },
+    { "predicate": { "level": 0.6000000 }, "model": "artofalchemy:item/vessel/saturn_9" },
+    { "predicate": { "level": 0.6666667 }, "model": "artofalchemy:item/vessel/saturn_10" },
+    { "predicate": { "level": 0.7333333 }, "model": "artofalchemy:item/vessel/saturn_11" },
+    { "predicate": { "level": 0.8000000 }, "model": "artofalchemy:item/vessel/saturn_12" },
+    { "predicate": { "level": 0.8666667 }, "model": "artofalchemy:item/vessel/saturn_13" },
+    { "predicate": { "level": 0.9333333 }, "model": "artofalchemy:item/vessel/saturn_14" }
+  ]
+}
