@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"AAA",
+		"QTQ",
+		"QQQ"
+	],
+	"key": {
+		"A": { "item":"artofalchemy:azoth" },
+		"T": { "item":"minecraft:crafting_table" },
+		"Q": { "item":"minecraft:quartz" }
+	},
+	"result": {
+		"item": "artofalchemy:synthesis_table"
+	}
+}

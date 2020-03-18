@@ -1,8 +1,6 @@
 package net.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -88,13 +86,18 @@ public class BlockEntityCalcinator extends BlockEntity
 			return false;
 		} else {
 			ItemStack outStack = recipe.getOutput();
-			int count;
+			ItemStack container = recipe.getContainer();
 			
+			int count;
 			if (inSlot.isDamageable()) {
 				float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 				count = ((int) (damageRatio * outStack.getCount()));
 			} else {
 				count = outStack.getCount();
+			}
+			
+			if (container != ItemStack.EMPTY && inSlot.getCount() != container.getCount()) {
+				 return false;
 			}
 			
 			if (outSlot.isEmpty()) {
@@ -116,13 +119,20 @@ public class BlockEntityCalcinator extends BlockEntity
 		ItemStack inSlot = items.get(0);
 		ItemStack outSlot = items.get(2);
 		ItemStack outStack = recipe.getOutput();
+		ItemStack container = recipe.getContainer(); 
+				
 		int count;
-		
 		if (inSlot.isDamageable()) {
 			float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			count = ((int) (damageRatio * outStack.getCount()));
 		} else {
 			count = outStack.getCount();
+		}
+		
+		if (container != ItemStack.EMPTY) {
+			items.set(0, container.copy());
+		} else {
+			inSlot.decrement(recipe.getCost());
 		}
 		
 		if (outSlot.isEmpty()) {
@@ -132,7 +142,6 @@ public class BlockEntityCalcinator extends BlockEntity
 			outSlot.increment(count);
 		}
 		
-		inSlot.decrement(recipe.getCost());
 	}
 	
 	@Override
@@ -177,7 +186,6 @@ public class BlockEntityCalcinator extends BlockEntity
 		
 		if (wasBurning) {
 			fuel = MathHelper.clamp(fuel - 2, 0, maxFuel);
-			dirty = true;
 		}
 		
 		if (!world.isClient()) {
@@ -197,7 +205,6 @@ public class BlockEntityCalcinator extends BlockEntity
 						dirty = true;
 					} else if (progress != 0) {
 						progress = 0;
-						dirty = true;
 					}
 				}
 				
@@ -206,20 +213,17 @@ public class BlockEntityCalcinator extends BlockEntity
 						progress++;
 					}
 					if (progress >= maxProgress) {
-						progress -= maxProgress;
 						doCraft(recipe);
-						sync();
+						progress -= maxProgress;
+						dirty = true;
 					}
-					dirty = true;
 				}
 				
 				if (!craftable && progress != 0) {
 					progress = 0;
-					dirty = true;
 				}
 			} else if (progress != 0) {
 				progress = 0;
-				dirty = true;
 			}
 			
 			if (isBurning() != wasBurning) {
@@ -240,13 +244,19 @@ public class BlockEntityCalcinator extends BlockEntity
 	}
 	
 	@Override
-	@Environment(EnvType.CLIENT)
+	public void markDirty() {
+		super.markDirty();
+		if (!world.isClient()) {
+			sync();
+		}
+	}
+	
+	@Override
 	public void fromClientTag(CompoundTag tag) {
 		fromTag(tag);
 	}
 	
 	@Override
-	@Environment(EnvType.CLIENT)
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
 	}

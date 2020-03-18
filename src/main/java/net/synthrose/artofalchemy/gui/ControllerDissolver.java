@@ -27,8 +27,7 @@ public class ControllerDissolver extends CottonCraftingController {
 	WEssentiaPanel essentiaPanel;
 	
 	public ControllerDissolver(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
-		super(AoARecipes.DISSOLUTION, syncId, playerInventory,
-				getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+		super(AoARecipes.DISSOLUTION, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		pos = ctx.run((world, pos) -> {
 			return pos;
@@ -51,12 +50,10 @@ public class ControllerDissolver extends CottonCraftingController {
 		root.add(tankBar, 0, 1, 2, 3);
 		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
-				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_magenta.png"),
-				2, 3, Direction.RIGHT);
+				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_magenta.png"), 2, 3, Direction.RIGHT);
 		root.add(progressBar, 3, 2, 3, 1);
 		
-		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.dissolution_chamber"),
-				WLabel.DEFAULT_TEXT_COLOR);
+		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.dissolution_chamber"), WLabel.DEFAULT_TEXT_COLOR);
 		title.setAlignment(Alignment.CENTER);
 		root.add(title, 0, 0, 9, 1);
 		

@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"top": "artofalchemy:block/synthesis_table_top",
+		"side": "artofalchemy:block/synthesis_table_side",
+		"bottom": "artofalchemy:block/synthesis_table_bottom"
+	}
+}

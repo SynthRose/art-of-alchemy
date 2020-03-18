@@ -28,10 +28,14 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	private int progress = 0;
 	private int maxProgress = 100;
 	private int status = 0;
+	// Status 0: Can craft
+	// Status 1: Generic error (no message)
+	// Status 2: Insufficient alkahest
+	// Status 3: Full output buffer
 	private boolean lit = false;
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
-	protected final EssentiaContainer essentia = new EssentiaContainer()
+	protected EssentiaContainer essentia = new EssentiaContainer()
 		.setCapacity(TANK_SIZE)
 		.setInput(false)
 		.setOutput(true);
@@ -138,11 +142,16 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		if (recipe == null || inSlot.isEmpty()) {
 			return updateStatus(1);
 		} else {
+			ItemStack container = recipe.getContainer();
 			EssentiaStack results = recipe.getEssentia();
 			
 			maxProgress = (int) (results.getCount() / SPEED_MOD);
 			if (maxProgress < 20) {
 				maxProgress = 20;
+			}
+			
+			if (container != ItemStack.EMPTY && inSlot.getCount() != container.getCount()) {
+				 return updateStatus(1);
 			}
 			
 			if (inSlot.isDamageable()) {
@@ -166,15 +175,22 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	private void doCraft(RecipeDissolution recipe) {
 		ItemStack inSlot = items.get(0);
 		EssentiaStack results = recipe.getEssentia();
+		ItemStack container = recipe.getContainer();
 		
 		if (inSlot.isDamageable()) {
 			double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
 			results.multiply(factor);
 		}
 		
+		if (container != ItemStack.EMPTY) {
+			items.set(0, container.copy());
+		} else {
+			inSlot.decrement(1);
+		}
+		
 		essentia.addEssentia(results);
 		alkahest -= results.getCount();
-		inSlot.decrement(1);
+		
 	}
 	
 	@Override
@@ -183,7 +199,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		tag.putInt("progress", progress);
 		tag.putInt("max_progress", maxProgress);
 		tag.putInt("status", status);
-		tag.put("essentia", essentia.getContents().toTag());
+		tag.put("essentia", essentia.toTag());
 		Inventories.toTag(tag, items);
 		return super.toTag(tag);
 	}
@@ -196,7 +212,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		progress = tag.getInt("progress");
 		maxProgress = tag.getInt("max_progress");
 		status = tag.getInt("status");
-		essentia.setContents(new EssentiaStack(tag.getCompound("essentia")));
+		essentia = new EssentiaContainer(tag.getCompound("essentia"));
 		maxAlkahest = TANK_SIZE;
 	}
 
@@ -243,8 +259,8 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 						if (alkahest <= 0) {
 							world.setBlockState(pos, world.getBlockState(pos).with(BlockDissolver.FILLED, false));
 						}
+						dirty = true;
 					}
-					dirty = true;
 				}
 			}
 			
@@ -285,10 +301,6 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
-	}
-	
-	public void sendPacket() {
-		
 	}
 	
 }

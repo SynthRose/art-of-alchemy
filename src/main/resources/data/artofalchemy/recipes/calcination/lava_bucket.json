@@ -1,0 +1,13 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "item": "minecraft:lava_bucket"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_d",
+  	"count": 4
+  },
+  "container": {
+  	"item": "minecraft:bucket"
+  }
+}

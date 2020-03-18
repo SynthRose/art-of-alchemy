@@ -20,12 +20,14 @@ public class RecipeDissolution implements Recipe<Inventory> {
 	protected String group;
 	protected Ingredient input;
 	protected EssentiaStack essentia;
+	protected ItemStack container;
 	
-	public RecipeDissolution(Identifier id, String group, Ingredient input, EssentiaStack essentia) {
+	public RecipeDissolution(Identifier id, String group, Ingredient input, EssentiaStack essentia, ItemStack container) {
 		this.id = id;
 		this.group = group;
 		this.input = input;
 		this.essentia = essentia;
+		this.container = container;
 	}
 
 	@Override
@@ -54,6 +56,10 @@ public class RecipeDissolution implements Recipe<Inventory> {
 	@Override
 	public Identifier getId() {
 		return id;
+	}
+	
+	public ItemStack getContainer() {
+		return container;
 	}
 	
 	@Override

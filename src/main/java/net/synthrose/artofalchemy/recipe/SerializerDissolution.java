@@ -2,9 +2,10 @@ package net.synthrose.artofalchemy.recipe;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.PacketByteBuf;
@@ -16,18 +17,21 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 	public RecipeDissolution read(Identifier id, JsonObject json) {
 		String group = JsonHelper.getString(json, "group", "");
 		Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
-		JsonObject essentiaObj = JsonHelper.getObject(json, "result");
-		EssentiaStack essentia = new EssentiaStack(essentiaObj);
-		return new RecipeDissolution(id, group, input, essentia);
+		EssentiaStack essentia = new EssentiaStack(JsonHelper.getObject(json, "result"));
+		ItemStack container = ItemStack.EMPTY;
+		if (json.has("container")) {
+			container = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "container"));
+		}
+		return new RecipeDissolution(id, group, input, essentia, container);
 	}
 
 	@Override
 	public RecipeDissolution read(Identifier id, PacketByteBuf buf) {
 		String group = buf.readString(32767);
 		Ingredient input = Ingredient.fromPacket(buf);
-		CompoundTag essentiaTag = buf.readCompoundTag();
-		EssentiaStack essentia = new EssentiaStack(essentiaTag);
-		return new RecipeDissolution(id, group, input, essentia);
+		EssentiaStack essentia = new EssentiaStack(buf.readCompoundTag());
+		ItemStack container = buf.readItemStack();
+		return new RecipeDissolution(id, group, input, essentia, container);
 	}
 
 	@Override
@@ -35,6 +39,7 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		buf.writeString(recipe.group);
 		recipe.input.write(buf);
 		buf.writeCompoundTag(recipe.essentia.toTag());
+		buf.writeItemStack(recipe.container);
 	}
 	
 

@@ -1,0 +1,9 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "item": "minecraft:cobblestone"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_f"
+  }
+}

@@ -9,8 +9,6 @@ To use this mod, you will need:
 * The [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 * CottonMC's [LibGUI](https://www.curseforge.com/minecraft/mc-mods/libgui)
 
-ItemStack renderer mixin courtesy of vini2003. 
-
 ## The World of Alchemy
 At the heart of alchemy is the practice of transmutation. The ability to transmute substances into other,
 more useful substances is a valuable skill for any would-be crafter, and it starts with understanding

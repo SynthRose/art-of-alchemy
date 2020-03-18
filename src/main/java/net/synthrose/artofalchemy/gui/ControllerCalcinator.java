@@ -18,8 +18,7 @@ import net.synthrose.artofalchemy.recipe.AoARecipes;
 public class ControllerCalcinator extends CottonCraftingController {
 
 	public ControllerCalcinator(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
-		super(AoARecipes.CALCINATION, syncId, playerInventory,
-				getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+		super(AoARecipes.CALCINATION, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);

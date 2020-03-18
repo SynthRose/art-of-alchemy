@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.minecraft.screen.BlockContext;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
 import net.synthrose.artofalchemy.block.BlockDissolver;
+import net.synthrose.artofalchemy.block.BlockSynthesizer;
 
 @Environment(EnvType.CLIENT)
 public class AoAScreens {
@@ -16,6 +17,9 @@ public class AoAScreens {
     		BlockContext.create(player.world, buf.readBlockPos())), player));
         ScreenProviderRegistry.INSTANCE.registerFactory(BlockDissolver.getId(), (syncId, id, player, buf) ->
 			new ScreenDissolver(new ControllerDissolver(syncId, player.inventory,
+			BlockContext.create(player.world, buf.readBlockPos())), player));
+        ScreenProviderRegistry.INSTANCE.registerFactory(BlockSynthesizer.getId(), (syncId, id, player, buf) ->
+			new ScreenSynthesizer(new ControllerSynthesizer(syncId, player.inventory,
 			BlockContext.create(player.world, buf.readBlockPos())), player));
 	}
 

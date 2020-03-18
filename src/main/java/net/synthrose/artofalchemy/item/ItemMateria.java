@@ -12,6 +12,18 @@ public class ItemMateria extends Item {
 		super(settings);
 		this.rank = rank;
 	}
+	
+	public MateriaRank getRank() {
+		return rank;
+	}
+	
+	public int getTier() {
+		if (rank == null) {
+			return 0;
+		} else {
+			return rank.getTier();
+		}
+	}
 
 	@Override
 	public boolean hasEnchantmentGlint(ItemStack stack) {

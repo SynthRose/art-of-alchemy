@@ -2,10 +2,12 @@ package net.synthrose.artofalchemy.essentia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
@@ -22,6 +24,8 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 			Essentia essentia = RegistryEssentia.INSTANCE.get(new Identifier(entry.getKey()));
 			if (essentia != null) {
 				put(essentia, entry.getValue().getAsInt());
+			} else {
+				throw new JsonSyntaxException("Unknown essentia '" + entry.getKey() + "'");
 			}
 		});
 	}
@@ -104,7 +108,8 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	// Non-mutating addition.
 	public static EssentiaStack add(EssentiaStack stack1, EssentiaStack stack2) {
 		EssentiaStack outStack = new EssentiaStack();
-		Set<Essentia> union = stack1.keySet();
+		Set<Essentia> union = new HashSet<Essentia>();
+		union.addAll(stack1.keySet());
 		union.addAll(stack2.keySet());
 		union.forEach((essentia) -> {
 			outStack.put(essentia, stack1.getOrDefault(essentia, 0) + stack2.getOrDefault(essentia, 0));
@@ -136,7 +141,8 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	
 	// Returns true if this stack contains at least as much essentia of all types as the argument.
 	public boolean contains(EssentiaStack other) {
-		Set<Essentia> union = this.keySet();
+		Set<Essentia> union = new HashSet<Essentia>();
+		union.addAll(this.keySet());
 		union.addAll(other.keySet());
 		for (Essentia essentia : union) {
 			if (this.getOrDefault(essentia, 0) < other.getOrDefault(essentia, 0)) {

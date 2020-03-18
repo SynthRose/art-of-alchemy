@@ -2,6 +2,10 @@
 	"item.artofalchemy.icon_item": "Mysterious Sigil",
 	"item.artofalchemy.azoth": "Azoth",
 	
+	"block.artofalchemy.calcination_furnace": "Calcination Furnace",
+	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",
+	"block.artofalchemy.synthesis_table": "Synthesis Table",
+	
 	"item.artofalchemy.materia_omega": "Ω-Rank Materia",
 	"item.artofalchemy.materia_s": "S-Rank Materia",
 	"item.artofalchemy.materia_a": "A-Rank Materia",
@@ -89,10 +93,12 @@
 	
 	"gui.artofalchemy.alkahest_tooltip": "Alkahest §7(%d/%d)",
 	"gui.artofalchemy.alkahest_warning": "Needs alkahest!",
-	"gui.artofalchemy.buffer_warning": "Essentia buffer is full!",
-	
-	"block.artofalchemy.calcination_furnace": "Calcination Furnace",
-	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",
+	"gui.artofalchemy.buffer_warning": "Buffer is full!",
+	"gui.artofalchemy.target_warning": "Unknown or missing target!",
+	"gui.artofalchemy.materia_warning": "Needs materia!",
+	"gui.artofalchemy.essentia_warning": "Needs essentia!",
+	"gui.artofalchemy.container_warning": "Needs a container to fill!",
+	"gui.artofalchemy.empty": "Empty",
 		
 	"itemGroup.artofalchemy.alchemy": "Art of Alchemy"
 }

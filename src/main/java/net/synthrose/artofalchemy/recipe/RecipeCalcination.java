@@ -19,13 +19,15 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	protected Ingredient input;
 	protected ItemStack output;
 	protected int cost;
+	protected ItemStack container;
 	
-	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, int cost) {
+	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, int cost, ItemStack container) {
 		this.id = id;
 		this.group = group;
 		this.input = input;
 		this.cost = cost;
 		this.output = output;
+		this.container = container;
 	}
 
 	@Override
@@ -54,6 +56,10 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	
 	public int getCost() {
 		return cost;
+	}
+	
+	public ItemStack getContainer() {
+		return container;
 	}
 	
 	@Override

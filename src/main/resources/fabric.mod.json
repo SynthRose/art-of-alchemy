@@ -24,8 +24,7 @@
     "server": []
   },
   "mixins": [
-  	"artofalchemy.mixins.json",
-  	"arno.mixins.json"
+  	"artofalchemy.mixins.json"
   ],
   "depends": {
   	"libgui": ">=1.7.0",

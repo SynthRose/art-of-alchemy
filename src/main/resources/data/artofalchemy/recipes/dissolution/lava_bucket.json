@@ -1,0 +1,12 @@
+{
+    "type": "artofalchemy:dissolution",
+    "ingredient": {
+        "item":"minecraft:lava_bucket"
+    },
+    "result": {
+        "artofalchemy:jupiter": 72
+    },
+    "container": {
+    	"item":"minecraft:bucket"
+    }
+}

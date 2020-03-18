@@ -18,7 +18,11 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 		ItemStack output = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"));
 		int cost = JsonHelper.getInt(json, "cost", 1);
-		return new RecipeCalcination(id, group, input, output, cost);
+		ItemStack container = ItemStack.EMPTY;
+		if (json.has("container")) {
+			container = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "container"));
+		}
+		return new RecipeCalcination(id, group, input, output, cost, container);
 	}
 
 	@Override
@@ -27,7 +31,8 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		Ingredient input = Ingredient.fromPacket(buf);
 		ItemStack output = buf.readItemStack();
 		int cost = buf.readVarInt();
-		return new RecipeCalcination(id, group, input, output, cost);
+		ItemStack container = buf.readItemStack();
+		return new RecipeCalcination(id, group, input, output, cost, container);
 	}
 
 	@Override
@@ -36,6 +41,7 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		recipe.input.write(buf);
 		buf.writeItemStack(recipe.output);
 		buf.writeVarInt(recipe.cost);
+		buf.writeItemStack(recipe.container);
 	}
 
 }

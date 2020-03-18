@@ -1,0 +1,10 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_s",
+  	"count": 16
+  }
+}

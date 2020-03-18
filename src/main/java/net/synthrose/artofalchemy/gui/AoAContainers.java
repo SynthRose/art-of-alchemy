@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.screen.BlockContext;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
 import net.synthrose.artofalchemy.block.BlockDissolver;
+import net.synthrose.artofalchemy.block.BlockSynthesizer;
 
 public class AoAContainers {
 
@@ -13,6 +14,9 @@ public class AoAContainers {
     		BlockContext.create(player.world, buf.readBlockPos())));
 		ContainerProviderRegistry.INSTANCE.registerFactory(BlockDissolver.getId(), (syncId, id, player, buf) ->
 			new ControllerDissolver(syncId, player.inventory,
+			BlockContext.create(player.world, buf.readBlockPos())));
+		ContainerProviderRegistry.INSTANCE.registerFactory(BlockSynthesizer.getId(), (syncId, id, player, buf) ->
+			new ControllerSynthesizer(syncId, player.inventory,
 			BlockContext.create(player.world, buf.readBlockPos())));
 	}
 

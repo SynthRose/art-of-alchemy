@@ -14,6 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -117,9 +119,16 @@ public class ItemEssentiaVessel extends Item {
 			container.in(ctx.getStack());
 			
 			if (transferred > 0) {
-				ctx.getPlayer().addMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
+				PlayerEntity player = ctx.getPlayer();
+				player.addMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
+				ctx.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BUCKET_FILL,
+						SoundCategory.BLOCKS, 1.0F, 1.0F);
+				return ActionResult.SUCCESS;
 			} else if (transferred < 0) {
-				ctx.getPlayer().addMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
+				PlayerEntity player = ctx.getPlayer();
+				player.addMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
+				ctx.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BUCKET_EMPTY,
+						SoundCategory.BLOCKS, 1.0F, 1.0F);
 			} else {
 				return ActionResult.PASS;
 			}
@@ -136,24 +145,32 @@ public class ItemEssentiaVessel extends Item {
 		if (user.isSneaking()) {
 			ItemStack stack = user.getStackInHand(hand);
 			EssentiaContainer container = getContainer(stack);
+			float pitch;
 			if (container.isInput() && container.isOutput()) {
 				user.addMessage(new TranslatableText(tooltipPrefix() + "input"), true);
 				container.setInput(true);
 				container.setOutput(false);
+				pitch = 0.80f;
 			} else if (container.isInput() && !container.isOutput()) {
 				user.addMessage(new TranslatableText(tooltipPrefix() + "output"), true);
 				container.setInput(false);
 				container.setOutput(true);
+				pitch = 0.95f;
 			} else if (!container.isInput() && container.isOutput()){
 				user.addMessage(new TranslatableText(tooltipPrefix() + "locked"), true);
 				container.setInput(false);
 				container.setOutput(false);
+				pitch = 1.05f;
 			} else {
 				user.addMessage(new TranslatableText(tooltipPrefix() + "unlocked"), true);
 				container.setInput(true);
 				container.setOutput(true);
+				pitch = 0.65f;
 			}
 			container.in(stack);
+			if(world.isClient) {
+				user.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 0.5f, pitch);
+			}
 			return TypedActionResult.consume(stack);
 		}
 		return super.use(world, user, hand);

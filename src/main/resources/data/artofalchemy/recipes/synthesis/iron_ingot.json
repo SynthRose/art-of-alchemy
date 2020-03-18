@@ -1,0 +1,13 @@
+{
+    "type": "artofalchemy:synthesis",
+    "target": {
+        "item":"minecraft:iron_ingot"
+    },
+    "materia": {
+    	"item":"artofalchemy:materia_c"
+    },
+    "essentia": {
+        "artofalchemy:mars": 144
+    },
+    "cost": 4
+}

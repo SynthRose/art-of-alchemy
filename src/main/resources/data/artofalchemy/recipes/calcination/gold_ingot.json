@@ -1,0 +1,10 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+  	"item": "artofalchemy:materia_b",
+  	"count": 4
+  }
+}

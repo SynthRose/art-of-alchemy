@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 import net.synthrose.artofalchemy.block.AoABlocks;
 import net.synthrose.artofalchemy.essentia.Essentia;
 import net.synthrose.artofalchemy.essentia.RegistryEssentia;
@@ -38,26 +37,13 @@ public class AoARenderers {
         			if (entry.getKey() == null) {
         				return 0xAA0077;
         			} else {
-        				int color = entry.getKey().getColor();
-        				int r = ((color >> 16) & 0xFF);
-        				int g = ((color >> 8) & 0xFF);
-        				int b = (color & 0xFF);
-        				r *= 1.1;
-        				g *= 1.1;
-        				b *= 1.1;
-        				r = MathHelper.clamp(r, 0, 0xFF);
-        				g = MathHelper.clamp(g, 0, 0xFF);
-        				b = MathHelper.clamp(b, 0, 0xFF);
-        				return ((r << 16) + (g << 8) + b);
+        				return entry.getKey().getColor();
         			}
         		} else {
         			return 0xFFFFFF;
         		}
         	}, entry.getValue());
     	}
-    	
-//    	ItemRendererRegistry.INSTANCE.register(AoAItems.ESSENTIA_VESSELS.get(null),
-//    			RendererItemEssentiaVessel::new);
     	
 	}
 

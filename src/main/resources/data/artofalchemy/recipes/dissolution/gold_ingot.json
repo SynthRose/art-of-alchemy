@@ -1,0 +1,9 @@
+{
+    "type": "artofalchemy:dissolution",
+    "ingredient": {
+        "item":"minecraft:gold_ingot"
+    },
+    "result": {
+        "artofalchemy:apollo": 144
+    }
+}

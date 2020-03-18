@@ -5,7 +5,9 @@ import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.essentia.Essentia;
 import net.synthrose.artofalchemy.essentia.RegistryEssentia;
 
@@ -32,8 +34,12 @@ public class WEssentiaSubPanel extends WPlainPanel {
 		if (essentia != null) {
 			sprite.setImage(new Identifier(id.getNamespace(), "textures/gui/essentia_banner/"
 					+ id.getPath() +".png"));
+			amtLabel.setText(new LiteralText(amount.toString()));
+		} else {
+			sprite.setImage(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/essentia_banner/empty.png"));
+			amtLabel.setText(new TranslatableText("gui." + ArtOfAlchemy.MOD_ID + ".empty"));
+			amtLabel.setAlignment(Alignment.LEFT);
 		}
-		amtLabel.setText(new LiteralText(amount.toString()));
 		this.layout();
 	}
 	

@@ -38,6 +38,9 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	protected void rebuildList() {
 		data.clear();
 		data.addAll(container.getContents().sortedList());
+		if (data.isEmpty()) {
+			data.add(null);
+		}
 	}
 	
 	protected void reconfigure() {
