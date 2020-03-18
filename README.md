@@ -29,32 +29,18 @@ elements and recombining them in different ways, new substances can be formed.
 
 ## Alchemical Machinery
 There are three core devices that alchemists make heavy use of in their work. They are the Calcination
-Furnace, Dissolution Chamber, and Conjunction Table. The Calcination Furnace uses solid fuel (the
+Furnace, Dissolution Chamber, and Synthesis Table. The Calcination Furnace uses solid fuel (the
 same sort you'd use in a regular furnace) to burn off the essentia within a substance, leaving behind
 only materia. The Dissolution Chamber does the reverse, using alkahest (the universal solvent) to break down
 the materia of a substance and leave its essentia in solution. Finally, the materia and essentia can be
-recombined in a Conjunction Table - with a bit of experience - to create new substances.
-
-*Note: The Conjunction Table is not yet implemented.*
-
-## To-Do / Idea List
-
-* Essentia Tank (IN PROGRESS)
-* Conjunction Table
-* Transmutation recipes for vanilla items
-* Alchemical formulae and journals
-* Utilize [Fluidity API](https://github.com/grondag/fluidity) (?)
-* Projection Bench or Philosopher's Stone, for upgrading materia (?)
-* Memorization Spire, for storing experience (?)
-* Distillation Apparatus, for recovering alkahest from essentia (?)
-* Alchemy with entities - souls, Votive Dagger, Sacrifice Altar, Summoning Altar (?)
+recombined in a Synthesis Table with a small sample of a desired substance to create more of the catalyst substance.
 
 ## Questions & Answers
 
 **When will you upload a release build of the mod?**  
-When I feel the mod is in a usable state. In other words, it will likely be as soon as the Conjunction Table
-and an essentia transport method are implemented. For now, you are welcome to download the source and run
-the project with it.
+Very soon! Now that the Synthesis Table is implemented, the most basic functionality of the mod is essentially done,
+although the mod lacks recipes for the vast majority of vanilla items. For now, you are welcome to download the source
+and run the project with it.
 
 **Can you port this to Forge or an older Minecraft version?**  
 No. I work on this mod in my spare time for fun; writing a port and maintaining multiple versions of the
@@ -74,7 +60,7 @@ a fork of the mod with your dream feature, or submit a pull request?
 
 **I found a bug! Can you fix it?**  
 Oh no! Submit an [issue](https://github.com/SynthRose/art-of-alchemy/issues) here and hopefully I can get
-it fixed soon. Please include any relevant crash reports, system information, and other context.
+it fixed soon. Please include any relevant crash reports, what you were doing, expected behavior, and other context.
 
 **Can you write a mod for me, or help me with my mod?**  
 Sorry, but I only have so much time, and I'm still learning myself.

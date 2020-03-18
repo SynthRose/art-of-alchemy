@@ -1,7 +1,5 @@
 package net.synthrose.artofalchemy.blockentity;
 
-import java.util.Collection;
-
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,10 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.tag.RegistryTagContainer;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.ImplementedInventory;
