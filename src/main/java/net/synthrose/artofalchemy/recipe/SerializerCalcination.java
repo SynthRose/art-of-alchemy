@@ -17,12 +17,12 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		String group = JsonHelper.getString(json, "group", "");
 		Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 		ItemStack output = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"));
-		int cost = JsonHelper.getInt(json, "cost", 1);
+		float factor = JsonHelper.getFloat(json, "factor", 1.0f);
 		ItemStack container = ItemStack.EMPTY;
 		if (json.has("container")) {
 			container = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "container"));
 		}
-		return new RecipeCalcination(id, group, input, output, cost, container);
+		return new RecipeCalcination(id, group, input, output, factor, container);
 	}
 
 	@Override
@@ -30,9 +30,9 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		String group = buf.readString(32767);
 		Ingredient input = Ingredient.fromPacket(buf);
 		ItemStack output = buf.readItemStack();
-		int cost = buf.readVarInt();
+		float factor = buf.readFloat();
 		ItemStack container = buf.readItemStack();
-		return new RecipeCalcination(id, group, input, output, cost, container);
+		return new RecipeCalcination(id, group, input, output, factor, container);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class SerializerCalcination implements RecipeSerializer<RecipeCalcination
 		buf.writeString(recipe.group);
 		recipe.input.write(buf);
 		buf.writeItemStack(recipe.output);
-		buf.writeVarInt(recipe.cost);
+		buf.writeFloat(recipe.factor);
 		buf.writeItemStack(recipe.container);
 	}
 

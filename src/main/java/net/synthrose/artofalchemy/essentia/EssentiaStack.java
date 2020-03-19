@@ -70,7 +70,7 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 		return list;
 	}
 	
-	// Mutating addition for a single essentia type. Can go negative - try not to break things.
+	// Mutating scalar multiplication for a single essentia type. Can go negative - try not to break things.
 	public void multiply(Essentia essentia, int scalar) {
 		this.put(essentia, this.getOrDefault(essentia, 0) * scalar);
 	}
@@ -80,10 +80,10 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	
 	// Mutating scalar multiplication. Can go negative - try not to break things.
 	public void multiply(int scalar) {
-		this.forEach(this::multiply);
+		this.forEach((essentia, __) -> {multiply(essentia, scalar);});
 	}
 	public void multiply(double scalar) {
-		this.forEach(this::multiply);
+		this.forEach((essentia, __) -> {multiply(essentia, scalar);});
 	}
 	
 	// Non-mutating scalar multiplication. Can go negative - try not to break things.

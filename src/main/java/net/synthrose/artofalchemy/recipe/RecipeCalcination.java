@@ -18,14 +18,15 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	protected String group;
 	protected Ingredient input;
 	protected ItemStack output;
-	protected int cost;
+	protected float factor;
 	protected ItemStack container;
 	
-	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, int cost, ItemStack container) {
+	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, float factor,
+			ItemStack container) {
 		this.id = id;
 		this.group = group;
 		this.input = input;
-		this.cost = cost;
+		this.factor = factor;
 		this.output = output;
 		this.container = container;
 	}
@@ -54,8 +55,8 @@ public class RecipeCalcination implements Recipe<Inventory> {
 		return id;
 	}
 	
-	public int getCost() {
-		return cost;
+	public float getFactor() {
+		return factor;
 	}
 	
 	public ItemStack getContainer() {

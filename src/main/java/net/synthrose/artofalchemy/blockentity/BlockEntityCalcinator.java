@@ -10,6 +10,7 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.MathHelper;
+import net.synthrose.artofalchemy.AoAHelper;
 import net.synthrose.artofalchemy.FuelHelper;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
@@ -19,8 +20,8 @@ import net.synthrose.artofalchemy.recipe.AoARecipes;
 public class BlockEntityCalcinator extends BlockEntity
 	implements ImplementedInventory, Tickable, PropertyDelegateHolder, BlockEntityClientSerializable {
 	
-	private int OPERATION_TIME = 100;
-	
+	private final int OPERATION_TIME = 100;
+	private final float EFFICIENCY = 0.50f;
 	private int fuel = 0;
 	private int maxFuel = 20;
 	private int progress = 0;
@@ -82,19 +83,17 @@ public class BlockEntityCalcinator extends BlockEntity
 		ItemStack inSlot = items.get(0);
 		ItemStack outSlot = items.get(2);
 		
-		if (recipe == null || inSlot.isEmpty() || inSlot.getCount() < recipe.getCost()) {
+		if (recipe == null || inSlot.isEmpty()) {
 			return false;
 		} else {
 			ItemStack outStack = recipe.getOutput();
 			ItemStack container = recipe.getContainer();
 			
-			int count;
+			float factor = EFFICIENCY * recipe.getFactor();
 			if (inSlot.isDamageable()) {
-				float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
-				count = ((int) (damageRatio * outStack.getCount()));
-			} else {
-				count = outStack.getCount();
+				factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			}
+			int count = (int) Math.ceil(factor * outStack.getCount());
 			
 			if (container != ItemStack.EMPTY && inSlot.getCount() != container.getCount()) {
 				 return false;
@@ -121,18 +120,16 @@ public class BlockEntityCalcinator extends BlockEntity
 		ItemStack outStack = recipe.getOutput();
 		ItemStack container = recipe.getContainer(); 
 				
-		int count;
+		float factor = EFFICIENCY * recipe.getFactor();
 		if (inSlot.isDamageable()) {
-			float damageRatio = 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
-			count = ((int) (damageRatio * outStack.getCount()));
-		} else {
-			count = outStack.getCount();
+			factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 		}
+		int count = AoAHelper.stochasticRound(factor * outStack.getCount());
 		
 		if (container != ItemStack.EMPTY) {
 			items.set(0, container.copy());
 		} else {
-			inSlot.decrement(recipe.getCost());
+			inSlot.decrement(1);
 		}
 		
 		if (outSlot.isEmpty()) {

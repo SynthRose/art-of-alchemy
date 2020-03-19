@@ -45,7 +45,7 @@ public class RecipeDissolution implements Recipe<Inventory> {
 	}
 	
 	public EssentiaStack getEssentia() {
-		return essentia;
+		return (EssentiaStack) essentia.clone();
 	}
 	
 	@Override

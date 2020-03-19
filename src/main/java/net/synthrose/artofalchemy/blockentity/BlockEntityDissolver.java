@@ -22,7 +22,8 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia {
 	
 	private final int TANK_SIZE = 4000;
-	private final double SPEED_MOD = 2.0;
+	private final float SPEED_MOD = 2.0f;
+	private final float EFFICIENCY = 0.5f;
 	private int alkahest = 0;
 	private int maxAlkahest = TANK_SIZE;
 	private int progress = 0;
@@ -154,10 +155,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 				 return updateStatus(1);
 			}
 			
+			float factor = EFFICIENCY;
 			if (inSlot.isDamageable()) {
-				double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
-				results.multiply(factor);
+				factor *= 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
 			}
+			results.multiply(factor);
 			
 			if (results.getCount() > alkahest) {
 				return updateStatus(2);
@@ -177,10 +179,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		EssentiaStack results = recipe.getEssentia();
 		ItemStack container = recipe.getContainer();
 		
+		float factor = EFFICIENCY;
 		if (inSlot.isDamageable()) {
-			double factor = 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
-			results.multiply(factor);
+			factor *= 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
 		}
+		results.multiply(factor);
 		
 		if (container != ItemStack.EMPTY) {
 			items.set(0, container.copy());
