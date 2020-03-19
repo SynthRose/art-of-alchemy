@@ -108,13 +108,13 @@ public class ItemEssentiaVessel extends Item {
 			int transferred = 0;
 			for (int i = 0; i < target.getNumContainers() && transferred == 0; i++) {
 				EssentiaContainer other = target.getContainer(i);
-				int pulled = container.pullContents(other).getCount();
-				transferred += pulled;
+				int pushed = container.pushContents(other).getCount();
+				transferred -= pushed;
 			}
 			for (int i = 0; i < target.getNumContainers() && transferred == 0; i++) {
 				EssentiaContainer other = target.getContainer(i);
-				int pushed = container.pushContents(other).getCount();
-				transferred -= pushed;
+				int pulled = container.pullContents(other).getCount();
+				transferred += pulled;
 			}
 			container.in(ctx.getStack());
 			

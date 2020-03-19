@@ -45,7 +45,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	protected EssentiaContainer essentiaContainer = new EssentiaContainer()
 		.setCapacity(TANK_SIZE)
 		.setInput(true)
-		.setOutput(false);
+		.setOutput(true);
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
 		
 		@Override

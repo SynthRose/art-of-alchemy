@@ -33,24 +33,24 @@ public class ControllerSynthesizer extends CottonCraftingController {
 			return pos;
 		}, null);
 		
-		WGridPanel root = new WGridPanel();
+		WGridPanel root = new WGridPanel(1);
 		setRootPanel(root);
 		root.setSize(162, 128 + 36);
 		
 		WSprite background = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/rune_bg.png"));
-		root.add(background, 0, 0, 9, 5);
+		root.add(background, 0, 0, 9 * 18, 5 * 18);
 		
 		WItemSlot inSlot = WItemSlot.of(blockInventory, 0);
-		root.add(inSlot, 4, 1);
+		root.add(inSlot, 4 * 18, 1 * 18 - 4);
 		
 		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 1);
-		root.add(outSlot, 6, 2);
+		root.add(outSlot, 6 * 18, 2 * 18);
 		
 		WSprite targetIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/target.png"));
-		root.add(targetIcon, 4, 3);
+		root.add(targetIcon, 4 * 18, 3 * 18 + 4, 18, 18);
 		
 		WItemSlot targetSlot = WItemSlot.of(blockInventory, 2);
-		root.add(targetSlot, 4, 3);
+		root.add(targetSlot, 4 * 18, 3 * 18 + 4);
 		
 //		WButton button = new WButton();
 //		button.setOnClick(() -> {
@@ -65,11 +65,11 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_cyan.png"), 1, 2, Direction.RIGHT);
-		root.add(progressBar, 3, 2, 3, 1);
+		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 1 * 18);
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.synthesis_table"), WLabel.DEFAULT_TEXT_COLOR);
 		title.setAlignment(Alignment.CENTER);
-		root.add(title, 0, 0, 9, 1);
+		root.add(title, 0, -1, 9 * 18, 1 * 18);
 		
 		WDynamicLabel alert = new WDynamicLabel(() -> {
 			switch (propertyDelegate.get(3)) {
@@ -86,7 +86,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 			}
 		}, 0xFF5555);
 		alert.setAlignment(Alignment.CENTER);
-		root.add(alert, 0, -1, 9, 1);
+		root.add(alert, 0, -1 * 18, 9 * 18, 18);
 		
 //		WDynamicLabel xpLabel = new WDynamicLabel(() -> {
 //			return Integer.toString(propertyDelegate.get(0));
@@ -96,9 +96,9 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		
 		EssentiaContainer essentia = getEssentia(ctx);
 		essentiaPanel = new WEssentiaPanel(essentia);
-		root.add(essentiaPanel, 0, 1, 3, 4);
+		root.add(essentiaPanel, 4, 1 * 18 - 7, 3 * 18, 4 * 18);
 		
-		root.add(this.createPlayerInventoryPanel(), 0, 5);
+		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
 		
 		root.validate(this);
 		
