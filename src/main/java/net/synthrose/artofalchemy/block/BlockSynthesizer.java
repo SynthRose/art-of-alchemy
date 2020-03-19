@@ -1,6 +1,5 @@
 package net.synthrose.artofalchemy.block;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -30,11 +29,13 @@ import net.synthrose.artofalchemy.item.AoAItems;
 public class BlockSynthesizer extends Block implements BlockEntityProvider {
 	
 	public static BooleanProperty LIT = Properties.LIT;
-	public static final Settings SETTINGS = FabricBlockSettings
-			.of(Material.STONE)
-			.hardness(5.0f).resistance(6.0f)
-			.nonOpaque()
-			.build();
+	public static final Settings SETTINGS = Settings
+		.of(Material.STONE)
+		.strength(5.0f, 6.0f)
+		.lightLevel((state) ->{
+			return state.get(LIT) ? 15 : 0;
+		})
+		.nonOpaque();
 	
 	public static Identifier getId() {
 		return Registry.BLOCK.getId(AoABlocks.SYNTHESIZER);
@@ -48,15 +49,6 @@ public class BlockSynthesizer extends Block implements BlockEntityProvider {
 	@Override
 	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(LIT);
-	}
-	
-	@Override
-	public int getLuminance(BlockState state) {
-		if (state.get(LIT)) { 
-			return 15;
-		} else {
-			return 0;
-		}
 	}
 	
 	@Override

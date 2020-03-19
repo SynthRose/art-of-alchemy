@@ -3,12 +3,12 @@ package net.synthrose.artofalchemy.recipe;
 import com.google.gson.JsonObject;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.PacketByteBuf;
 import net.synthrose.artofalchemy.essentia.EssentiaStack;
 
 public class SerializerDissolution implements RecipeSerializer<RecipeDissolution> {

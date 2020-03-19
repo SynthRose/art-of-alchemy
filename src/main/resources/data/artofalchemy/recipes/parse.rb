@@ -55,7 +55,7 @@ sheet.each do |row|
     recipe["target"] = { type => id }
     recipe["materia"] = { "item" => materia }
     recipe["essentia"] = essentia
-    recipe["cost"] = materia_amt.numerator
+    recipe["cost"] = materia_amt.ceil
     recipe["container"] = { "item" => "minecraft:bucket" } if id.include?("bucket")
     file = File.new("synthesis/#{filename}", mode = 'w')
     file.write(JSON.generate(recipe))

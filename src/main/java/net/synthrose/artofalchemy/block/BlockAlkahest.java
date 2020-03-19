@@ -16,15 +16,13 @@ import net.synthrose.artofalchemy.fluid.AoAFluids;
 
 public class BlockAlkahest extends FluidBlock {
 	
-	public static final Settings SETTINGS = Settings.copy(Blocks.WATER);
-
+	public static final Settings SETTINGS = Settings.copy(Blocks.WATER)
+		.lightLevel((state) -> {
+			return 9;
+		});
+	
 	public BlockAlkahest() {
 		super(AoAFluids.ALKAHEST, SETTINGS);
-	}
-	
-	@Override
-	public int getLuminance(BlockState state) {
-		return 9;
 	}
 	
 	@Override

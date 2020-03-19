@@ -12,7 +12,7 @@ import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.BlockContext;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +26,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 	BlockPos pos;
 	WEssentiaPanel essentiaPanel;
 	
-	public ControllerSynthesizer(int syncId, PlayerInventory playerInventory, BlockContext ctx) {
+	public ControllerSynthesizer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
 		super(AoARecipes.SYNTHESIS, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		pos = ctx.run((world, pos) -> {
@@ -110,7 +110,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		}
 	}
 
-	private static EssentiaContainer getEssentia(BlockContext ctx) {
+	private static EssentiaContainer getEssentia(ScreenHandlerContext ctx) {
 		return ctx.run((world, pos) -> {
 			BlockEntity be = world.getBlockEntity(pos);
 			if (be instanceof HasEssentia) {
