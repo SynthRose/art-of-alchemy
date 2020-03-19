@@ -7,7 +7,7 @@ To use this mod, you will need:
 * Minecraft 20w10a
 * The [Fabric](https://fabricmc.net/) mod loader
 * The [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
-* CottonMC's [LibGUI](https://www.curseforge.com/minecraft/mc-mods/libgui)
+* CottonMC's [LibGUI](https://www.curseforge.com/minecraft/mc-mods/libgui) if you are working with the source (you do not need it to play the mod)
 
 ## The World of Alchemy
 At the heart of alchemy is the practice of transmutation. The ability to transmute substances into other,
