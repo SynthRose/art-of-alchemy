@@ -10,14 +10,18 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+if (System.env.RUN_COUNT) { // only change version if we're in github's workflow environment - full releases shouldn't have the +build
+	version = project.mod_version + "+" + System.env.RUN_COUNT // automatically increments every time the workflow runs, but won't affect fabric.mod.json dependencies
+}
+
 minecraft {
 }
 
 repositories {
-    maven {
-        name = "CottonMC"
-        url = "http://server.bbkr.space:8081/artifactory/libs-release"
-    }
+	maven {
+		name = "CottonMC"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release"
+	}
 }
 
 dependencies {
@@ -29,7 +33,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "io.github.cottonmc:LibGui:${project.libgui_version}"
 	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
-	
+
 	include "io.github.cottonmc:LibGui:${project.libgui_version}"
 }
 
@@ -67,6 +71,18 @@ jar {
 
 // configure the maven publication
 publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/synthrose/art-of-alchemy"))
+			credentials {
+				username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+				password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+			}
+		}
+		// uncomment to publish to the local maven
+		// mavenLocal()
+	}
 	publications {
 		mavenJava(MavenPublication) {
 			// add all the jars that should be included when publishing to maven
@@ -80,11 +96,5 @@ publishing {
 				builtBy remapSourcesJar
 			}
 		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
 	}
 }
