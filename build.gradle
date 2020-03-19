@@ -74,7 +74,7 @@ publishing {
 	repositories {
 		maven {
 			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/synthrose/art-of-alchemy"))
+			url = uri("https://maven.pkg.github.com/synthrose/art-of-alchemy")
 			credentials {
 				username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
 				password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
