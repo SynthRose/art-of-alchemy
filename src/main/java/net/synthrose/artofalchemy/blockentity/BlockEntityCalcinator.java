@@ -148,6 +148,7 @@ public class BlockEntityCalcinator extends BlockEntity
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.putInt("fuel", fuel);
 		tag.putInt("progress", progress);
+		tag.putInt("maxFuel", maxFuel);
 		Inventories.toTag(tag, items);
 		return super.toTag(tag);
 	}
@@ -158,7 +159,7 @@ public class BlockEntityCalcinator extends BlockEntity
 		Inventories.fromTag(tag, items);
 		fuel = tag.getInt("fuel");
 		progress = tag.getInt("progress");
-		maxFuel = FuelHelper.fuelTime(items.get(1));
+		maxFuel = tag.getInt("maxFuel");
 		maxProgress = OPERATION_TIME;
 	}
 
@@ -184,13 +185,13 @@ public class BlockEntityCalcinator extends BlockEntity
 		boolean wasBurning = isBurning();
 		boolean dirty = false;
 		
-		if (wasBurning) {
-			fuel = MathHelper.clamp(fuel - 2, 0, maxFuel);
-		}
-		
 		if (!world.isClient()) {
 			ItemStack inSlot = items.get(0);
 			ItemStack fuelSlot = items.get(1);
+			
+			if (wasBurning) {
+				fuel = MathHelper.clamp(fuel - 2, 0, maxFuel);
+			}
 			
 			if (!inSlot.isEmpty() && (isBurning() || FuelHelper.isFuel(fuelSlot))) {
 				RecipeCalcination recipe = world.getRecipeManager()
