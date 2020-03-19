@@ -1,4 +1,5 @@
 {
+	"group": "artofalchemy:essentia_vessel_recolor",
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{ "tag":"artofalchemy:essentia_vessel" },

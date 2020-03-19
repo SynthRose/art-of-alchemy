@@ -1,4 +1,5 @@
 {
+	"group": "artofalchemy:materia_downgrade_a",
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{ "item":"artofalchemy:materia_omega" },

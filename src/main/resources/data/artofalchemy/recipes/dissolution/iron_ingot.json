@@ -1,9 +1,1 @@
-{
-    "type": "artofalchemy:dissolution",
-    "ingredient": {
-        "item":"minecraft:iron_ingot"
-    },
-    "result": {
-        "artofalchemy:mars": 144
-    }
-}
+{"type":"artofalchemy:dissolution","ingredient":{"item":"minecraft:iron_ingot"},"result":{"artofalchemy:mercury":36,"artofalchemy:mars":108}}

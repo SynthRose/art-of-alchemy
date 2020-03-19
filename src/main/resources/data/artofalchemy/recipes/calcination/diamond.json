@@ -1,10 +1,1 @@
-{
-  "type": "artofalchemy:calcination",
-  "ingredient": {
-    "item": "minecraft:diamond"
-  },
-  "result": {
-  	"item": "artofalchemy:materia_a",
-  	"count": 4
-  }
-}
+{"type":"artofalchemy:calcination","ingredient":{"item":"minecraft:diamond"},"result":{"item":"artofalchemy:materia_a","count":4}}

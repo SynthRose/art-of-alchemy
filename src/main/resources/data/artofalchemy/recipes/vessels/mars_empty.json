@@ -1,4 +1,5 @@
 {
+	"group": "artofalchemy:essentia_vessel_empty",
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{ "item":"artofalchemy:essentia_vessel_mars" }

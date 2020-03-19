@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:crafting_shapeless",
+	"group": "artofalchemy:materia_downgrade_b",
 	"ingredients": [
 		{ "item":"artofalchemy:materia_s" },
 		{ "item":"artofalchemy:materia_c" }

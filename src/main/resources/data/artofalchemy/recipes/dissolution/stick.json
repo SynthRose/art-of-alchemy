@@ -1,9 +1,0 @@
-{
-    "type": "artofalchemy:dissolution",
-    "ingredient": {
-        "item":"minecraft:stick"
-    },
-    "result": {
-        "artofalchemy:tellus": 16
-    }
-}
