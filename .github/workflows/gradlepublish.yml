@@ -3,9 +3,7 @@
 
 name: Gradle Package
 
-on:
-  release:
-    types: [created]
+on: push
 
 jobs:
   build:
@@ -29,5 +27,6 @@ jobs:
     - name: Publish to GitHub Packages
       run: ./gradlew publish
       env:
+        RUN_COUNT: ${{ github.run_number }}
         USERNAME: ${{ github.actor }}
         PASSWORD: ${{ secrets.GITHUB_TOKEN }}
