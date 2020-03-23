@@ -12,10 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.essentia.EssentiaContainer;
+import net.synthrose.artofalchemy.essentia.EssentiaStack;
 
 public class AoANetworking {
 
 	public static final Identifier ESSENTIA_PACKET = ArtOfAlchemy.id("update_essentia");
+	public static final Identifier ESSENTIA_PACKET_REQ = ArtOfAlchemy.id("update_essentia_req");
 
 	public static void initializeNetworking() {
 		
@@ -32,6 +34,21 @@ public class AoANetworking {
 		
 		players.forEach(player -> {
 			ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET, data);
+		});
+	}
+	
+	public static void sendEssentiaPacketWithRequirements(World world, BlockPos pos,
+			int essentiaId, EssentiaContainer container, EssentiaStack required) {
+		Stream<PlayerEntity> players = PlayerStream.watching(world, pos);
+		
+		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+		data.writeInt(essentiaId);
+		data.writeCompoundTag(container.toTag());
+		data.writeCompoundTag(required.toTag());
+		data.writeBlockPos(pos);
+		
+		players.forEach(player -> {
+			ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET_REQ, data);
 		});
 	}
 

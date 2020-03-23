@@ -4,23 +4,33 @@ import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Direction;
+import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockDissolver;
 import net.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.synthrose.artofalchemy.essentia.HasEssentia;
+import net.synthrose.artofalchemy.fluid.HasAlkahest;
 import net.synthrose.artofalchemy.network.AoANetworking;
 import net.synthrose.artofalchemy.essentia.EssentiaStack;
 import net.synthrose.artofalchemy.recipe.RecipeDissolution;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,
-	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia {
+	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia,
+	HasAlkahest, SidedInventory {
 	
+	private static final int[] TOP_SLOTS = new int[]{0};
+	private static final int[] BOTTOM_SLOTS = new int[]{0};
+	private static final int[] SIDE_SLOTS = new int[]{0};
 	private final int TANK_SIZE = 4000;
 	private final float SPEED_MOD = 2.0f;
 	private final float EFFICIENCY = 0.5f;
@@ -106,14 +116,12 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		return 1;
 	}
 	
-	public boolean hasAlkahest() {
-		return alkahest > 0;
-	}
-	
+	@Override
 	public int getAlkahest() {
 		return alkahest;
 	}
 	
+	@Override
 	public boolean setAlkahest(int amount) {
 		if (amount >= 0 && amount <= maxAlkahest) {
 			alkahest = amount;
@@ -123,10 +131,6 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		} else {
 			return false;
 		}
-	}
-	
-	public boolean addAlkahest(int amount) {
-		return setAlkahest(alkahest + amount);
 	}
 	
 	private boolean updateStatus(int status) {
@@ -304,6 +308,36 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
+	}
+	
+	@Override
+	public int[] getInvAvailableSlots(Direction side) {
+		if (side == Direction.UP) {
+			return TOP_SLOTS;
+		} else if (side == Direction.DOWN) {
+			return BOTTOM_SLOTS;
+		} else {
+			return SIDE_SLOTS;
+		}
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+		return isValidInvStack(slot, stack);
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+		if (dir == Direction.DOWN) {
+			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
+			if (tag == null) {
+				return false;
+			} else {
+				return tag.contains(stack.getItem());
+			}
+		} else {
+			return true;
+		}
 	}
 	
 }

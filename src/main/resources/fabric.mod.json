@@ -27,7 +27,7 @@
   	"artofalchemy.mixins.json"
   ],
   "depends": {
-  	"libgui": ">=1.7.0",
+  	"libgui": ">=1.8.0",
     "fabricloader": ">=0.4.0",
     "fabric": "*"
   }

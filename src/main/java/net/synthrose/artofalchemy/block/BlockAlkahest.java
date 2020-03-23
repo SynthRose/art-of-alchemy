@@ -17,9 +17,7 @@ import net.synthrose.artofalchemy.fluid.AoAFluids;
 public class BlockAlkahest extends FluidBlock {
 	
 	public static final Settings SETTINGS = Settings.copy(Blocks.WATER)
-		.lightLevel((state) -> {
-			return 9;
-		});
+		.lightLevel((state) -> 9);
 	
 	public BlockAlkahest() {
 		super(AoAFluids.ALKAHEST, SETTINGS);

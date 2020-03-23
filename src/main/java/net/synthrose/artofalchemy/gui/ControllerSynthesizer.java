@@ -17,7 +17,9 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
+import net.synthrose.artofalchemy.blockentity.BlockEntitySynthesizer;
 import net.synthrose.artofalchemy.essentia.EssentiaContainer;
+import net.synthrose.artofalchemy.essentia.EssentiaStack;
 import net.synthrose.artofalchemy.essentia.HasEssentia;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
@@ -94,8 +96,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 //		xpLabel.setAlignment(Alignment.CENTER);
 //		root.add(xpLabel, 0, -2, 9, 1);
 		
-		EssentiaContainer essentia = getEssentia(ctx);
-		essentiaPanel = new WEssentiaPanel(essentia);
+		essentiaPanel = new WEssentiaPanel(getEssentia(ctx), getRequirements(ctx));
 		root.add(essentiaPanel, 4, 1 * 18 - 7, 3 * 18, 4 * 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
@@ -109,6 +110,13 @@ public class ControllerSynthesizer extends CottonCraftingController {
 			essentiaPanel.updateEssentia(essentia);
 		}
 	}
+	
+	public void updateEssentia(int essentiaId, EssentiaContainer essentia,
+			EssentiaStack required, BlockPos pos) {
+		if (pos.equals(this.pos)) {
+			essentiaPanel.updateEssentia(essentia, required);
+		}
+	}
 
 	private static EssentiaContainer getEssentia(ScreenHandlerContext ctx) {
 		return ctx.run((world, pos) -> {
@@ -119,6 +127,17 @@ public class ControllerSynthesizer extends CottonCraftingController {
 				return new EssentiaContainer();
 			}
 		}, new EssentiaContainer());
+	}
+	
+	private static EssentiaStack getRequirements(ScreenHandlerContext ctx) {
+		return ctx.run((world, pos) -> {
+			BlockEntity be = world.getBlockEntity(pos);
+			if (be instanceof BlockEntitySynthesizer) {
+				return ((BlockEntitySynthesizer) be).getRequirements();
+			} else {
+				return new EssentiaStack();
+			}
+		}, new EssentiaStack());
 	}
 
 }

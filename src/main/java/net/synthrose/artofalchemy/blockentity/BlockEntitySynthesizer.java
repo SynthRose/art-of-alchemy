@@ -4,6 +4,7 @@ import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -12,11 +13,13 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Direction;
 import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockSynthesizer;
 import net.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.synthrose.artofalchemy.essentia.HasEssentia;
+import net.synthrose.artofalchemy.item.ItemAlchemyFormula;
 import net.synthrose.artofalchemy.item.ItemMateria;
 import net.synthrose.artofalchemy.network.AoANetworking;
 import net.synthrose.artofalchemy.essentia.EssentiaStack;
@@ -24,8 +27,11 @@ import net.synthrose.artofalchemy.recipe.RecipeSynthesis;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntitySynthesizer extends BlockEntity implements ImplementedInventory,
-	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia {
+	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, SidedInventory {
 	
+	private static final int[] TOP_SLOTS = new int[]{0};
+	private static final int[] BOTTOM_SLOTS = new int[]{1, 2};
+	private static final int[] SIDE_SLOTS = new int[]{1, 2};
 	private final double SPEED_MOD = 2.0;
 	private final int TANK_SIZE = 4000;
 	private int xp = 0;
@@ -153,6 +159,11 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 			EssentiaStack essentia = recipe.getEssentia();
 			int cost = recipe.getCost();
 			
+			Item target = targetSlot.getItem();
+			if (target instanceof ItemAlchemyFormula) {
+				target = ItemAlchemyFormula.getFormula(targetSlot);
+			}
+			
 			int tier = 1;
 			if (inSlot.getItem() instanceof ItemMateria) {
 				tier = ((ItemMateria) inSlot.getItem()).getTier() + 1;
@@ -184,7 +195,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 				}
 				if (outSlot.isEmpty()) {
 					return updateStatus(0);
-				} else if (outSlot.getItem() == targetSlot.getItem()) {
+				} else if (outSlot.getItem() == target) {
 					if (outSlot.getCount() < outSlot.getMaxCount()) {
 						return updateStatus(0);
 					} else {
@@ -207,8 +218,13 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 		int cost = recipe.getCost();
 //		int xpCost = recipe.getXp(targetSlot);
 		
+		Item target = targetSlot.getItem();
+		if (target instanceof ItemAlchemyFormula) {
+			target = ItemAlchemyFormula.getFormula(targetSlot);
+		}
+		
 		if (container != Ingredient.EMPTY || outSlot.isEmpty()) {
-			items.set(1, new ItemStack(targetSlot.getItem()));
+			items.set(1, new ItemStack(target));
 		} else {
 			outSlot.increment(1);
 		}
@@ -297,7 +313,6 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 					if (progress >= maxProgress) {
 						progress -= maxProgress;
 						doCraft(recipe);
-						AoANetworking.sendEssentiaPacket(world, pos, 0, essentiaContainer);
 						dirty = true;
 					}
 				}
@@ -340,6 +355,63 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
+	}
+	
+	@Override
+	public void sync() {
+		recipeSync();
+		BlockEntityClientSerializable.super.sync();
+	}
+	
+	public void recipeSync() {
+		EssentiaStack requirements = getRequirements();
+		AoANetworking.sendEssentiaPacketWithRequirements(world, pos, 0, essentiaContainer, requirements);
+	}
+	
+	public EssentiaStack getRequirements() {
+		RecipeSynthesis recipe = world.getRecipeManager()
+				.getFirstMatch(AoARecipes.SYNTHESIS, this, world).orElse(null);
+		if (recipe == null) {
+			return new EssentiaStack();
+		} else {
+			return recipe.getEssentia();
+		}
+	}
+	
+	@Override
+	public int[] getInvAvailableSlots(Direction side) {
+		if (side == Direction.UP) {
+			return TOP_SLOTS;
+		} else if (side == Direction.DOWN) {
+			return BOTTOM_SLOTS;
+		} else {
+			return SIDE_SLOTS;
+		}
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+		if (slot == 1) {
+			return world.isReceivingRedstonePower(pos) && isValidInvStack(slot, stack);
+		} else {
+			return isValidInvStack(slot, stack);
+		}
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+		if (slot == 1) {
+			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
+			if (tag == null) {
+				return true;
+			} else {
+				return !tag.contains(stack.getItem());
+			}
+		} else if (slot == 2) {
+			return world.isReceivingRedstonePower(pos);
+		} else {
+			return true;
+		}
 	}
 	
 }

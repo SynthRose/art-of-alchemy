@@ -18,9 +18,7 @@ import net.synthrose.artofalchemy.fluid.AoAFluids;
 public class BlockEssentia extends FluidBlock {
 	
 	public static final Settings SETTINGS = Settings.copy(Blocks.WATER)
-		.lightLevel((state) -> {
-			return 9;
-		});
+		.lightLevel((state) -> 9);
 	protected static Essentia essentia;
 	
 	public BlockEssentia(Essentia essentia) {

@@ -4,22 +4,30 @@ import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.synthrose.artofalchemy.AoAHelper;
+import net.synthrose.artofalchemy.ArtOfAlchemy;
 import net.synthrose.artofalchemy.FuelHelper;
 import net.synthrose.artofalchemy.ImplementedInventory;
 import net.synthrose.artofalchemy.block.BlockCalcinator;
 import net.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.synthrose.artofalchemy.recipe.AoARecipes;
 
-public class BlockEntityCalcinator extends BlockEntity
-	implements ImplementedInventory, Tickable, PropertyDelegateHolder, BlockEntityClientSerializable {
+public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory,
+Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {
 	
+	private static final int[] TOP_SLOTS = new int[]{0};
+	private static final int[] BOTTOM_SLOTS = new int[]{0, 2};
+	private static final int[] SIDE_SLOTS = new int[]{1};
 	private final int OPERATION_TIME = 100;
 	private final float EFFICIENCY = 0.50f;
 	private int fuel = 0;
@@ -257,6 +265,36 @@ public class BlockEntityCalcinator extends BlockEntity
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTag(tag);
+	}
+
+	@Override
+	public int[] getInvAvailableSlots(Direction side) {
+		if (side == Direction.UP) {
+			return TOP_SLOTS;
+		} else if (side == Direction.DOWN) {
+			return BOTTOM_SLOTS;
+		} else {
+			return SIDE_SLOTS;
+		}
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+		return isValidInvStack(slot, stack);
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+		if (dir == Direction.DOWN && slot == 0) {
+			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
+			if (tag == null) {
+				return false;
+			} else {
+				return tag.contains(stack.getItem());
+			}
+		} else {
+			return true;
+		}
 	}
 	
 }

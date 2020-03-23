@@ -24,6 +24,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -98,14 +99,12 @@ public class ItemEssentiaVessel extends Item {
 		super.onCraft(stack, world, player);
 	}
 	
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext ctx) {
-		EssentiaContainer container = getContainer(ctx.getStack());
-		BlockEntity be = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+	public static int useStackOnBE(ItemStack stack, BlockEntity be) {
+		EssentiaContainer container = getContainer(stack);
+		int transferred = 0;
+		
 		if (be != null && be instanceof HasEssentia) {
-			
 			HasEssentia target = (HasEssentia) be;
-			int transferred = 0;
 			for (int i = 0; i < target.getNumContainers() && transferred == 0; i++) {
 				EssentiaContainer other = target.getContainer(i);
 				int pushed = container.pushContents(other).getCount();
@@ -116,25 +115,35 @@ public class ItemEssentiaVessel extends Item {
 				int pulled = container.pullContents(other).getCount();
 				transferred += pulled;
 			}
-			container.in(ctx.getStack());
-			
+			BlockPos pos = be.getPos();
 			if (transferred > 0) {
-				PlayerEntity player = ctx.getPlayer();
-				player.addMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
-				ctx.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BUCKET_FILL,
-						SoundCategory.BLOCKS, 1.0F, 1.0F);
-				return ActionResult.SUCCESS;
+				be.getWorld().playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			} else if (transferred < 0) {
-				PlayerEntity player = ctx.getPlayer();
-				player.addMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
-				ctx.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BUCKET_EMPTY,
-						SoundCategory.BLOCKS, 1.0F, 1.0F);
-			} else {
-				return ActionResult.PASS;
+				be.getWorld().playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
+		}
+		
+		container.in(stack);
+		return transferred;
+	}
+	
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext ctx) {
+		PlayerEntity player = ctx.getPlayer();
+		BlockEntity be = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+		int transferred = useStackOnBE(ctx.getStack(), be);
+		
+		if (player != null) {
+			if (transferred > 0) {
+				player.addMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
+			} else if (transferred < 0) {
+				player.addMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
+			}
+		}
+		
+		if (transferred != 0) {
 			be.markDirty();
 			return ActionResult.SUCCESS;
-			
 		} else {
 			return ActionResult.PASS;
 		}
@@ -245,6 +254,7 @@ public class ItemEssentiaVessel extends Item {
 			tooltip.add(new TranslatableText(prefix + "input").formatted(Formatting.RED));
 		}
 		
+		super.appendTooltip(stack, world, tooltip, ctx);
 	}
 	
 	@Override

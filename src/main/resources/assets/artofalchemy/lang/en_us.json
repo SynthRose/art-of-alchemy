@@ -1,6 +1,9 @@
 {
 	"item.artofalchemy.icon_item": "Mysterious Sigil",
 	"item.artofalchemy.azoth": "Azoth",
+	"item.artofalchemy.alchemy_formula": "Alchemical Formula",
+	"item.artofalchemy.brewing_formula": "Brewing Formula",
+	"item.artofalchemy.enchantment_formula": "Enchantment Formula",
 	
 	"block.artofalchemy.calcination_furnace": "Calcination Furnace",
 	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",
@@ -99,6 +102,8 @@
 	"gui.artofalchemy.essentia_warning": "Needs essentia!",
 	"gui.artofalchemy.container_warning": "Needs a container to fill!",
 	"gui.artofalchemy.empty": "Empty",
+	"gui.artofalchemy.essentia_amount": "%d/%d",
+	"gui.artofalchemy.required_amount": "!%d",
 		
 	"itemGroup.artofalchemy.alchemy": "Art of Alchemy"
 }

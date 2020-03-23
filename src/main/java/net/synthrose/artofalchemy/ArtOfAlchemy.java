@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.synthrose.artofalchemy.block.AoABlocks;
 import net.synthrose.artofalchemy.blockentity.AoABlockEntities;
+import net.synthrose.artofalchemy.dispenser.AoADispenserBehavior;
 import net.synthrose.artofalchemy.essentia.AoAEssentia;
 import net.synthrose.artofalchemy.fluid.AoAFluids;
 import net.synthrose.artofalchemy.gui.AoAContainers;
@@ -40,11 +41,12 @@ public class ArtOfAlchemy implements ModInitializer {
         AoABlockEntities.registerBlockEntities();
         AoAContainers.registerContainers();
         AoARecipes.registerRecipes();
+        AoADispenserBehavior.registerDispenserBehavior();
         AoANetworking.initializeNetworking();
     }
     
     public static Identifier id(String name) {
-    	return new Identifier(ArtOfAlchemy.MOD_ID, name);
+    	return new Identifier(MOD_ID, name);
     }
 
     public static void log(Level level, String message){

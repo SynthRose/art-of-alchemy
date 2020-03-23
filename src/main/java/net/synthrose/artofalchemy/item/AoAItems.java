@@ -19,6 +19,7 @@ public class AoAItems {
 
 	public static final Item ICON_ITEM = new Item(new Item.Settings());	
 	public static final Item AZOTH = new Item(defaults());
+	public static final Item ALCHEMY_FORMULA = new Item(defaults());
 	
 	public static final Item MATERIA_OMEGA = new ItemMateria(defaults(Rarity.RARE), MateriaRank.OMEGA);
 	public static final Item MATERIA_S = new ItemMateria(defaults(Rarity.UNCOMMON), MateriaRank.S);
@@ -36,6 +37,8 @@ public class AoAItems {
 	public static void registerItems() {
 		register("icon_item", ICON_ITEM);
 		register("azoth", AZOTH);
+		
+		register("alchemy_formula", ALCHEMY_FORMULA);
 		
 		register("materia_omega", MATERIA_OMEGA);
 		register("materia_s", MATERIA_S);

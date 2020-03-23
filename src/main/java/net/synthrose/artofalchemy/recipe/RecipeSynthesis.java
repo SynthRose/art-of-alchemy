@@ -4,6 +4,7 @@ package net.synthrose.artofalchemy.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -13,6 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.synthrose.artofalchemy.block.AoABlocks;
 import net.synthrose.artofalchemy.essentia.EssentiaStack;
+import net.synthrose.artofalchemy.item.ItemAlchemyFormula;
 import net.synthrose.artofalchemy.item.ItemMateria;
 
 public class RecipeSynthesis implements Recipe<Inventory> {
@@ -38,7 +40,13 @@ public class RecipeSynthesis implements Recipe<Inventory> {
 
 	@Override
 	public boolean matches(Inventory inv, World world) {
-		return target.test(inv.getInvStack(2));
+		ItemStack stack = inv.getInvStack(2);
+		if (stack.getItem() instanceof ItemAlchemyFormula) {
+			Item targetItem = ItemAlchemyFormula.getFormula(stack);
+			return target.test(new ItemStack(targetItem));
+		} else {
+			return target.test(stack);
+		}
 	}
 
 	@Override
