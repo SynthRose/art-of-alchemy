@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "artofalchemy:block/essentia_port_top",
+		"core": "artofalchemy:block/essentia_pipe_core"
+	},
+	"elements": [
+		{
+			"from": [6, 6, 6],
+			"to": [10, 10, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#core"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#core"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#core"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#core"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#core"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#core"}
+			}
+		}
+	]
+}

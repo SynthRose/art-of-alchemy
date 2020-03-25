@@ -68,7 +68,7 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 		}
 		
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity != null && blockEntity instanceof BlockEntityCalcinator) {			
+		if (blockEntity instanceof BlockEntityCalcinator) {
 			ContainerProviderRegistry.INSTANCE.openContainer(getId(), player,
 					(packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
 		}

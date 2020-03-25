@@ -63,7 +63,7 @@ public class BlockSynthesizer extends Block implements BlockEntityProvider {
 		ItemStack inHand = player.getStackInHand(hand);
 		
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity != null && blockEntity instanceof BlockEntitySynthesizer) {
+		if (blockEntity instanceof BlockEntitySynthesizer) {
 			if (AoAItems.ESSENTIA_VESSELS.containsValue(inHand.getItem())) {
 				ItemUsageContext itemContext = new ItemUsageContext(player, hand, hit);
 				ActionResult itemResult = inHand.useOnBlock(itemContext);

@@ -1,0 +1,8 @@
+{
+	"parent": "artofalchemy:block/essentia_port",
+	"textures": {
+		"top": "artofalchemy:block/essentia_extractor_top",
+		"side": "artofalchemy:block/essentia_extractor_side",
+		"bottom": "artofalchemy:block/essentia_extractor_bottom"
+	}
+}

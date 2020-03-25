@@ -18,11 +18,12 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		String group = JsonHelper.getString(json, "group", "");
 		Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 		EssentiaStack essentia = new EssentiaStack(JsonHelper.getObject(json, "result"));
+		float factor = JsonHelper.getFloat(json, "factor", 1.0f);
 		ItemStack container = ItemStack.EMPTY;
 		if (json.has("container")) {
 			container = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "container"));
 		}
-		return new RecipeDissolution(id, group, input, essentia, container);
+		return new RecipeDissolution(id, group, input, essentia, factor, container);
 	}
 
 	@Override
@@ -30,8 +31,9 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		String group = buf.readString(32767);
 		Ingredient input = Ingredient.fromPacket(buf);
 		EssentiaStack essentia = new EssentiaStack(buf.readCompoundTag());
+		float factor = buf.readFloat();
 		ItemStack container = buf.readItemStack();
-		return new RecipeDissolution(id, group, input, essentia, container);
+		return new RecipeDissolution(id, group, input, essentia, factor, container);
 	}
 
 	@Override
@@ -39,6 +41,7 @@ public class SerializerDissolution implements RecipeSerializer<RecipeDissolution
 		buf.writeString(recipe.group);
 		recipe.input.write(buf);
 		buf.writeCompoundTag(recipe.essentia.toTag());
+		buf.writeFloat(recipe.factor);
 		buf.writeItemStack(recipe.container);
 	}
 	

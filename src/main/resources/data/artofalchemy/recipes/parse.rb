@@ -20,13 +20,15 @@ sheet.each do |row|
   restricted = !row[3].nil?
 
   materia = "artofalchemy:materia_" + row[4].downcase unless row[4].nil?
-  materia_amt = row[5].to_r
+  materia_amt = row[5].to_i
+  materia_factor = row[19].to_f || 1.0
 
   essentia = {}
   for i in 6..18
     e = sheet.headers[i].downcase.prepend("artofalchemy:")
     essentia[e] = row[i].to_i unless row[i].nil?
   end
+  essentia_factor = row[20].to_f || 1.0
 
   unless materia.nil?
     recipe = {}
@@ -34,7 +36,7 @@ sheet.each do |row|
     recipe["ingredient"] = { type => id }
     recipe["result"] = { "item" => materia, "count" => materia_amt.numerator }
     recipe["container"] = { "item" => "minecraft:bucket" } if id.include?("bucket")
-    recipe["factor"] = 1.0/materia_amt.denominator unless materia_amt.denominator == 1
+    recipe["factor"] = materia_factor
     file = File.new("calcination/#{filename}", mode = 'w')
     file.write(JSON.generate(recipe))
   end
@@ -45,6 +47,7 @@ sheet.each do |row|
     recipe["ingredient"] = { type => id }
     recipe["result"] = essentia
     recipe["container"] = { "item" => "minecraft:bucket" } if id.include?("bucket")
+    recipe["factor"] = essentia_factor
     file = File.new("dissolution/#{filename}", mode = 'w')
     file.write(JSON.generate(recipe))
   end

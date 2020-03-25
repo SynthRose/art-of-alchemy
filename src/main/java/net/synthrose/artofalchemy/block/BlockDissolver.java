@@ -67,7 +67,7 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 		ItemStack inHand = player.getStackInHand(hand);
 		
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity != null && blockEntity instanceof BlockEntityDissolver) {
+		if (blockEntity instanceof BlockEntityDissolver) {
 			BlockEntityDissolver dissolver = (BlockEntityDissolver) blockEntity;
 			if (inHand.getItem() == AoAItems.ALKAHEST_BUCKET && dissolver.addAlkahest(1000)) {
 				if (!player.abilities.creativeMode) {

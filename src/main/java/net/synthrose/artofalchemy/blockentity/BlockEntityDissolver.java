@@ -115,7 +115,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	public int getNumContainers() {
 		return 1;
 	}
-	
+
 	@Override
 	public int getAlkahest() {
 		return alkahest;
@@ -159,7 +159,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 				 return updateStatus(1);
 			}
 			
-			float factor = EFFICIENCY;
+			float factor = EFFICIENCY * recipe.getFactor();
 			if (inSlot.isDamageable()) {
 				factor *= 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
 			}
@@ -183,9 +183,9 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		EssentiaStack results = recipe.getEssentia();
 		ItemStack container = recipe.getContainer();
 		
-		float factor = EFFICIENCY;
+		float factor = EFFICIENCY * recipe.getFactor();
 		if (inSlot.isDamageable()) {
-			factor *= 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
+			factor *= 1.0 - (inSlot.getDamage() / inSlot.getMaxDamage());
 		}
 		results.multiply(factor);
 		
@@ -262,7 +262,6 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 					if (progress >= maxProgress) {
 						progress -= maxProgress;
 						doCraft(recipe);
-						AoANetworking.sendEssentiaPacket(world, pos, 0, essentia);
 						if (alkahest <= 0) {
 							world.setBlockState(pos, world.getBlockState(pos).with(BlockDissolver.FILLED, false));
 						}
@@ -298,6 +297,12 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		if (!world.isClient()) {
 			sync();
 		}
+	}
+	
+	@Override
+	public void sync() {
+		AoANetworking.sendEssentiaPacket(world, pos, 0, essentia);
+		BlockEntityClientSerializable.super.sync();
 	}
 
 	@Override

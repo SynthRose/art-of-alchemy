@@ -332,8 +332,8 @@ public class EssentiaContainer {
 	}
 	
 	// Push as much as possible of a stack to another container, returning the essentia transferred
-	public EssentiaStack pushStack(EssentiaContainer other, EssentiaStack stack) {
-		if (!this.output || !other.input) {
+	public EssentiaStack pushStack(EssentiaContainer other, EssentiaStack stack, boolean force) {
+		if (!force && (!this.output || !other.input)) {
 			return new EssentiaStack();
 		} else {
 			EssentiaStack transferred = new EssentiaStack();
@@ -360,18 +360,34 @@ public class EssentiaContainer {
 	}
 	
 	// Pull as much as possible of a stack from another container, returning the essentia transferred
-	public EssentiaStack pullStack(EssentiaContainer other, EssentiaStack stack) {
-		return other.pushStack(this, stack);
+	public EssentiaStack pullStack(EssentiaContainer other, EssentiaStack stack, boolean force) {
+		return other.pushStack(this, stack, force);
 	}
 	
 	// Push as much as possible of this container's contents to another, returning the essentia transferred
-	public EssentiaStack pushContents(EssentiaContainer other) {
-		return pushStack(other, this.contents);
+	public EssentiaStack pushContents(EssentiaContainer other, boolean force) {
+		return pushStack(other, this.contents, force);
 	}
 	
 	// Pull as much as possible of another container's contents, returning the essentia transferred
+	public EssentiaStack pullContents(EssentiaContainer other, boolean force) {
+		return pullStack(other, other.contents, force);
+	}
+	
+	public EssentiaStack pushStack(EssentiaContainer other, EssentiaStack stack) {
+		return pushStack(other, stack, false);
+	}
+	
+	public EssentiaStack pullStack(EssentiaContainer other, EssentiaStack stack) {
+		return pullStack(other, stack, false);
+	}
+	
+	public EssentiaStack pushContents(EssentiaContainer other) {
+		return pushContents(other, false);
+	}
+	
 	public EssentiaStack pullContents(EssentiaContainer other) {
-		return pullStack(other, other.contents);
+		return pullContents(other, false);
 	}
 	
 	public CompoundTag toTag() {

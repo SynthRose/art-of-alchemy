@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -70,6 +71,7 @@ public class ItemEssentiaVessel extends Item {
 	}
 	
 	public static EssentiaContainer getContainer(ItemStack stack) {
+		CompoundTag tag = stack.getTag();
 		EssentiaContainer container = EssentiaContainer.of(stack);
 		Essentia type = null;
 		if (stack.getItem() instanceof ItemEssentiaVessel) {
@@ -103,7 +105,7 @@ public class ItemEssentiaVessel extends Item {
 		EssentiaContainer container = getContainer(stack);
 		int transferred = 0;
 		
-		if (be != null && be instanceof HasEssentia) {
+		if (be instanceof HasEssentia) {
 			HasEssentia target = (HasEssentia) be;
 			for (int i = 0; i < target.getNumContainers() && transferred == 0; i++) {
 				EssentiaContainer other = target.getContainer(i);
@@ -112,7 +114,7 @@ public class ItemEssentiaVessel extends Item {
 			}
 			for (int i = 0; i < target.getNumContainers() && transferred == 0; i++) {
 				EssentiaContainer other = target.getContainer(i);
-				int pulled = container.pullContents(other).getCount();
+				int pulled = container.pullContents(other, container.isInput()).getCount();
 				transferred += pulled;
 			}
 			BlockPos pos = be.getPos();

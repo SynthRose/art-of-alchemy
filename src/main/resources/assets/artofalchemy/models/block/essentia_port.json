@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "#top",
+		"top": "artofalchemy:block/essentia_port_top",
+		"side": "artofalchemy:block/essentia_port_side",
+		"bottom": "artofalchemy:block/essentia_port_bottom",
+		"tube": "artofalchemy:block/essentia_pipe_tube"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 2, 14],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 2], "texture": "#side"},
+				"east": {"uv": [2, 0, 14, 2], "texture": "#side"},
+				"south": {"uv": [2, 0, 14, 2], "texture": "#side"},
+				"west": {"uv": [2, 0, 14, 2], "texture": "#side"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#top"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#bottom"}
+			}
+		},
+		{
+			"from": [7, 2, 7],
+			"to": [9, 6, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 4], "texture": "#tube"},
+				"east": {"uv": [0, 0, 2, 4], "texture": "#tube"},
+				"south": {"uv": [0, 0, 2, 4], "texture": "#tube"},
+				"west": {"uv": [0, 0, 2, 4], "texture": "#tube"},
+				"up": {"uv": [0, 6, 2, 8], "texture": "#tube"},
+				"down": {"uv": [0, 6, 2, 8], "texture": "#tube"}
+			}
+		}
+	]
+}

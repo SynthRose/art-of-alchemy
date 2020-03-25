@@ -21,14 +21,17 @@ public class RecipeCalcination implements Recipe<Inventory> {
 	protected float factor;
 	protected ItemStack container;
 	
-	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, float factor,
-			ItemStack container) {
+	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, float factor, ItemStack container) {
 		this.id = id;
 		this.group = group;
 		this.input = input;
 		this.factor = factor;
 		this.output = output;
 		this.container = container;
+	}
+
+	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, ItemStack container) {
+		this(id, group, input, output, 1.0f, container);
 	}
 
 	@Override

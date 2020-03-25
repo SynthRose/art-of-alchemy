@@ -30,7 +30,7 @@ public class AoADispenserBehavior {
 		public ItemStack dispense(BlockPointer pointer, ItemStack stack) {
 			Direction facing = pointer.getBlockState().get(DispenserBlock.FACING);
 			BlockEntity be = pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(facing));
-			if (be != null && be instanceof HasAlkahest) {
+			if (be instanceof HasAlkahest) {
 				boolean successful = ((HasAlkahest) be).addAlkahest(1000);
 				if (successful) {
 					be.getWorld().playSound(null, be.getPos(), SoundEvents.ITEM_BUCKET_EMPTY,

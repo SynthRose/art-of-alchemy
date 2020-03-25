@@ -14,11 +14,14 @@ public class AoABlockEntities {
 		BlockEntityDissolver::new, AoABlocks.DISSOLVER).build(null);
 	public static final BlockEntityType<?> SYNTHESIZER = BlockEntityType.Builder.create(
 		BlockEntitySynthesizer::new, AoABlocks.SYNTHESIZER).build(null);
+	public static final BlockEntityType<?> PIPE = BlockEntityType.Builder.create(
+		BlockEntityPipe::new, AoABlocks.PIPE).build(null);
 
 	public static void registerBlockEntities() {
 		register("calcination_furnace", CALCINATOR);
 		register("dissolution_chamber", DISSOLVER);
 		register("synthesis_table", SYNTHESIZER);
+		register("essentia_pipe", PIPE);
 	}
 	
 	public static void register(String name, BlockEntityType<? extends BlockEntity> blockEntity) {
