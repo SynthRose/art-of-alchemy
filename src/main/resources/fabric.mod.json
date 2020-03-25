@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.synthrose.artofalchemy.ArtOfAlchemy"
+      "io.github.synthrose.artofalchemy.ArtOfAlchemy"
     ],
     "client": [
-      "net.synthrose.artofalchemy.ArtOfAlchemyClient"
+      "io.github.synthrose.artofalchemy.ArtOfAlchemyClient"
     ],
     "server": []
   },
