@@ -1,8 +1,5 @@
 package io.github.synthrose.artofalchemy.item;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.MateriaRank;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
@@ -15,20 +12,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AoAItems {
 
 	public static final Item ICON_ITEM = new Item(new Item.Settings());	
 	public static final Item AZOTH = new Item(defaults());
 	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(defaults().maxCount(1));
-	
-	public static final Item MATERIA_OMEGA = new ItemMateria(defaults(Rarity.RARE), MateriaRank.OMEGA);
-	public static final Item MATERIA_S = new ItemMateria(defaults(Rarity.UNCOMMON), MateriaRank.S);
-	public static final Item MATERIA_A = new ItemMateria(defaults(), MateriaRank.A);
-	public static final Item MATERIA_B = new ItemMateria(defaults(), MateriaRank.B);
-	public static final Item MATERIA_C = new ItemMateria(defaults(), MateriaRank.C);
-	public static final Item MATERIA_D = new ItemMateria(defaults(), MateriaRank.D);
-	public static final Item MATERIA_E = new ItemMateria(defaults(), MateriaRank.E);
-	public static final Item MATERIA_F = new ItemMateria(defaults(), MateriaRank.F);
+
+	public static final Map<MateriaRank, Item> MATERIA_DUSTS = new HashMap<>();
 	
 	public static final Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
 	public static final Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
@@ -39,15 +32,12 @@ public class AoAItems {
 		register("azoth", AZOTH);
 		
 		register("alchemy_formula", ALCHEMY_FORMULA);
-		
-		register("materia_omega", MATERIA_OMEGA);
-		register("materia_s", MATERIA_S);
-		register("materia_a", MATERIA_A);
-		register("materia_b", MATERIA_B);
-		register("materia_c", MATERIA_C);
-		register("materia_d", MATERIA_D);
-		register("materia_e", MATERIA_E);
-		register("materia_f", MATERIA_F);
+
+		// Register materia dusts
+		for (MateriaRank rank : MateriaRank.values()) {
+			String name = "materia_" + rank.toString().toLowerCase();
+			MATERIA_DUSTS.put(rank, register(name, new ItemMateria(defaults(), rank)));
+		}
 		
 		register("alkahest_bucket", ALKAHEST_BUCKET);
 		
@@ -59,12 +49,12 @@ public class AoAItems {
 		});
 		
 		// Register essentia vessels; add-on essentia buckets will be registered to THEIR namespace
+		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
+				new ItemEssentiaVessel(defaults(), null)));
 		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
 			Identifier itemId = new Identifier(id.getNamespace(), "essentia_vessel_" + id.getPath());
 			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(defaults(), essentia)));
 		});
-		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
-				new ItemEssentiaVessel(defaults(), null)));
 	}
 	
 	public static Item register(String name, Item item) {
@@ -74,12 +64,8 @@ public class AoAItems {
 	public static Item register(Identifier id, Item item) {
 		return Registry.register(Registry.ITEM, id, item);
 	}
-	
+
 	public static Settings defaults() {
-		return defaults(Rarity.COMMON);
-	}
-	
-	public static Settings defaults(Rarity rarity) {
-		return new Item.Settings().rarity(rarity).group(ArtOfAlchemy.ALCHEMY_GROUP);
+		return new Item.Settings().group(ArtOfAlchemy.ALCHEMY_GROUP);
 	}
 }

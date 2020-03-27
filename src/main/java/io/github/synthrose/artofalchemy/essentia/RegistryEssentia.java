@@ -1,10 +1,10 @@
 package io.github.synthrose.artofalchemy.essentia;
 
-import java.util.function.BiConsumer;
-
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.SimpleRegistry;
+
+import java.util.function.BiConsumer;
 
 public class RegistryEssentia extends SimpleRegistry<Essentia> {
 

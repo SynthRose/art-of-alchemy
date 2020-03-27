@@ -1,10 +1,5 @@
 package io.github.synthrose.artofalchemy;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.blockentity.AoABlockEntities;
 import io.github.synthrose.artofalchemy.dispenser.AoADispenserBehavior;
@@ -14,7 +9,11 @@ import io.github.synthrose.artofalchemy.gui.AoAContainers;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
-
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

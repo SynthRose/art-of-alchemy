@@ -1,5 +1,7 @@
 package io.github.synthrose.artofalchemy.dispenser;
 
+import io.github.synthrose.artofalchemy.fluid.HasAlkahest;
+import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemEssentiaVessel;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -10,8 +12,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
-import io.github.synthrose.artofalchemy.fluid.HasAlkahest;
-import io.github.synthrose.artofalchemy.item.AoAItems;
 
 public class AoADispenserBehavior {
 	

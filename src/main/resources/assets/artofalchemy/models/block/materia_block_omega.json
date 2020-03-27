@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "artofalchemy:block/materia_block_omega"
+  }
+}

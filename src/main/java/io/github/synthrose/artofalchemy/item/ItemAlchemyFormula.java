@@ -1,7 +1,5 @@
 package io.github.synthrose.artofalchemy.item;
 
-import java.util.List;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -16,6 +14,8 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemAlchemyFormula extends AbstractItemFormula<Item> {
 

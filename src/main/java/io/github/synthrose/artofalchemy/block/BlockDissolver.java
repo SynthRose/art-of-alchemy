@@ -1,6 +1,7 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityDissolver;
+import io.github.synthrose.artofalchemy.item.AoAItems;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -27,7 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import io.github.synthrose.artofalchemy.item.AoAItems;
 
 public class BlockDissolver extends Block implements BlockEntityProvider {
 	

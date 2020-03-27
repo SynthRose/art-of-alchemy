@@ -1,14 +1,14 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import io.github.synthrose.artofalchemy.block.BlockPipe;
+import io.github.synthrose.artofalchemy.essentia.HasEssentia;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class BlockEntityPipe extends BlockEntity implements Tickable {
 	

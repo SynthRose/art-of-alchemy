@@ -1,18 +1,18 @@
 package io.github.synthrose.artofalchemy.render;
 
-import java.util.Map.Entry;
-
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
+import io.github.synthrose.artofalchemy.fluid.AoAFluids;
+import io.github.synthrose.artofalchemy.item.AoAItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import io.github.synthrose.artofalchemy.fluid.AoAFluids;
-import io.github.synthrose.artofalchemy.item.AoAItems;
+
+import java.util.Map.Entry;
 
 @Environment(EnvType.CLIENT)
 public class AoARenderers {

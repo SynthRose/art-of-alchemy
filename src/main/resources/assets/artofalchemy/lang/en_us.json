@@ -19,6 +19,15 @@
 	"item.artofalchemy.materia_d": "D-Rank Materia",
 	"item.artofalchemy.materia_e": "E-Rank Materia",
 	"item.artofalchemy.materia_f": "F-Rank Materia",
+
+	"block.artofalchemy.materia_block_omega": "Ω-Rank Materia Block",
+	"block.artofalchemy.materia_block_s": "S-Rank Materia Block",
+	"block.artofalchemy.materia_block_a": "A-Rank Materia Block",
+	"block.artofalchemy.materia_block_b": "B-Rank Materia Block",
+	"block.artofalchemy.materia_block_c": "C-Rank Materia Block",
+	"block.artofalchemy.materia_block_d": "D-Rank Materia Block",
+	"block.artofalchemy.materia_block_e": "E-Rank Materia Block",
+	"block.artofalchemy.materia_block_f": "F-Rank Materia Block",
 	
 	"item.artofalchemy.alkahest_bucket": "Alkahest Bucket",
 	"item.artofalchemy.essentia_bucket_mercury": "Mercury Essentia Bucket",

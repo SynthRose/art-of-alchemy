@@ -9,7 +9,7 @@ public class ItemMateria extends Item {
 	private final MateriaRank rank;
 
 	public ItemMateria(Settings settings, MateriaRank rank) {
-		super(settings);
+		super(settings.rarity(rank.rarity));
 		this.rank = rank;
 	}
 	
@@ -21,12 +21,13 @@ public class ItemMateria extends Item {
 		if (rank == null) {
 			return 0;
 		} else {
-			return rank.getTier();
+			return rank.tier;
 		}
 	}
 
 	@Override
 	public boolean hasEnchantmentGlint(ItemStack stack) {
-	      return (stack.hasEnchantments() || rank.getTier() >= 6);
+	      return (stack.hasEnchantments() || getTier() >= 6);
 	}
+
 }

@@ -1,8 +1,8 @@
 package io.github.synthrose.artofalchemy;
 
-import java.util.Random;
-
 import net.minecraft.util.math.MathHelper;
+
+import java.util.Random;
 
 public class AoAHelper {
 	

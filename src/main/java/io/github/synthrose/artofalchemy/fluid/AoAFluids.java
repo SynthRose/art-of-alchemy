@@ -1,14 +1,14 @@
 package io.github.synthrose.artofalchemy.fluid;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import net.minecraft.fluid.BaseFluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AoAFluids {
 	

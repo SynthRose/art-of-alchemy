@@ -1,7 +1,5 @@
 package io.github.synthrose.artofalchemy.render;
 
-import java.util.function.Function;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -22,6 +20,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
+
+import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class RendererFluid {

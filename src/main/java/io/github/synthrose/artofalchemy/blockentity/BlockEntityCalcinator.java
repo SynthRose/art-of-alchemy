@@ -1,9 +1,13 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import io.github.synthrose.artofalchemy.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.FuelHelper;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.block.BlockCalcinator;
+import io.github.synthrose.artofalchemy.recipe.AoARecipes;
+import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,10 +22,6 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
-import io.github.synthrose.artofalchemy.AoAHelper;
-import io.github.synthrose.artofalchemy.block.BlockCalcinator;
-import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
-import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory,
 Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {

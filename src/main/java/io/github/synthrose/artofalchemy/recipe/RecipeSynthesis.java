@@ -3,6 +3,8 @@ package io.github.synthrose.artofalchemy.recipe;
 
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
+import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
+import io.github.synthrose.artofalchemy.item.ItemMateria;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
@@ -14,8 +16,6 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
-import io.github.synthrose.artofalchemy.item.ItemMateria;
 
 public class RecipeSynthesis implements Recipe<Inventory> {
 	

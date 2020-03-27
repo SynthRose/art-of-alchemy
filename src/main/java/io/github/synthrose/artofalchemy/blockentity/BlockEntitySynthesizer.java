@@ -3,7 +3,15 @@ package io.github.synthrose.artofalchemy.blockentity;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
+import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
+import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
+import io.github.synthrose.artofalchemy.item.ItemMateria;
+import io.github.synthrose.artofalchemy.network.AoANetworking;
+import io.github.synthrose.artofalchemy.recipe.AoARecipes;
+import io.github.synthrose.artofalchemy.recipe.RecipeSynthesis;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,14 +26,6 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
-import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
-import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
-import io.github.synthrose.artofalchemy.item.ItemMateria;
-import io.github.synthrose.artofalchemy.network.AoANetworking;
-import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
-import io.github.synthrose.artofalchemy.recipe.RecipeSynthesis;
-import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 
 public class BlockEntitySynthesizer extends BlockEntity implements ImplementedInventory,
 	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, SidedInventory {

@@ -1,16 +1,11 @@
 package io.github.synthrose.artofalchemy.essentia;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
+
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class EssentiaStack extends HashMap<Essentia, Integer> {

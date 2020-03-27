@@ -1,17 +1,21 @@
 package io.github.synthrose.artofalchemy.block;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.registry.Registry;
+import io.github.synthrose.artofalchemy.MateriaRank;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.item.AoAItems;
+import io.github.synthrose.artofalchemy.item.BlockItemMateria;
+import io.github.synthrose.artofalchemy.item.ItemMateria;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
+import net.minecraft.util.registry.Registry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AoABlocks {
 	
@@ -20,7 +24,9 @@ public class AoABlocks {
 	public static final Block SYNTHESIZER = new BlockSynthesizer();
 	public static final Block ANALYZER = new BlockAnalyzer();
 	public static final Block PIPE = new BlockPipe();
-	
+
+	public static final Map<MateriaRank, Block> MATERIA_BLOCKS = new HashMap<>();
+
 	public static final Block ALKAHEST = new BlockAlkahest();
 	public static final Map<Essentia, Block> ESSENTIA = new HashMap<>();
 	
@@ -32,6 +38,14 @@ public class AoABlocks {
 		register("essentia_pipe", PIPE);
 		
 		registerItemless("alkahest", ALKAHEST);
+
+		// Register materia dusts
+		for (MateriaRank rank : MateriaRank.values()) {
+			String name = "materia_block_" + rank.toString().toLowerCase();
+			BlockMateria block = new BlockMateria(rank);
+			MATERIA_BLOCKS.put(rank, registerItemless(name, block));
+			AoAItems.register(name, new BlockItemMateria(block, AoAItems.defaults()));
+		}
 		
 		// Register essentia fluid blocks; add-on essentia fluids will be registered to THEIR namespace
 		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
@@ -39,13 +53,10 @@ public class AoABlocks {
 			ESSENTIA.put(essentia, registerItemless(blockId, new BlockEssentia(essentia)));
 		});
 	}
+
 	
 	public static Block register(String name, Block block) {
-		return register(name, block, Rarity.COMMON);
-	}
-	
-	public static Block register(String name, Block block, Rarity rarity) {
-		AoAItems.register(name, new BlockItem(block, AoAItems.defaults(rarity)));
+		AoAItems.register(name, new BlockItem(block, AoAItems.defaults()));
 		return registerItemless(name, block);
 	}
 	

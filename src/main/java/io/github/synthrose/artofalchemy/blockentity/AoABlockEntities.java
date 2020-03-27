@@ -1,10 +1,10 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.block.AoABlocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
-import io.github.synthrose.artofalchemy.block.AoABlocks;
 
 public class AoABlockEntities {
 	

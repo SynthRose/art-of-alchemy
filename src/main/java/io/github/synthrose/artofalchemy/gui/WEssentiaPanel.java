@@ -1,16 +1,12 @@
 package io.github.synthrose.artofalchemy.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import io.github.cottonmc.cotton.gui.widget.WListPanel;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	

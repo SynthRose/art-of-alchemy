@@ -1,9 +1,9 @@
 package io.github.synthrose.artofalchemy.item;
 
-import java.util.HashSet;
-import java.util.List;
-
 import blue.endless.jankson.annotation.Nullable;
+import io.github.synthrose.artofalchemy.essentia.Essentia;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
+import io.github.synthrose.artofalchemy.essentia.HasEssentia;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,19 +19,14 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import io.github.synthrose.artofalchemy.essentia.Essentia;
-import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class ItemEssentiaVessel extends Item {
 	

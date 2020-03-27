@@ -2,6 +2,7 @@ package io.github.synthrose.artofalchemy.fluid;
 
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
+import io.github.synthrose.artofalchemy.item.AoAItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.WorldView;
-import io.github.synthrose.artofalchemy.item.AoAItems;
 
 abstract class FluidEssentia extends BaseFluid {
 	

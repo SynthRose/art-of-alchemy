@@ -1,0 +1,13 @@
+{
+  "group": "artofalchemy:uncompress_materia",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "artofalchemy:materia_block_s"
+    }
+  ],
+  "result": {
+    "item": "artofalchemy:materia_s",
+    "count": 9
+  }
+}

@@ -1,7 +1,5 @@
 package io.github.synthrose.artofalchemy.block;
 
-import java.util.Random;
-
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,6 +11,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockAlkahest extends FluidBlock {
 	

@@ -1,8 +1,6 @@
 package io.github.synthrose.artofalchemy.block;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -13,7 +11,9 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe;
+
+import java.util.HashMap;
+import java.util.Map;
 	
 public class BlockPipe extends Block implements BlockEntityProvider {
 	

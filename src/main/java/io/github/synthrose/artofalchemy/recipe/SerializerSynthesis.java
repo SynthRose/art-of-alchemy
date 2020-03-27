@@ -1,7 +1,6 @@
 package io.github.synthrose.artofalchemy.recipe;
 
 import com.google.gson.JsonObject;
-
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;

@@ -1,7 +1,5 @@
 package io.github.synthrose.artofalchemy.network;
 
-import java.util.stream.Stream;
-
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
@@ -13,6 +11,8 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.stream.Stream;
 
 public class AoANetworking {
 

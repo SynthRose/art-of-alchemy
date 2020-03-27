@@ -2,6 +2,7 @@ package io.github.synthrose.artofalchemy.network;
 
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
+import io.github.synthrose.artofalchemy.gui.EssentiaScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -9,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
-import io.github.synthrose.artofalchemy.gui.EssentiaScreen;
 
 @Environment(EnvType.CLIENT)
 public class AoAClientNetworking {

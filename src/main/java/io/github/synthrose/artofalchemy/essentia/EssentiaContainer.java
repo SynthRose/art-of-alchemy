@@ -1,17 +1,15 @@
 package io.github.synthrose.artofalchemy.essentia;
 
-import java.util.HashSet;
-import java.util.Map.Entry;
-
 import blue.endless.jankson.annotation.Nullable;
-
-import java.util.Set;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.util.Identifier;
+
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class EssentiaContainer {
 

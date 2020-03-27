@@ -23,7 +23,9 @@
     ],
     "server": []
   },
-  "mixins": [],
+  "mixins": [
+    "artofalchemy.mixins.json"
+  ],
   "depends": {
   	"libgui": ">=1.8.0",
     "fabricloader": ">=0.4.0",

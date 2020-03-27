@@ -1,13 +1,8 @@
 package io.github.synthrose.artofalchemy.gui;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
-import io.github.cottonmc.cotton.gui.widget.WBar;
-import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
+import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.WLabel;
-import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.blockentity.BlockEntitySynthesizer;

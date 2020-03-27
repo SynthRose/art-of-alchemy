@@ -1,0 +1,17 @@
+{
+  "group": "artofalchemy:compress_materia",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "artofalchemy:materia_omega"
+    }
+  },
+  "result": {
+    "item": "artofalchemy:materia_block_omega"
+  }
+}

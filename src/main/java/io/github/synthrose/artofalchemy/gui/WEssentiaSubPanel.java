@@ -1,7 +1,5 @@
 package io.github.synthrose.artofalchemy.gui;
 
-import java.util.List;
-
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
@@ -15,6 +13,8 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public class WEssentiaSubPanel extends WPlainPanel {
 	
