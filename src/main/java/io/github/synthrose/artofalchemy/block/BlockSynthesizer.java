@@ -28,13 +28,11 @@ import io.github.synthrose.artofalchemy.item.AoAItems;
 
 public class BlockSynthesizer extends Block implements BlockEntityProvider {
 	
-	public static BooleanProperty LIT = Properties.LIT;
+	public static final BooleanProperty LIT = Properties.LIT;
 	public static final Settings SETTINGS = Settings
 		.of(Material.STONE)
 		.strength(5.0f, 6.0f)
-		.lightLevel((state) ->{
-			return state.get(LIT) ? 15 : 0;
-		})
+		.lightLevel((state) -> state.get(LIT) ? 15 : 0)
 		.nonOpaque();
 	
 	public static Identifier getId() {

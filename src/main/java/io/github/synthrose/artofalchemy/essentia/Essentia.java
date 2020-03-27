@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 
 public class Essentia {
 	
-	private int color;
+	private final int color;
 	
 	public Essentia(int color) {
 		this.color = color;

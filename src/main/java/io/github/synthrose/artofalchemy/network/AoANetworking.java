@@ -32,9 +32,7 @@ public class AoANetworking {
 		data.writeCompoundTag(container.toTag());
 		data.writeBlockPos(pos);
 		
-		players.forEach(player -> {
-			ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET, data);
-		});
+		players.forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET, data));
 	}
 	
 	public static void sendEssentiaPacketWithRequirements(World world, BlockPos pos,
@@ -47,9 +45,7 @@ public class AoANetworking {
 		data.writeCompoundTag(required.toTag());
 		data.writeBlockPos(pos);
 		
-		players.forEach(player -> {
-			ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET_REQ, data);
-		});
+		players.forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET_REQ, data));
 	}
 
 }

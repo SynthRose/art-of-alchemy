@@ -19,7 +19,7 @@ public class AoAItems {
 
 	public static final Item ICON_ITEM = new Item(new Item.Settings());	
 	public static final Item AZOTH = new Item(defaults());
-	public static final Item ALCHEMY_FORMULA = new Item(defaults());
+	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(defaults().maxCount(1));
 	
 	public static final Item MATERIA_OMEGA = new ItemMateria(defaults(Rarity.RARE), MateriaRank.OMEGA);
 	public static final Item MATERIA_S = new ItemMateria(defaults(Rarity.UNCOMMON), MateriaRank.S);
@@ -30,9 +30,9 @@ public class AoAItems {
 	public static final Item MATERIA_E = new ItemMateria(defaults(), MateriaRank.E);
 	public static final Item MATERIA_F = new ItemMateria(defaults(), MateriaRank.F);
 	
-	public static Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
-	public static Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
-	public static Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
+	public static final Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
+	public static final Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
+	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
 	
 	public static void registerItems() {
 		register("icon_item", ICON_ITEM);

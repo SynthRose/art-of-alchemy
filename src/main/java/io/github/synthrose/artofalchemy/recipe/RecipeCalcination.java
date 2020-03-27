@@ -14,12 +14,12 @@ import net.minecraft.world.World;
 
 public class RecipeCalcination implements Recipe<Inventory> {
 	
-	protected Identifier id;
-	protected String group;
-	protected Ingredient input;
-	protected ItemStack output;
-	protected float factor;
-	protected ItemStack container;
+	protected final Identifier id;
+	protected final String group;
+	protected final Ingredient input;
+	protected final ItemStack output;
+	protected final float factor;
+	protected final ItemStack container;
 	
 	public RecipeCalcination(Identifier id, String group, Ingredient input, ItemStack output, float factor, ItemStack container) {
 		this.id = id;

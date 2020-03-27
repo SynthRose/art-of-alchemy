@@ -14,8 +14,8 @@ public class AoAFluids {
 	
 	public static BaseFluid ALKAHEST;
 	public static BaseFluid ALKAHEST_FLOWING;
-	public static Map<Essentia, BaseFluid> ESSENTIA_FLUIDS = new HashMap<>();
-	public static Map<Essentia, BaseFluid> ESSENTIA_FLUIDS_FLOWING = new HashMap<>();
+	public static final Map<Essentia, BaseFluid> ESSENTIA_FLUIDS = new HashMap<>();
+	public static final Map<Essentia, BaseFluid> ESSENTIA_FLUIDS_FLOWING = new HashMap<>();
 
 	public static void registerFluids() {
 		ALKAHEST 			= register("alkahest", new FluidAlkahest.Still());

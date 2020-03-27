@@ -19,13 +19,13 @@ import io.github.synthrose.artofalchemy.item.ItemMateria;
 
 public class RecipeSynthesis implements Recipe<Inventory> {
 	
-	protected Identifier id;
-	protected String group;
-	protected Ingredient target;
-	protected Ingredient materia;
-	protected EssentiaStack essentia;
-	protected Ingredient container;
-	protected int cost;
+	protected final Identifier id;
+	protected final String group;
+	protected final Ingredient target;
+	protected final Ingredient materia;
+	protected final EssentiaStack essentia;
+	protected final Ingredient container;
+	protected final int cost;
 	
 	public RecipeSynthesis(Identifier id, String group, Ingredient target, Ingredient materia, EssentiaStack essentia,
 			Ingredient container, int cost) {

@@ -5,6 +5,7 @@ import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -246,8 +247,8 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	}
 	
 	@Override
-	public void fromTag(CompoundTag tag) {
-		super.fromTag(tag);
+	public void fromTag(BlockState state, CompoundTag tag) {
+		super.fromTag(state, tag);
 		Inventories.fromTag(tag, items);
 		xp = tag.getInt("xp");
 		progress = tag.getInt("progress");
@@ -349,7 +350,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 
 	@Override
 	public void fromClientTag(CompoundTag tag) {
-		fromTag(tag);
+		fromTag(world.getBlockState(pos), tag);
 	}
 
 	@Override

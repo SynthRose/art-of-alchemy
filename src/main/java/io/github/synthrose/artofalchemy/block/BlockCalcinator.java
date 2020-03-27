@@ -29,14 +29,12 @@ import net.minecraft.world.World;
 
 public class BlockCalcinator extends Block implements BlockEntityProvider {
 	
-	public static DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-	public static BooleanProperty LIT = Properties.LIT;
+	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+	public static final BooleanProperty LIT = Properties.LIT;
 	public static final Settings SETTINGS = Settings
 		.of(Material.STONE)
 		.strength(5.0f, 6.0f)
-		.lightLevel((state) ->{
-			return state.get(LIT) ? 15 : 0;
-		})
+		.lightLevel((state) -> state.get(LIT) ? 15 : 0)
 		.nonOpaque();
 
 	public static Identifier getId() {
@@ -47,7 +45,6 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 		super(SETTINGS);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
-	
 	
 	@Override
 	protected void appendProperties(Builder<Block, BlockState> builder) {

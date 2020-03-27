@@ -2,10 +2,10 @@ package io.github.synthrose.artofalchemy.essentia;
 
 public interface HasEssentia {
 	
-	public EssentiaContainer getContainer(int id);
-	public int getNumContainers();
+	EssentiaContainer getContainer(int id);
+	int getNumContainers();
 	
-	public default EssentiaContainer getContainer() {
+	default EssentiaContainer getContainer() {
 		return getContainer(0);
 	}
 

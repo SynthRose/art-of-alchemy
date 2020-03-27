@@ -2,6 +2,8 @@ package io.github.synthrose.artofalchemy.item;
 
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-public class ItemAlchemyFormula extends Item {
+public class ItemAlchemyFormula extends AbstractItemFormula<Item> {
 
 	public ItemAlchemyFormula(Settings settings) {
 		super(settings);
@@ -35,7 +37,8 @@ public class ItemAlchemyFormula extends Item {
 		CompoundTag tag = stack.getOrCreateTag();
 		tag.put("formula", StringTag.of(Registry.ITEM.getId(formula).toString()));
 	}
-	
+
+	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext ctx) {
 		tooltip.add(new TranslatableText(getFormula(stack).getTranslationKey()).formatted(Formatting.GRAY));

@@ -5,6 +5,7 @@ import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.FuelHelper;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -110,11 +111,7 @@ Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory 
 			if (outSlot.isEmpty()) {
 				return true;
 			} else if (outSlot.getItem() == outStack.getItem()) {
-				if (outSlot.getCount() <= outSlot.getMaxCount() - count) {
-					return true;
-				} else {
-					return false;
-				}
+				return outSlot.getCount() <= outSlot.getMaxCount() - count;
 			} else {
 				return false;
 			}
@@ -159,8 +156,8 @@ Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory 
 	}
 	
 	@Override
-	public void fromTag(CompoundTag tag) {
-		super.fromTag(tag);
+	public void fromTag(BlockState state, CompoundTag tag) {
+		super.fromTag(state, tag);
 		Inventories.fromTag(tag, items);
 		fuel = tag.getInt("fuel");
 		progress = tag.getInt("progress");
@@ -259,7 +256,7 @@ Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory 
 	
 	@Override
 	public void fromClientTag(CompoundTag tag) {
-		fromTag(tag);
+		fromTag(world.getBlockState(pos), tag);
 	}
 	
 	@Override

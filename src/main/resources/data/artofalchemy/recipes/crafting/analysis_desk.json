@@ -7,10 +7,10 @@
 	],
 	"key": {
 		"A": { "item":"artofalchemy:azoth" },
-		"T": { "item":"minecraft:smithing_table" },
+		"T": { "item":"minecraft:crafting_table" },
 		"Q": { "item":"minecraft:quartz" }
 	},
 	"result": {
-		"item": "artofalchemy:synthesis_table"
+		"item": "artofalchemy:analysis_desk"
 	}
 }

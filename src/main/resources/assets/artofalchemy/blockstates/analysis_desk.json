@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "artofalchemy:block/analysis_desk",
+			"y": 0
+		},
+		"facing=east": {
+			"model": "artofalchemy:block/analysis_desk",
+			"y": 90
+		},
+		"facing=south": {
+			"model": "artofalchemy:block/analysis_desk",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "artofalchemy:block/analysis_desk",
+			"y": 270
+		}
+	}
+}

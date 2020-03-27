@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "artofalchemy",
-  "version": "0.1.0+20w12a",
+  "version": "0.1.0+20w13b",
   "name": "Art of Alchemy",
   "description": "An alchemical mod for everyone's favorite block game.",
   "authors": [
@@ -23,9 +23,7 @@
     ],
     "server": []
   },
-  "mixins": [
-  	"artofalchemy.mixins.json"
-  ],
+  "mixins": [],
   "depends": {
   	"libgui": ">=1.8.0",
     "fabricloader": ">=0.4.0",

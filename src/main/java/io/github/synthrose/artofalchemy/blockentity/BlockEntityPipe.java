@@ -12,7 +12,7 @@ import io.github.synthrose.artofalchemy.essentia.HasEssentia;
 
 public class BlockEntityPipe extends BlockEntity implements Tickable {
 	
-	private int OPERATION_TIME = 10;
+	private final int OPERATION_TIME = 10;
 	private int timer = 0;
 
 	public BlockEntityPipe() {

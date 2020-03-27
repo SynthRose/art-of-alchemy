@@ -18,15 +18,17 @@ public class AoABlocks {
 	public static final Block CALCINATOR = new BlockCalcinator();
 	public static final Block DISSOLVER = new BlockDissolver();
 	public static final Block SYNTHESIZER = new BlockSynthesizer();
+	public static final Block ANALYZER = new BlockAnalyzer();
 	public static final Block PIPE = new BlockPipe();
 	
 	public static final Block ALKAHEST = new BlockAlkahest();
-	public static Map<Essentia, Block> ESSENTIA = new HashMap<>();
+	public static final Map<Essentia, Block> ESSENTIA = new HashMap<>();
 	
 	public static void registerBlocks() {
 		register("calcination_furnace", CALCINATOR);
 		register("dissolution_chamber", DISSOLVER);
 		register("synthesis_table", SYNTHESIZER);
+		register("analysis_desk", ANALYZER);
 		register("essentia_pipe", PIPE);
 		
 		registerItemless("alkahest", ALKAHEST);

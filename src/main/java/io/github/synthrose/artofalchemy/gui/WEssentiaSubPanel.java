@@ -21,10 +21,10 @@ public class WEssentiaSubPanel extends WPlainPanel {
 	private Essentia essentia = null;
 	private Integer amount = 0;
 	private Integer required = 0;
-	private WSprite bg = new WSprite(ArtOfAlchemy.id("textures/gui/essentia_banner.png"));
-	private WSprite sprite = new WSprite(null);
-	private WLabel amtLabel = new WLabel("0");
-	private WLabel typeLabel = new WLabel("Empty");
+	private final WSprite bg = new WSprite(ArtOfAlchemy.id("textures/gui/essentia_banner.png"));
+	private final WSprite sprite = new WSprite(null);
+	private final WLabel amtLabel = new WLabel("0");
+	private final WLabel typeLabel = new WLabel("Empty");
 	
 	public WEssentiaSubPanel() {
 		bg.setParent(this);
@@ -70,7 +70,7 @@ public class WEssentiaSubPanel extends WPlainPanel {
 				amtLabel.setText(new LiteralText(Integer.toString(amount - required)));
 			} else {
 				amtLabel.setColor(0x00AA00, 0x55FF55);
-				amtLabel.setText(new LiteralText("+" + Integer.toString(amount - required)));
+				amtLabel.setText(new LiteralText("+" + (amount - required)));
 			}
 		}
 	}

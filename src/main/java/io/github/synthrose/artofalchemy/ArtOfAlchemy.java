@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ArtOfAlchemy implements ModInitializer {
 
-    public static Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "artofalchemy";
     public static final String MOD_NAME = "Art of Alchemy";

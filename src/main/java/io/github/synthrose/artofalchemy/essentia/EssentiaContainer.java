@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 
 public class EssentiaContainer {
 
-	private EssentiaStack contents = new EssentiaStack();
-	private Set<Essentia> whitelist = new HashSet<>();
+	private final EssentiaStack contents = new EssentiaStack();
+	private final Set<Essentia> whitelist = new HashSet<>();
 	private Integer capacity = null;
 	private boolean input = true;
 	private boolean output = true;

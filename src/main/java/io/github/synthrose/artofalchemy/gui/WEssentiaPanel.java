@@ -18,7 +18,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	protected EssentiaStack required = new EssentiaStack();
 		
 	public WEssentiaPanel(EssentiaContainer container) {
-		super(new ArrayList<Essentia>(), null, null);
+		super(new ArrayList<>(), null, null);
 		this.container = container;
 		this.supplier = WEssentiaSubPanel::new;
 		this.configurator = null;
@@ -26,7 +26,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	}
 	
 	public WEssentiaPanel(EssentiaContainer container, EssentiaStack required) {
-		super(new ArrayList<Essentia>(), null, null);
+		super(new ArrayList<>(), null, null);
 		this.container = container;
 		this.required = required;
 		this.supplier = WEssentiaSubPanel::new;
@@ -40,9 +40,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	
 	public void updateEssentia(EssentiaContainer container) {
 		this.container = container;
-		this.configurator = (Essentia essentia, WEssentiaSubPanel panel) -> {
-			panel.setEssentia(essentia, container.getCount(essentia));
-		};
+		this.configurator = (Essentia essentia, WEssentiaSubPanel panel) -> panel.setEssentia(essentia, container.getCount(essentia));
 		rebuildList();
 		reconfigure();
 		this.layout();
@@ -51,10 +49,8 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	public void updateEssentia(EssentiaContainer container, EssentiaStack required) {
 		this.container = container;
 		this.required = required;
-		this.configurator = (Essentia essentia, WEssentiaSubPanel panel) -> {
-			panel.setEssentia(essentia, container.getCount(essentia),
-					required.getOrDefault(essentia, 0));
-		};
+		this.configurator = (Essentia essentia, WEssentiaSubPanel panel) -> panel.setEssentia(essentia, container.getCount(essentia),
+				required.getOrDefault(essentia, 0));
 		rebuildList();
 		reconfigure();
 		this.layout();
@@ -80,9 +76,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 		
 		data.clear();
 		data.addAll(sortOrder.keySet());
-		data.sort((key1, key2) -> {
-			return sortOrder.get(key2) - sortOrder.get(key1);
-		});
+		data.sort((key1, key2) -> sortOrder.get(key2) - sortOrder.get(key1));
 		
 		if (data.isEmpty()) {
 			data.add(null);

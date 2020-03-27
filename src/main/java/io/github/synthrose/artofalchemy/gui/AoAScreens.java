@@ -1,5 +1,6 @@
 package io.github.synthrose.artofalchemy.gui;
 
+import io.github.synthrose.artofalchemy.block.BlockAnalyzer;
 import io.github.synthrose.artofalchemy.block.BlockCalcinator;
 import io.github.synthrose.artofalchemy.block.BlockDissolver;
 import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
@@ -20,6 +21,9 @@ public class AoAScreens {
 			ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
         ScreenProviderRegistry.INSTANCE.registerFactory(BlockSynthesizer.getId(), (syncId, id, player, buf) ->
 			new ScreenSynthesizer(new ControllerSynthesizer(syncId, player.inventory,
+			ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
+		ScreenProviderRegistry.INSTANCE.registerFactory(BlockAnalyzer.getId(), (syncId, id, player, buf) ->
+			new ScreenAnalyzer(new ControllerAnalyzer(syncId, player.inventory,
 			ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
 	}
 

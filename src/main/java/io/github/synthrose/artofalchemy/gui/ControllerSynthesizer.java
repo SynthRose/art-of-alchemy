@@ -25,15 +25,13 @@ import net.minecraft.util.math.BlockPos;
 
 public class ControllerSynthesizer extends CottonCraftingController {
 	
-	BlockPos pos;
-	WEssentiaPanel essentiaPanel;
+	final BlockPos pos;
+	final WEssentiaPanel essentiaPanel;
 	
 	public ControllerSynthesizer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
 		super(AoARecipes.SYNTHESIS, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
-		pos = ctx.run((world, pos) -> {
-			return pos;
-		}, null);
+		pos = ctx.run((world, pos) -> pos, null);
 		
 		WGridPanel root = new WGridPanel(1);
 		setRootPanel(root);
@@ -43,7 +41,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		root.add(background, 0, 0, 9 * 18, 5 * 18);
 		
 		WItemSlot inSlot = WItemSlot.of(blockInventory, 0);
-		root.add(inSlot, 4 * 18, 1 * 18 - 4);
+		root.add(inSlot, 4 * 18, 18 - 4);
 		
 		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 1);
 		root.add(outSlot, 6 * 18, 2 * 18);
@@ -67,21 +65,25 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_cyan.png"), 1, 2, Direction.RIGHT);
-		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 1 * 18);
+		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 18);
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.synthesis_table"), WLabel.DEFAULT_TEXT_COLOR);
 		title.setAlignment(Alignment.CENTER);
-		root.add(title, 0, -1, 9 * 18, 1 * 18);
-		
+		root.add(title, 0, -1, 9 * 18, 18);
+
 		WDynamicLabel alert = new WDynamicLabel(() -> {
 			switch (propertyDelegate.get(3)) {
 			case 2:
+				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".target_warning");
 			case 3:
+				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".materia_warning");
 			case 4:
+				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".essentia_warning");
 			case 5:
+				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".container_warning");
 			default:
 				return "";
@@ -97,7 +99,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 //		root.add(xpLabel, 0, -2, 9, 1);
 		
 		essentiaPanel = new WEssentiaPanel(getEssentia(ctx), getRequirements(ctx));
-		root.add(essentiaPanel, 4, 1 * 18 - 7, 3 * 18, 4 * 18);
+		root.add(essentiaPanel, 4, 18 - 7, 3 * 18, 4 * 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
 		

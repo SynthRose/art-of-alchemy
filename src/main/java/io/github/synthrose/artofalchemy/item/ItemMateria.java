@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemMateria extends Item {
 	
-	private MateriaRank rank;
+	private final MateriaRank rank;
 
 	public ItemMateria(Settings settings, MateriaRank rank) {
 		super(settings);

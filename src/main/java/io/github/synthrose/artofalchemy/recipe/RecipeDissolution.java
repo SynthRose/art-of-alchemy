@@ -16,12 +16,12 @@ import net.minecraft.world.World;
 
 public class RecipeDissolution implements Recipe<Inventory> {
 	
-	protected Identifier id;
-	protected String group;
-	protected Ingredient input;
-	protected EssentiaStack essentia;
-	protected float factor;
-	protected ItemStack container;
+	protected final Identifier id;
+	protected final String group;
+	protected final Ingredient input;
+	protected final EssentiaStack essentia;
+	protected final float factor;
+	protected final ItemStack container;
 	
 	public RecipeDissolution(Identifier id, String group, Ingredient input, EssentiaStack essentia, float factor, ItemStack container) {
 		this.id = id;

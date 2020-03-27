@@ -10,7 +10,7 @@ public enum MateriaRank {
 	E     (1),
 	F     (0);
 	
-	private int tier;
+	private final int tier;
 	
 	MateriaRank(int tier) {
 		this.tier = tier;

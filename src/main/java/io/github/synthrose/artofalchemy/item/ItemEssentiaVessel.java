@@ -60,11 +60,7 @@ public class ItemEssentiaVessel extends Item {
 	public ItemEssentiaVessel(Settings settings) {
 		this(settings, null);
 	}
-	
-	public boolean isEmpty() {
-		return false;
-	}
-	
+
 	@Override
 	public ItemStack getStackForRender() {
 		return new ItemStack(AoAItems.ESSENTIA_VESSELS.get(null));
@@ -89,7 +85,7 @@ public class ItemEssentiaVessel extends Item {
 	
 	public void setContainer(ItemStack stack, EssentiaContainer container) {
 		if (TYPE != null) {
-			container.setWhitelist(new HashSet<Essentia>()).whitelist(TYPE).setWhitelistEnabled(true);
+			container.setWhitelist(new HashSet<>()).whitelist(TYPE).setWhitelistEnabled(true);
 		}
 		container.in(stack);
 	}

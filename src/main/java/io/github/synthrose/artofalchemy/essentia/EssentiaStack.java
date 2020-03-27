@@ -64,9 +64,7 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 				list.add(key);
 			}
 		}
-		list.sort((item1, item2) -> {
-			return get(item2) - get(item1);
-		});
+		list.sort((item1, item2) -> get(item2) - get(item1));
 		return list;
 	}
 	
@@ -80,18 +78,16 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	
 	// Mutating scalar multiplication. Can go negative - try not to break things.
 	public void multiply(int scalar) {
-		this.forEach((essentia, __) -> {multiply(essentia, scalar);});
+		this.forEach((essentia, __) -> multiply(essentia, scalar));
 	}
 	public void multiply(double scalar) {
-		this.forEach((essentia, __) -> {multiply(essentia, scalar);});
+		this.forEach((essentia, __) -> multiply(essentia, scalar));
 	}
 	
 	// Non-mutating scalar multiplication. Can go negative - try not to break things.
 	public EssentiaStack multiply(EssentiaStack inStack, int scalar) {
 		EssentiaStack outStack = new EssentiaStack();
-		inStack.forEach((essentia, amount) -> {
-			outStack.put(essentia, amount * scalar);
-		});
+		inStack.forEach((essentia, amount) -> outStack.put(essentia, amount * scalar));
 		return outStack;
 	}
 	
@@ -108,12 +104,10 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	// Non-mutating addition.
 	public static EssentiaStack add(EssentiaStack stack1, EssentiaStack stack2) {
 		EssentiaStack outStack = new EssentiaStack();
-		Set<Essentia> union = new HashSet<Essentia>();
+		Set<Essentia> union = new HashSet<>();
 		union.addAll(stack1.keySet());
 		union.addAll(stack2.keySet());
-		union.forEach((essentia) -> {
-			outStack.put(essentia, stack1.getOrDefault(essentia, 0) + stack2.getOrDefault(essentia, 0));
-		});
+		union.forEach((essentia) -> outStack.put(essentia, stack1.getOrDefault(essentia, 0) + stack2.getOrDefault(essentia, 0)));
 		return outStack;
 	}
 	
@@ -141,7 +135,7 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	
 	// Returns true if this stack contains at least as much essentia of all types as the argument.
 	public boolean contains(EssentiaStack other) {
-		Set<Essentia> union = new HashSet<Essentia>();
+		Set<Essentia> union = new HashSet<>();
 		union.addAll(this.keySet());
 		union.addAll(other.keySet());
 		for (Essentia essentia : union) {

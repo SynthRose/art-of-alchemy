@@ -5,6 +5,7 @@ import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -161,7 +162,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			
 			float factor = EFFICIENCY * recipe.getFactor();
 			if (inSlot.isDamageable()) {
-				factor *= 1.0 - inSlot.getDamage() / inSlot.getMaxDamage();
+				factor *= 1.0 - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			}
 			results.multiply(factor);
 			
@@ -185,7 +186,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		
 		float factor = EFFICIENCY * recipe.getFactor();
 		if (inSlot.isDamageable()) {
-			factor *= 1.0 - (inSlot.getDamage() / inSlot.getMaxDamage());
+			factor *= 1.0 - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 		}
 		results.multiply(factor);
 		
@@ -212,8 +213,8 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	}
 	
 	@Override
-	public void fromTag(CompoundTag tag) {
-		super.fromTag(tag);
+	public void fromTag(BlockState state, CompoundTag tag) {
+		super.fromTag(state, tag);
 		Inventories.fromTag(tag, items);
 		alkahest = tag.getInt("alkahest");
 		progress = tag.getInt("progress");
@@ -307,7 +308,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 
 	@Override
 	public void fromClientTag(CompoundTag tag) {
-		fromTag(tag);
+		fromTag(world.getBlockState(pos), tag);
 	}
 
 	@Override

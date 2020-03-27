@@ -43,7 +43,7 @@ public class BlockPipe extends Block implements BlockEntityProvider {
 		PUSH("push"),
 		PASSIVE("passive");
 		
-		private String string;
+		private final String string;
 		
 		IOFace(String string) {
 			this.string = string;

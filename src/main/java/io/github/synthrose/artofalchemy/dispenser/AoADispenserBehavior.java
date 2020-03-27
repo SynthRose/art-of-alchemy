@@ -15,7 +15,7 @@ import io.github.synthrose.artofalchemy.item.AoAItems;
 
 public class AoADispenserBehavior {
 	
-	protected static DispenserBehavior VESSEL_BEHAVIOR = new DispenserBehavior() {
+	protected static final DispenserBehavior VESSEL_BEHAVIOR = new DispenserBehavior() {
 		@Override
 		public ItemStack dispense(BlockPointer pointer, ItemStack stack) {
 			Direction facing = pointer.getBlockState().get(DispenserBlock.FACING);
@@ -25,7 +25,7 @@ public class AoADispenserBehavior {
 		}
 	};
 	
-	protected static DispenserBehavior ALKAHEST_BEHAVIOR = new DispenserBehavior() {
+	protected static final DispenserBehavior ALKAHEST_BEHAVIOR = new DispenserBehavior() {
 		@Override
 		public ItemStack dispense(BlockPointer pointer, ItemStack stack) {
 			Direction facing = pointer.getBlockState().get(DispenserBlock.FACING);
