@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.controller;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.*;
@@ -7,6 +7,7 @@ import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.gui.widget.WEssentiaPanel;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.I18n;

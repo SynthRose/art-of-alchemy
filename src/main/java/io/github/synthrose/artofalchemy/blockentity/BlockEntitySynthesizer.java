@@ -1,6 +1,7 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import io.github.synthrose.artofalchemy.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
@@ -8,6 +9,7 @@ import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import io.github.synthrose.artofalchemy.essentia.HasEssentia;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
+import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.item.ItemMateria;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
@@ -159,11 +161,8 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 			Ingredient materia = recipe.getMateria();
 			EssentiaStack essentia = recipe.getEssentia();
 			int cost = recipe.getCost();
-			
-			Item target = targetSlot.getItem();
-			if (target instanceof ItemAlchemyFormula) {
-				target = ItemAlchemyFormula.getFormula(targetSlot);
-			}
+
+			Item target = AoAHelper.getTarget(targetSlot);
 			
 			int tier = 1;
 			if (inSlot.getItem() instanceof ItemMateria) {
@@ -219,10 +218,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 		int cost = recipe.getCost();
 //		int xpCost = recipe.getXp(targetSlot);
 		
-		Item target = targetSlot.getItem();
-		if (target instanceof ItemAlchemyFormula) {
-			target = ItemAlchemyFormula.getFormula(targetSlot);
-		}
+		Item target = AoAHelper.getTarget(targetSlot);
 		
 		if (container != Ingredient.EMPTY || outSlot.isEmpty()) {
 			items.set(1, new ItemStack(target));

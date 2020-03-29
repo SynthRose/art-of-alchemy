@@ -1,9 +1,11 @@
 package io.github.synthrose.artofalchemy.recipe;
 
 
+import io.github.synthrose.artofalchemy.AoAHelper;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
+import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.item.ItemMateria;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -41,12 +43,7 @@ public class RecipeSynthesis implements Recipe<Inventory> {
 	@Override
 	public boolean matches(Inventory inv, World world) {
 		ItemStack stack = inv.getInvStack(2);
-		if (stack.getItem() instanceof ItemAlchemyFormula) {
-			Item targetItem = ItemAlchemyFormula.getFormula(stack);
-			return target.test(new ItemStack(targetItem));
-		} else {
-			return target.test(stack);
-		}
+		return target.test(new ItemStack(AoAHelper.getTarget(stack)));
 	}
 
 	@Override

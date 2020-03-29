@@ -1,6 +1,5 @@
 package io.github.synthrose.artofalchemy.essentia;
 
-import blue.endless.jankson.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -61,8 +60,7 @@ public class EssentiaContainer {
 			}	
 		}
 	}
-	
-	@Nullable
+
 	public static EssentiaContainer of(ItemStack item) {
 		EssentiaContainer container;
 		if (item.hasTag() && item.getTag().contains("contents")) {

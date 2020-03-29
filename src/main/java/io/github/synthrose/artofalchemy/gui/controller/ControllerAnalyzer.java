@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.controller;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -6,6 +6,7 @@ import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.synthrose.artofalchemy.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.item.AbstractItemFormula;
 import io.github.synthrose.artofalchemy.item.AoAItems;
@@ -88,6 +89,7 @@ public class ControllerAnalyzer extends CottonCraftingController {
 
 	@Override
 	public void close(PlayerEntity player) {
+		inventory.removeInvStack(3);
 		dropInventory(player, world, inventory);
 		super.close(player);
 	}
@@ -111,9 +113,9 @@ public class ControllerAnalyzer extends CottonCraftingController {
 	public void updateRecipe() {
 		if (!world.isClient) {
 			if (inventory.getInvStack(0).getItem() == Items.PAPER && inventory.getInvStack(1).getItem() == Items.INK_SAC
-					&& !inventory.getInvStack(2).isEmpty() && !(inventory.getInvStack(2).getItem() instanceof AbstractItemFormula)) {
+					&& !inventory.getInvStack(2).isEmpty()) {
 				ItemStack formula = new ItemStack(AoAItems.ALCHEMY_FORMULA);
-				ItemAlchemyFormula.setFormula(formula, inventory.getInvStack(2).getItem());
+				ItemAlchemyFormula.setFormula(formula, AoAHelper.getTarget(inventory.getInvStack(2)));
 				inventory.setInvStack(3, formula);
 			} else {
 				inventory.setInvStack(3, ItemStack.EMPTY);

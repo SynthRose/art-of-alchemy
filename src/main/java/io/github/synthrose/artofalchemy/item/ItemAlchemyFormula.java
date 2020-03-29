@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemAlchemyFormula extends AbstractItemFormula<Item> {
+public class ItemAlchemyFormula extends AbstractItemFormula {
 
 	public ItemAlchemyFormula(Settings settings) {
 		super(settings);
@@ -44,6 +44,5 @@ public class ItemAlchemyFormula extends AbstractItemFormula<Item> {
 		tooltip.add(new TranslatableText(getFormula(stack).getTranslationKey()).formatted(Formatting.GRAY));
 		super.appendTooltip(stack, world, tooltip, ctx);
 	}
-	
 
 }

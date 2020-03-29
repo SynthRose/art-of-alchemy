@@ -1,6 +1,5 @@
 package io.github.synthrose.artofalchemy.item;
 
-import blue.endless.jankson.annotation.Nullable;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.HasEssentia;
@@ -41,7 +40,7 @@ public class ItemEssentiaVessel extends Item {
 		TYPE = type;
 		this.addPropertyGetter(new Identifier("level"), new ItemPropertyGetter() {
 			@Environment(EnvType.CLIENT)
-			public float call(ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
+			public float call(ItemStack stack, World world, LivingEntity entity) {
 				EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
 				double level = contents.getCount();
 				if (!contents.hasUnlimitedCapacity()) {

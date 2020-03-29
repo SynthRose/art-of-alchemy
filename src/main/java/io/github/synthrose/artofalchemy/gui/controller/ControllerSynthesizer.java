@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.controller;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.*;
@@ -9,6 +9,7 @@ import io.github.synthrose.artofalchemy.blockentity.BlockEntitySynthesizer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.gui.widget.WEssentiaPanel;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.I18n;
@@ -22,7 +23,8 @@ public class ControllerSynthesizer extends CottonCraftingController {
 	
 	final BlockPos pos;
 	final WEssentiaPanel essentiaPanel;
-	
+
+	@SuppressWarnings("MethodCallSideOnly")
 	public ControllerSynthesizer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
 		super(AoARecipes.SYNTHESIS, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
@@ -69,16 +71,12 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		WDynamicLabel alert = new WDynamicLabel(() -> {
 			switch (propertyDelegate.get(3)) {
 			case 2:
-				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".target_warning");
 			case 3:
-				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".materia_warning");
 			case 4:
-				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".essentia_warning");
 			case 5:
-				//noinspection MethodCallSideOnly
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".container_warning");
 			default:
 				return "";

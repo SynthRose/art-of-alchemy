@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.widget;
 
 import io.github.cottonmc.cotton.gui.widget.WListPanel;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
