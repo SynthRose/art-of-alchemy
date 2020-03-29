@@ -9,7 +9,6 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -19,6 +18,7 @@ public class AoAItems {
 
 	public static final Item ICON_ITEM = new Item(new Item.Settings());	
 	public static final Item AZOTH = new Item(defaults());
+	public static final Item JOURNAL = new ItemJournal(defaults());
 	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(defaults().maxCount(1));
 
 	public static final Map<MateriaRank, Item> MATERIA_DUSTS = new HashMap<>();
@@ -30,7 +30,8 @@ public class AoAItems {
 	public static void registerItems() {
 		register("icon_item", ICON_ITEM);
 		register("azoth", AZOTH);
-		
+
+		register("alchemical_journal", JOURNAL);
 		register("alchemy_formula", ALCHEMY_FORMULA);
 
 		// Register materia dusts

@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.screen;
 
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;

@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy;
 
-import io.github.synthrose.artofalchemy.gui.AoAScreens;
+import io.github.synthrose.artofalchemy.gui.screen.AoAScreens;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
 import io.github.synthrose.artofalchemy.render.AoARenderers;
 import net.fabricmc.api.ClientModInitializer;

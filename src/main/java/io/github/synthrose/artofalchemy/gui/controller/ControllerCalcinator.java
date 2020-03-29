@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.gui;
+package io.github.synthrose.artofalchemy.gui.controller;
 
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.*;

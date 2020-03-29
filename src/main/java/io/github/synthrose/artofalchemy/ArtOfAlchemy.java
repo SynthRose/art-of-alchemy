@@ -5,7 +5,7 @@ import io.github.synthrose.artofalchemy.blockentity.AoABlockEntities;
 import io.github.synthrose.artofalchemy.dispenser.AoADispenserBehavior;
 import io.github.synthrose.artofalchemy.essentia.AoAEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
-import io.github.synthrose.artofalchemy.gui.AoAContainers;
+import io.github.synthrose.artofalchemy.gui.controller.AoAContainers;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
