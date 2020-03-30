@@ -9,12 +9,9 @@ FileUtils.mkdir("synthesis") unless File.directory?("synthesis")
 sheet = CSV.open("sheet.csv", headers:true)
 sheet.each do |row|
   id = row[1]
-  filename = "#{row[1].gsub(":", "_")}.json"
   next if id.nil?
-
-  unless id.include?("!")
-    id = "minecraft:" + id
-  end
+  filename = "#{row[1].gsub(":", "_")}.json"
+  id = "minecraft:" + id unless id.include?(":")
 
   type = if row[2].nil? then "item" else "tag" end
   restricted = !row[3].nil?
@@ -30,7 +27,7 @@ sheet.each do |row|
   end
   essentia_factor = row[20].to_f || 1.0
 
-  unless materia.nil?
+  unless materia.nil? || materia_factor <= 0
     recipe = {}
     recipe["type"] = "artofalchemy:calcination"
     recipe["ingredient"] = { type => id }
@@ -41,7 +38,7 @@ sheet.each do |row|
     file.write(JSON.generate(recipe))
   end
 
-  unless essentia.empty?
+  unless essentia.empty? || essentia_factor <= 0
     recipe = {}
     recipe["type"] = "artofalchemy:dissolution"
     recipe["ingredient"] = { type => id }

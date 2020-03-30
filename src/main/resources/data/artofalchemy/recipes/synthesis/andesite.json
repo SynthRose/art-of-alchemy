@@ -1,1 +1,1 @@
-{"type":"artofalchemy:synthesis","target":{"item":"minecraft:andesite"},"materia":{"item":"artofalchemy:materia_f"},"essentia":{"artofalchemy:diana":1,"artofalchemy:ceres":1},"cost":1}
+{"type":"artofalchemy:synthesis","target":{"item":"minecraft:andesite"},"materia":{"item":"artofalchemy:materia_f"},"essentia":{"artofalchemy:mercury":2,"artofalchemy:ceres":2},"cost":1}

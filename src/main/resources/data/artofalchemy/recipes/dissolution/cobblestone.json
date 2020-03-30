@@ -1,1 +1,1 @@
-{"type":"artofalchemy:dissolution","ingredient":{"item":"minecraft:cobblestone"},"result":{"artofalchemy:mercury":1}}
+{"type":"artofalchemy:dissolution","ingredient":{"item":"minecraft:cobblestone"},"result":{"artofalchemy:mercury":2,"artofalchemy:saturn":2},"factor":0.5}
