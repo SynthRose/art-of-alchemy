@@ -26,7 +26,7 @@ public class AoAItems {
 	public static final Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
 	public static final Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
 	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
-	
+
 	public static void registerItems() {
 		register("icon_item", ICON_ITEM);
 		register("azoth", AZOTH);
@@ -49,7 +49,7 @@ public class AoAItems {
 					new BucketItem(AoAFluids.ESSENTIA_FLUIDS.get(essentia), defaults().maxCount(1))));
 		});
 		
-		// Register essentia vessels; add-on essentia buckets will be registered to THEIR namespace
+		// Register essentia vessels; add-on essentia vessels will be registered to THEIR namespace
 		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
 				new ItemEssentiaVessel(defaults(), null)));
 		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {

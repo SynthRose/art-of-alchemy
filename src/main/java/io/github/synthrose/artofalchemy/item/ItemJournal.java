@@ -44,13 +44,17 @@ public class ItemJournal extends AbstractItemFormula {
     }
 
     public static void setFormula(ItemStack stack, Item formula) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.put("selected", StringTag.of(Registry.ITEM.getId(formula).toString()));
+        setFormula(stack, Registry.ITEM.getId(formula));
     }
 
-    public static void setFormula(ItemStack stack, Identifier formula) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.put("selected", StringTag.of(formula.toString()));
+    public static boolean setFormula(ItemStack stack, Identifier formula) {
+        if (hasFormula(stack, formula) && formula != Registry.ITEM.getId(Items.AIR)) {
+            CompoundTag tag = stack.getOrCreateTag();
+            tag.put("selected", StringTag.of(formula.toString()));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static ListTag getOrCreateEntriesTag(ItemStack stack) {
@@ -85,15 +89,12 @@ public class ItemJournal extends AbstractItemFormula {
         return list;
     }
 
-    public static boolean addFormula(ItemStack stack, Item formula) {
-        ListTag entries = getOrCreateEntriesTag(stack);
-        StringTag newEntry = StringTag.of(Registry.ITEM.getId(formula).toString());
-        if (!entries.contains(newEntry) && formula != Items.AIR) {
-            entries.add(newEntry);
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean hasFormula(ItemStack stack, Identifier formula) {
+        return getOrCreateEntriesTag(stack).contains(StringTag.of(formula.toString()));
+    }
+
+    public static boolean hasFormula(ItemStack stack, Item formula) {
+        return hasFormula(stack, Registry.ITEM.getId(formula));
     }
 
     public static boolean addFormula(ItemStack stack, Identifier formula) {
@@ -105,6 +106,10 @@ public class ItemJournal extends AbstractItemFormula {
         } else {
             return false;
         }
+    }
+
+    public static boolean addFormula(ItemStack stack, Item formula) {
+        return addFormula(stack, Registry.ITEM.getId(formula));
     }
 
     @Override
