@@ -39,9 +39,7 @@ recombined in a Synthesis Table with a small sample of a desired substance to cr
 ## Questions & Answers
 
 **What sort of state is the mod in?**  
-A very early one! The most basic functionality of the mod is there - the Calcination Furnace, Dissolution Chamber, and
-Projection Table - but the mod lacks recipes for the vast majority of vanilla items and a lot of planned features. If you
-want to help make recipes for the mod, you can head over to [this spreadsheet](https://docs.google.com/spreadsheets/d/154XPt0xTNqfSSH5Ybp8lZ18sUFIr32FTcV5lL-OhrOQ/edit?usp=sharing) and suggest changes.
+Coming along! The three core machines - the Calcination Furnace, Dissolution Chamber, and Projection Table - are there, as is the Alchemical Journal. Most vanilla raw resources have recipes, but many crafted items still lack them, as do modded resources such as from [CottonResources](https://github.com/CottonMC/CottonResources) or [TechReborn](https://github.com/TechReborn/TechReborn). If you want to help make recipes for the mod, you can head over to [this spreadsheet](https://docs.google.com/spreadsheets/d/154XPt0xTNqfSSH5Ybp8lZ18sUFIr32FTcV5lL-OhrOQ/edit?usp=sharing) and suggest changes.
 
 **Can you port this to Forge or an older Minecraft version?**  
 No. I work on this mod in my spare time for fun; writing a port and maintaining multiple versions of the
