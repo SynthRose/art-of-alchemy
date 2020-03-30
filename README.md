@@ -4,7 +4,7 @@ An alchemical mod for Minecraft 1.16.x / Fabric.
 ## Mod Requirements & Acknowledgments
 To use this mod, you will need:
 
-* Minecraft 20w12a
+* Minecraft 20w13b
 * The [Fabric](https://fabricmc.net/) mod loader
 * The [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
