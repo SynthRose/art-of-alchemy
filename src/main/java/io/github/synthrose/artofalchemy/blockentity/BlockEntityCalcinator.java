@@ -9,15 +9,14 @@ import io.github.synthrose.artofalchemy.block.BlockCalcinator;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
@@ -283,12 +282,7 @@ Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory 
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
 		if (dir == Direction.DOWN && slot == 0) {
-			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
-			if (tag == null) {
-				return false;
-			} else {
-				return tag.contains(stack.getItem());
-			}
+			return TagRegistry.item(ArtOfAlchemy.id("containers")).contains(stack.getItem());
 		} else {
 			return true;
 		}

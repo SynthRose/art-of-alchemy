@@ -1,1 +1,1 @@
-{"type":"artofalchemy:synthesis","target":{"item":"minecraft:redstone"},"materia":{"item":"artofalchemy:materia_c"},"essentia":{"artofalchemy:venus":54,"artofalchemy:diana":18},"cost":2}
+{"type":"artofalchemy:synthesis","target":{"item":"minecraft:redstone"},"materia":{"item":"artofalchemy:materia_c"},"essentia":{"artofalchemy:mercury":20,"artofalchemy:venus":40,"artofalchemy:saturn":20},"cost":2}

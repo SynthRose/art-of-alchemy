@@ -8,13 +8,12 @@ import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import io.github.synthrose.artofalchemy.essentia.HasEssentia;
-import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
-import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.item.ItemMateria;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeSynthesis;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -398,12 +397,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
 		if (slot == 1) {
-			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
-			if (tag == null) {
-				return true;
-			} else {
-				return !tag.contains(stack.getItem());
-			}
+			return TagRegistry.item(ArtOfAlchemy.id("containers")).contains(stack.getItem());
 		} else if (slot == 2) {
 			return world.isReceivingRedstonePower(pos);
 		} else {
