@@ -9,6 +9,8 @@ import io.github.synthrose.artofalchemy.gui.widget.WFormulaList;
 import io.github.synthrose.artofalchemy.item.AbstractItemFormula;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.BasicInventory;
@@ -27,7 +29,8 @@ public class ControllerJournal extends CottonCraftingController {
 
 	Hand hand;
 	WTextField searchBar;
-	WButton clearButton;
+	// When LibGUI fixes the dedi server crash, these hacks will be removed
+	WButton clearButton = null;
 	WFormulaList formulaList;
 	ItemStack journal;
 
@@ -69,14 +72,16 @@ public class ControllerJournal extends CottonCraftingController {
 		};
 		root.add(searchBar, 22, 14, 6 * 18 + 6, 12);
 
-		clearButton = new WButton(new LiteralText("❌"));
-		clearButton.setAlignment(Alignment.CENTER);
-		clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
-		clearButton.setOnClick(() -> {
-			ItemJournal.setFormula(this.journal, Items.AIR);
-			AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
-		});
-		root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			clearButton = new WButton(new LiteralText("❌"));
+			clearButton.setAlignment(Alignment.CENTER);
+			clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
+			clearButton.setOnClick(() -> {
+				ItemJournal.setFormula(this.journal, Items.AIR);
+				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
+			});
+			root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
+		}
 		
 		WSprite background = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/rune_bg.png"));
 		root.add(background, 0, 2 * 18 + 10, 9 * 18, 5 * 18);
@@ -92,7 +97,6 @@ public class ControllerJournal extends CottonCraftingController {
 		root.add(this.createPlayerInventoryPanel(), 0, 8 * 18);
 		
 		root.validate(this);
-
 	}
 
 	@Override
@@ -131,7 +135,9 @@ public class ControllerJournal extends CottonCraftingController {
 	public void refresh() {
 		if (journal.getItem() instanceof ItemJournal) {
 			formulaList.refresh(journal, searchBar.getText());
-			clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
+			}
 		} else {
 			this.close(playerInventory.player);
 		}

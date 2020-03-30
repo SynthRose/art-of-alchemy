@@ -6,6 +6,8 @@ import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,8 +27,8 @@ public class WFormulaListItem extends WPlainPanel {
 	private Item formula = Items.AIR;
 	private final WItemScalable itemDisplay;
 	private final WLabel formulaLabel;
-	private final WLabel typeLabel;
-	private final WButton setButton;
+//	private final WLabel typeLabel;
+	private WButton setButton = null;
 
 	@SuppressWarnings("MethodCallSideOnly")
 	public WFormulaListItem(ItemStack journal, Item formula) {
@@ -42,21 +44,24 @@ public class WFormulaListItem extends WPlainPanel {
 		formulaLabel = new WLabel(itemStackList.get(0).getName());
 		formulaLabel.setAlignment(Alignment.LEFT);
 		formulaLabel.setParent(this);
-		add(formulaLabel, 16, 0);
+//		add(formulaLabel, 16, -1);
+		add(formulaLabel, 16, 3);
 
-		typeLabel = new WLabel(new TranslatableText("gui.artofalchemy.formula_type.alchemy").formatted(Formatting.DARK_PURPLE));
-		typeLabel.setAlignment(Alignment.LEFT);
-		typeLabel.setParent(this);
-		add(typeLabel, 16, 8);
+//		typeLabel = new WLabel(new TranslatableText("gui.artofalchemy.formula_type.transmutation").formatted(Formatting.DARK_PURPLE));
+//		typeLabel.setAlignment(Alignment.LEFT);
+//		typeLabel.setParent(this);
+//		add(typeLabel, 16, 8);
 
-		setButton = new WButton(new LiteralText("✔"));
-		setButton.setAlignment(Alignment.CENTER);
-		setButton.setParent(this);
-		add(setButton, 7 * 18 - 1, -3, 20, 20);
-		setButton.setOnClick(() -> {
-			ItemJournal.setFormula(this.journal, this.formula);
-			AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(this.formula));
-		});
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			setButton = new WButton(new LiteralText("✔"));
+			setButton.setAlignment(Alignment.CENTER);
+			setButton.setParent(this);
+			add(setButton, 7 * 18 - 1, -3, 20, 20);
+			setButton.setOnClick(() -> {
+				ItemJournal.setFormula(this.journal, this.formula);
+				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(this.formula));
+			});
+		}
 
 		refresh(journal, formula);
 	}
@@ -70,7 +75,9 @@ public class WFormulaListItem extends WPlainPanel {
 		itemDisplay.getItems().clear();
 		itemDisplay.getItems().add(new ItemStack(formula));
 		formulaLabel.setText(itemDisplay.getItems().get(0).getName());
-		selected = ItemJournal.getFormula(journal) == formula;
-		setButton.setEnabled(!selected);
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			selected = ItemJournal.getFormula(journal) == formula;
+			setButton.setEnabled(!selected);
+		}
 	}
 }

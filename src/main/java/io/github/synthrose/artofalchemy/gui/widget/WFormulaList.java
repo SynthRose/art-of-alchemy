@@ -2,12 +2,12 @@ package io.github.synthrose.artofalchemy.gui.widget;
 
 import io.github.cottonmc.cotton.gui.widget.WListPanel;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.registry.Registry;
 
-import java.util.List;
 import java.util.Map;
 
 public class WFormulaList extends WListPanel<Item, WFormulaListItem> {
@@ -27,18 +27,20 @@ public class WFormulaList extends WListPanel<Item, WFormulaListItem> {
     @SuppressWarnings("MethodCallSideOnly")
     public void refresh(ItemStack journal, String filter) {
         this.journal = journal;
-        data = ItemJournal.getEntries(journal);
-        data.sort((Item item1, Item item2) -> item1.getName().toString().compareToIgnoreCase(item2.getName().toString()));
-        data.removeIf((item) -> {
-            String lcFilter = filter.toLowerCase();
-            if (item.getName().asString().toLowerCase().contains(lcFilter)) {
-                return false;
-            } else if (Registry.ITEM.getId(item).getPath().contains(lcFilter)) {
-                return false;
-            } else {
-                return true;
-            }
-        });
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            data = ItemJournal.getEntries(journal);
+            data.sort((Item item1, Item item2) -> item1.getName().toString().compareToIgnoreCase(item2.getName().toString()));
+            data.removeIf((item) -> {
+                String lcFilter = filter.toLowerCase();
+                if (item.getName().asString().toLowerCase().contains(lcFilter)) {
+                    return false;
+                } else if (Registry.ITEM.getId(item).getPath().contains(lcFilter)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        }
         reconfigure();
         layout();
     }

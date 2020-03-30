@@ -4,7 +4,7 @@
 
 	"item.artofalchemy.alchemical_journal": "Alchemical Journal",
 	"item.artofalchemy.alchemical_journal.tooltip_entries": "%d entries",
-	"item.artofalchemy.alchemy_formula": "Alchemy Formula",
+	"item.artofalchemy.alchemy_formula": "Transmutation Formula",
 	"item.artofalchemy.brewing_formula": "Brewing Formula",
 	"item.artofalchemy.enchantment_formula": "Enchantment Formula",
 	
@@ -118,7 +118,7 @@
 	"gui.artofalchemy.empty": "Empty",
 	"gui.artofalchemy.essentia_amount": "%d/%d",
 	"gui.artofalchemy.required_amount": "!%d",
-	"gui.artofalchemy.formula_type.alchemy": "Alchemy",
+	"gui.artofalchemy.formula_type.transmutation": "Transmutation",
 		
 	"itemGroup.artofalchemy.alchemy": "Art of Alchemy"
 }
