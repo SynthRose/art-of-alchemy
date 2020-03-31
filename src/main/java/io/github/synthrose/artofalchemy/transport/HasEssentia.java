@@ -1,4 +1,6 @@
-package io.github.synthrose.artofalchemy.essentia;
+package io.github.synthrose.artofalchemy.transport;
+
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 
 public interface HasEssentia {
 	

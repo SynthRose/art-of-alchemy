@@ -20,11 +20,11 @@ import org.apache.logging.log4j.Logger;
 
 public class ArtOfAlchemy implements ModInitializer {
 
-    public static final Logger LOGGER = LogManager.getLogger();
-
     public static final String MOD_ID = "artofalchemy";
     public static final String MOD_NAME = "Art of Alchemy";
-    
+
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
     public static final ItemGroup ALCHEMY_GROUP = FabricItemGroupBuilder.create(ArtOfAlchemy.id("alchemy"))
     		.icon(() -> new ItemStack(AoAItems.ICON_ITEM)).build();
 
@@ -32,7 +32,7 @@ public class ArtOfAlchemy implements ModInitializer {
     public void onInitialize() {
         log(Level.INFO, "Humankind cannot gain anything without first giving something in return. "
         		+ "To obtain, something of equal value must be lost.");
-        
+
         AoAEssentia.registerEssentia();
         AoAFluids.registerFluids();
         AoABlocks.registerBlocks();
@@ -43,7 +43,7 @@ public class ArtOfAlchemy implements ModInitializer {
         AoADispenserBehavior.registerDispenserBehavior();
         AoANetworking.initializeNetworking();
     }
-    
+
     public static Identifier id(String name) {
     	return new Identifier(MOD_ID, name);
     }

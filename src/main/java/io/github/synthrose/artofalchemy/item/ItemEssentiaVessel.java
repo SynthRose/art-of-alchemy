@@ -2,7 +2,7 @@ package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
@@ -38,16 +38,13 @@ public class ItemEssentiaVessel extends Item {
 	public ItemEssentiaVessel(Settings settings, Essentia type) {
 		super(settings.maxCount(1));
 		TYPE = type;
-		this.addPropertyGetter(new Identifier("level"), new ItemPropertyGetter() {
-			@Environment(EnvType.CLIENT)
-			public float call(ItemStack stack, World world, LivingEntity entity) {
-				EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
-				double level = contents.getCount();
-				if (!contents.hasUnlimitedCapacity()) {
-					level /= contents.getCapacity();
-				}
-				return (float) MathHelper.clamp(level, 0.0, 1.0);
+		this.addPropertyGetter(new Identifier("level"), (stack, world, entity) -> {
+			EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
+			double level = contents.getCount();
+			if (!contents.hasUnlimitedCapacity()) {
+				level /= contents.getCapacity();
 			}
+			return (float) MathHelper.clamp(level, 0.0, 1.0);
 		});
 	}
 	

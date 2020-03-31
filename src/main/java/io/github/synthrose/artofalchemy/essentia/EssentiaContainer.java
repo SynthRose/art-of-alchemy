@@ -21,7 +21,6 @@ public class EssentiaContainer {
 	private boolean whitelistEnabled = false;
 	
 	public EssentiaContainer() {
-		
 	}
 	
 	public EssentiaContainer(CompoundTag tag) {

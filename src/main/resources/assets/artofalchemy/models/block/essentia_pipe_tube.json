@@ -12,9 +12,7 @@
 				"north": {"uv": [0, 0, 2, 6], "texture": "#tube"},
 				"east": {"uv": [0, 0, 2, 6], "texture": "#tube"},
 				"south": {"uv": [0, 0, 2, 6], "texture": "#tube"},
-				"west": {"uv": [0, 0, 2, 6], "texture": "#tube"},
-				"up": {"uv": [0, 6, 2, 8], "texture": "#tube"},
-				"down": {"uv": [0, 6, 2, 8], "texture": "#tube"}
+				"west": {"uv": [0, 0, 2, 6], "texture": "#tube"}
 			}
 		}
 	]

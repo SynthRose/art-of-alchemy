@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy.fluid;
+package io.github.synthrose.artofalchemy.transport;
 
 public interface HasAlkahest {
 	

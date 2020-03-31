@@ -34,11 +34,7 @@ public class WFormulaList extends WListPanel<Item, WFormulaListItem> {
                 String lcFilter = filter.toLowerCase();
                 if (item.getName().asString().toLowerCase().contains(lcFilter)) {
                     return false;
-                } else if (Registry.ITEM.getId(item).getPath().contains(lcFilter)) {
-                    return false;
-                } else {
-                    return true;
-                }
+                } else return !Registry.ITEM.getId(item).getPath().contains(lcFilter);
             });
         }
         reconfigure();

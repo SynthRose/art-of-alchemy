@@ -47,7 +47,7 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 		super(SETTINGS);
 		setDefaultState(getDefaultState().with(FILLED, false).with(LIT, false));
 	}
-	
+
 	@Override
 	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(FILLED).add(LIT);

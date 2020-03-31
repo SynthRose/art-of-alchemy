@@ -4,6 +4,7 @@
   "package": "io.github.synthrose.artofalchemy.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinWorld"
   ],
   "client": [
   ],

@@ -8,7 +8,6 @@ import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.item.AbstractItemFormula;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,11 +32,7 @@ public class ControllerAnalyzer extends CottonCraftingController {
 				return stack.getItem() == Items.PAPER;
 			} else if (slot == 1) {
 				return stack.getItem() == Items.INK_SAC;
-			} else if (slot == 2) {
-				return true;
-			} else {
-				return false;
-			}
+			} else return slot == 2;
 		}
 	};
 
@@ -59,10 +54,10 @@ public class ControllerAnalyzer extends CottonCraftingController {
 		root.add(paperSlot, 2 * 18 + 4, 2 * 18);
 
 		WSprite inkIcon = new WSprite(new Identifier("minecraft", "textures/item/ink_sac.png"));
-		root.add(inkIcon, 4 * 18, 1 * 18 - 4, 16, 16);
+		root.add(inkIcon, 4 * 18, 18 - 4, 16, 16);
 		
 		WItemSlot inkSlot = WItemSlot.of(inventory, 1);
-		root.add(inkSlot, 4 * 18, 1 * 18 - 4);
+		root.add(inkSlot, 4 * 18, 18 - 4);
 
 		WSprite targetIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/target.png"));
 		root.add(targetIcon, 4 * 18, 3 * 18 + 4, 18, 18);
