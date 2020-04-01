@@ -1,18 +1,26 @@
 package io.github.synthrose.artofalchemy.block;
 
-import io.github.synthrose.artofalchemy.imixin.IMixinWorld;
+import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
 import io.github.synthrose.artofalchemy.transport.NetworkElement;
 import io.github.synthrose.artofalchemy.transport.NetworkNode;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -106,18 +114,19 @@ public class BlockPipe extends Block implements NetworkElement {
 		return false;
 	}
 
-	public int getConnectionCount(BlockState state) {
-		int i = 0;
+	public Set<BlockPos> getConnections(BlockState state, BlockPos pos) {
+		Set<BlockPos> connections = new HashSet<>();
 		for (Direction dir : faces.keySet()) {
 			if (state.get(getProperty(dir)) == IOFace.CONNECT) {
-				i++;
+				connections.add(pos.offset(dir));
 			}
 		}
-		return i;
+		return connections;
 	}
 
-	public int getConnectionCount(World world, BlockPos pos) {
-		return getConnectionCount(world.getBlockState(pos));
+	@Override
+	public Set<BlockPos> getConnections(World world, BlockPos pos) {
+		return getConnections(world.getBlockState(pos), pos);
 	}
 
 	@Override
@@ -146,18 +155,58 @@ public class BlockPipe extends Block implements NetworkElement {
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
-		((IMixinWorld) world).getEssentiaNetworker().add(pos);
+		if (!world.isClient()) {
+			EssentiaNetworker.get((ServerWorld) world).add(pos);
+		}
 	}
 
 	@Override
 	public void onBroken(IWorld world, BlockPos pos, BlockState state) {
-		((IMixinWorld) world).getEssentiaNetworker().remove(pos);
 		super.onBroken(world, pos, state);
+		if (!world.isClient()) {
+			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
+		}
+	}
+
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ItemStack stack = player.getStackInHand(hand);
+		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(stack.getItem())) {
+			return ActionResult.PASS;
+		}
+		EnumProperty<IOFace> property = getProperty(hit.getSide());
+		switch (state.get(property)) {
+			case NONE:
+			case CONNECT:
+				world.setBlockState(pos, state.with(property,  IOFace.PULL));
+				break;
+			case PULL:
+				world.setBlockState(pos, state.with(property,  IOFace.PUSH));
+				break;
+			case PUSH:
+				world.setBlockState(pos, state.with(property,  IOFace.PASSIVE));
+				break;
+			case PASSIVE:
+				world.setBlockState(pos, state.with(property,  IOFace.BLOCK));
+				break;
+			case BLOCK:
+				if (faceOpen(world.getBlockState(pos.offset(hit.getSide())), hit.getSide().getOpposite())) {
+					world.setBlockState(pos, state.with(property,  IOFace.CONNECT));
+				} else {
+					world.setBlockState(pos, state.with(property,  IOFace.NONE));
+				}
+				break;
+		}
+		if (!world.isClient()) {
+			EssentiaNetworker.get((ServerWorld) world).update(pos);
+		}
+		return ActionResult.SUCCESS;
 	}
 
 	public enum IOFace implements StringIdentifiable {
 		NONE,
 		CONNECT,
+		BLOCK,
 		PULL(NetworkNode.Type.PULL),
 		PUSH(NetworkNode.Type.PUSH),
 		PASSIVE(NetworkNode.Type.PASSIVE);

@@ -11,4 +11,5 @@ public interface NetworkElement {
     Set<NetworkNode> getNodes(World world, BlockPos pos);
     boolean isConnected(World world, BlockPos pos, Direction dir);
     boolean isConnected(World world, BlockPos pos, BlockPos other);
+    Set<BlockPos> getConnections(World world, BlockPos pos);
 }

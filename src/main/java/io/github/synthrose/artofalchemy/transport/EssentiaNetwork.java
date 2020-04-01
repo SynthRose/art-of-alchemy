@@ -1,4 +1,5 @@
 package io.github.synthrose.artofalchemy.transport;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +30,10 @@ public class EssentiaNetwork {
 
     public Set<BlockPos> getPositions() {
         return positions;
+    }
+
+    public int getSize() {
+        return positions.size();
     }
 
     public boolean contains(BlockPos pos) { return positions.contains(pos); }
@@ -94,7 +99,6 @@ public class EssentiaNetwork {
             return;
         }
         lastTicked = world.getTime();
-        System.out.println(uuid + " ticking at time " + lastTicked + " with " + positions.size() + " pipes");
 
         for (NetworkNode pusher : pushers) {
             for (NetworkNode puller : pullers) {
@@ -116,8 +120,20 @@ public class EssentiaNetwork {
         BlockEntity toBE = to.getBlockEntity();
         if (fromBE instanceof HasEssentia && toBE instanceof HasEssentia) {
             for (int i = 0; i < ((HasEssentia) fromBE).getNumContainers(); i++) {
+                EssentiaContainer fromContainer;
+                if (from.getDirection().isPresent()) {
+                    fromContainer = ((HasEssentia) fromBE).getContainer(from.getDirection().get().getOpposite());
+                } else {
+                    fromContainer = ((HasEssentia) fromBE).getContainer();
+                }
                 for (int j = 0; j < ((HasEssentia) toBE).getNumContainers(); j++) {
-                    ((HasEssentia) fromBE).getContainer(i).pushContents(((HasEssentia) toBE).getContainer(j));
+                    EssentiaContainer toContainer;
+                    if (to.getDirection().isPresent()) {
+                        toContainer = ((HasEssentia) toBE).getContainer(to.getDirection().get().getOpposite());
+                    } else {
+                        toContainer = ((HasEssentia) toBE).getContainer();
+                    }
+                    fromContainer.pushContents(toContainer);
                 }
             }
             fromBE.markDirty();

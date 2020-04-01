@@ -101,6 +101,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	public BlockEntityDissolver() {
 		super(AoABlockEntities.DISSOLVER);
 	}
+
+	@Override
+	public EssentiaContainer getContainer(Direction dir) {
+		return getContainer(0);
+	}
 	
 	@Override
 	public EssentiaContainer getContainer(int id) {

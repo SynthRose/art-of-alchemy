@@ -29,7 +29,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 		this.configurator = null;
 		updateEssentia(container, required);
 	}
-	
+
 	public WEssentiaPanel() {
 		this(new EssentiaContainer());
 	}

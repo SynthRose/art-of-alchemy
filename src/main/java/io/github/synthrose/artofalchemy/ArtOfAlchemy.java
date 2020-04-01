@@ -9,10 +9,13 @@ import io.github.synthrose.artofalchemy.gui.controller.AoAContainers;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
+import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +45,11 @@ public class ArtOfAlchemy implements ModInitializer {
         AoARecipes.registerRecipes();
         AoADispenserBehavior.registerDispenserBehavior();
         AoANetworking.initializeNetworking();
+        WorldTickCallback.EVENT.register((world) -> {
+            if (!world.isClient()) {
+                EssentiaNetworker.get((ServerWorld) world).tick();
+            }
+        });
     }
 
     public static Identifier id(String name) {

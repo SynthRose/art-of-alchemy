@@ -7,20 +7,20 @@
     "layer2": "artofalchemy:item/vessel/overlay_jupiter"
   },
   "overrides": [
-    { "predicate": { "level": 0.0000000 }, "model": "artofalchemy:item/vessel/jupiter_0" },
-    { "predicate": { "level": 0.0666667 }, "model": "artofalchemy:item/vessel/jupiter_1" },
-    { "predicate": { "level": 0.1333333 }, "model": "artofalchemy:item/vessel/jupiter_2" },
-    { "predicate": { "level": 0.2000000 }, "model": "artofalchemy:item/vessel/jupiter_3" },
-    { "predicate": { "level": 0.2666667 }, "model": "artofalchemy:item/vessel/jupiter_4" },
-    { "predicate": { "level": 0.3333333 }, "model": "artofalchemy:item/vessel/jupiter_5" },
-    { "predicate": { "level": 0.4000000 }, "model": "artofalchemy:item/vessel/jupiter_6" },
-    { "predicate": { "level": 0.4666667 }, "model": "artofalchemy:item/vessel/jupiter_7" },
-    { "predicate": { "level": 0.5333333 }, "model": "artofalchemy:item/vessel/jupiter_8" },
-    { "predicate": { "level": 0.6000000 }, "model": "artofalchemy:item/vessel/jupiter_9" },
-    { "predicate": { "level": 0.6666667 }, "model": "artofalchemy:item/vessel/jupiter_10" },
-    { "predicate": { "level": 0.7333333 }, "model": "artofalchemy:item/vessel/jupiter_11" },
-    { "predicate": { "level": 0.8000000 }, "model": "artofalchemy:item/vessel/jupiter_12" },
-    { "predicate": { "level": 0.8666667 }, "model": "artofalchemy:item/vessel/jupiter_13" },
-    { "predicate": { "level": 0.9333333 }, "model": "artofalchemy:item/vessel/jupiter_14" }
+    { "predicate": { "level": 0.0 }, "model": "artofalchemy:item/vessel/jupiter_0" },
+    { "predicate": { "level": 0.0001 }, "model": "artofalchemy:item/vessel/jupiter_1" },
+    { "predicate": { "level": 0.07692307692307693 }, "model": "artofalchemy:item/vessel/jupiter_2" },
+    { "predicate": { "level": 0.15384615384615385 }, "model": "artofalchemy:item/vessel/jupiter_3" },
+    { "predicate": { "level": 0.23076923076923078 }, "model": "artofalchemy:item/vessel/jupiter_4" },
+    { "predicate": { "level": 0.3076923076923077 }, "model": "artofalchemy:item/vessel/jupiter_5" },
+    { "predicate": { "level": 0.38461538461538464 }, "model": "artofalchemy:item/vessel/jupiter_6" },
+    { "predicate": { "level": 0.46153846153846156 }, "model": "artofalchemy:item/vessel/jupiter_7" },
+    { "predicate": { "level": 0.5384615384615384 }, "model": "artofalchemy:item/vessel/jupiter_8" },
+    { "predicate": { "level": 0.6153846153846154 }, "model": "artofalchemy:item/vessel/jupiter_9" },
+    { "predicate": { "level": 0.6923076923076923 }, "model": "artofalchemy:item/vessel/jupiter_10" },
+    { "predicate": { "level": 0.7692307692307693 }, "model": "artofalchemy:item/vessel/jupiter_11" },
+    { "predicate": { "level": 0.8461538461538461 }, "model": "artofalchemy:item/vessel/jupiter_12" },
+    { "predicate": { "level": 0.9230769230769231 }, "model": "artofalchemy:item/vessel/jupiter_13" },
+    { "predicate": { "level": 0.9999 }, "model": "artofalchemy:item/vessel/jupiter_14" }
   ]
 }

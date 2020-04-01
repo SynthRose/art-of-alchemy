@@ -100,7 +100,12 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	public BlockEntitySynthesizer() {
 		super(AoABlockEntities.SYNTHESIZER);
 	}
-	
+
+	@Override
+	public EssentiaContainer getContainer(Direction dir) {
+		return getContainer(0);
+	}
+
 	@Override
 	public EssentiaContainer getContainer(int id) {
 		if (id == 0) {

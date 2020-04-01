@@ -384,6 +384,10 @@ public class EssentiaContainer {
 	public EssentiaStack pullContents(EssentiaContainer other) {
 		return pullContents(other, false);
 	}
+
+	public int getColor() {
+		return getContents().getColor();
+	}
 	
 	public CompoundTag toTag() {
 		CompoundTag tag = new CompoundTag();

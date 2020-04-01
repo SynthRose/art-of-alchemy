@@ -2,8 +2,10 @@ package io.github.synthrose.artofalchemy.essentia;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import io.github.synthrose.artofalchemy.AoAHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.*;
 
@@ -139,6 +141,17 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 			}
 		}
 		return true;
+	}
+
+	public int getColor() {
+		Vec3d colorSum = new Vec3d(0, 0, 0);
+		double count = getCount();
+		for (Essentia essentia : keySet()) {
+			Vec3d color = AoAHelper.decimalColor(essentia.getColor());
+			color = color.multiply(get(essentia) / count);
+			colorSum = colorSum.add(color);
+		}
+		return AoAHelper.combineColor(colorSum);
 	}
 	
 }
