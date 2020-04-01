@@ -1,6 +1,7 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.item.ItemEssentiaPort;
 import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
 import io.github.synthrose.artofalchemy.transport.NetworkElement;
 import io.github.synthrose.artofalchemy.transport.NetworkNode;
@@ -11,10 +12,12 @@ import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
@@ -37,7 +40,7 @@ public class BlockPipe extends Block implements NetworkElement {
 	private Map<Direction, EnumProperty<IOFace>> faces;
 
 	public BlockPipe() {
-		super(Settings.of(Material.METAL).nonOpaque().noCollision());
+		super(Settings.of(Material.CLAY).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.METAL));
 	}
 
 	@Override
@@ -166,30 +169,38 @@ public class BlockPipe extends Block implements NetworkElement {
 		if (!world.isClient()) {
 			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
 		}
+		for (Direction dir : faces.keySet()) {
+			dropStack((World) world, pos, new ItemStack(ItemEssentiaPort.getItem(state.get(getProperty(dir)))));
+		}
 	}
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemStack stack = player.getStackInHand(hand);
-		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(stack.getItem())) {
+		ItemStack heldStack = player.getStackInHand(hand);
+		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(heldStack.getItem())) {
 			return ActionResult.PASS;
 		}
 		EnumProperty<IOFace> property = getProperty(hit.getSide());
 		switch (state.get(property)) {
 			case NONE:
 			case CONNECT:
-				world.setBlockState(pos, state.with(property,  IOFace.PULL));
-				break;
-			case PULL:
-				world.setBlockState(pos, state.with(property,  IOFace.PUSH));
-				break;
-			case PUSH:
-				world.setBlockState(pos, state.with(property,  IOFace.PASSIVE));
-				break;
-			case PASSIVE:
-				world.setBlockState(pos, state.with(property,  IOFace.BLOCK));
+				if (heldStack.getItem() instanceof ItemEssentiaPort) {
+					world.setBlockState(pos, state.with(property,  ((ItemEssentiaPort) heldStack.getItem()).IOFACE));
+					if (!player.abilities.creativeMode) {
+						heldStack.decrement(1);
+					}
+				} else {
+					world.setBlockState(pos, state.with(property,  IOFace.BLOCK));
+				}
 				break;
 			case BLOCK:
+			case INSERTER:
+			case EXTRACTOR:
+			case PASSIVE:
+				if (!player.abilities.creativeMode) {
+					ItemStack stack = new ItemStack(ItemEssentiaPort.getItem(state.get(property)));
+					dropStack(world, pos, stack);
+				}
 				if (faceOpen(world.getBlockState(pos.offset(hit.getSide())), hit.getSide().getOpposite())) {
 					world.setBlockState(pos, state.with(property,  IOFace.CONNECT));
 				} else {
@@ -200,6 +211,7 @@ public class BlockPipe extends Block implements NetworkElement {
 		if (!world.isClient()) {
 			EssentiaNetworker.get((ServerWorld) world).update(pos);
 		}
+		world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_IRON, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		return ActionResult.SUCCESS;
 	}
 
@@ -207,8 +219,8 @@ public class BlockPipe extends Block implements NetworkElement {
 		NONE,
 		CONNECT,
 		BLOCK,
-		PULL(NetworkNode.Type.PULL),
-		PUSH(NetworkNode.Type.PUSH),
+		INSERTER(NetworkNode.Type.PULL),
+		EXTRACTOR(NetworkNode.Type.PUSH),
 		PASSIVE(NetworkNode.Type.PASSIVE);
 		
 		private final String string;

@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item":"artofalchemy:essentia_pipe" },
+		{ "item":"minecraft:quartz" },
+		{ "item":"minecraft:glowstone_dust" },
+		{ "item":"minecraft:redstone" }
+	],
+	"result": {
+		"item": "artofalchemy:essentia_extractor"
+	}
+}

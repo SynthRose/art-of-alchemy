@@ -12,7 +12,11 @@
 	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",
 	"block.artofalchemy.synthesis_table": "Synthesis Table",
 	"block.artofalchemy.analysis_desk": "Analysis Desk",
-	"block.artofalchemy.essentia_pipe": "Essentia Pipe",
+
+	"block.artofalchemy.essentia_pipe": "Essentia Conduit",
+	"item.artofalchemy.essentia_port": "Essentia Port",
+	"item.artofalchemy.essentia_inserter": "Evacuated Essentia Port",
+	"item.artofalchemy.essentia_extractor": "Pressurized Essentia Port",
 	
 	"item.artofalchemy.materia_omega": "Ω-Rank Materia",
 	"item.artofalchemy.materia_s": "S-Rank Materia",

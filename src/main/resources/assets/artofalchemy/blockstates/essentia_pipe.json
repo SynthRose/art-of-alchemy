@@ -1,10 +1,10 @@
 {
     "multipart": [
         {   "apply": { "model": "artofalchemy:block/essentia_pipe_core" }},
-        {   "when": { "down": "pull" },
+        {   "when": { "down": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter" }
         },
-        {   "when": { "down": "push" },
+        {   "when": { "down": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor" }
         },
         {   "when": { "down": "passive" },
@@ -16,10 +16,10 @@
         {   "when": { "down": "block" },
             "apply": { "model": "artofalchemy:block/essentia_blocker" }
         },
-        {   "when": { "up": "pull" },
+        {   "when": { "up": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":180 }
         },
-        {   "when": { "up": "push" },
+        {   "when": { "up": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":180 }
         },
         {   "when": { "up": "passive" },
@@ -31,10 +31,10 @@
         {   "when": { "up": "block" },
             "apply": { "model": "artofalchemy:block/essentia_blocker", "x":180 }
         },
-        {   "when": { "north": "pull" },
+        {   "when": { "north": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":90, "y":180 }
         },
-        {   "when": { "north": "push" },
+        {   "when": { "north": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":90, "y":180 }
         },
         {   "when": { "north": "passive" },
@@ -46,10 +46,10 @@
         {   "when": { "north": "block" },
             "apply": { "model": "artofalchemy:block/essentia_blocker", "x":90, "y":180 }
         },
-        {   "when": { "south": "pull" },
+        {   "when": { "south": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":90 }
         },
-        {   "when": { "south": "push" },
+        {   "when": { "south": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":90 }
         },
         {   "when": { "south": "passive" },
@@ -61,10 +61,10 @@
         {   "when": { "south": "block" },
             "apply": { "model": "artofalchemy:block/essentia_blocker", "x":90 }
         },
-        {   "when": { "east": "pull" },
+        {   "when": { "east": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x": 90, "y":270 }
         },
-        {   "when": { "east": "push" },
+        {   "when": { "east": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x": 90, "y":270 }
         },
         {   "when": { "east": "passive" },
@@ -76,10 +76,10 @@
         {   "when": { "east": "block" },
             "apply": { "model": "artofalchemy:block/essentia_blocker", "x": 90, "y":270 }
         },
-        {   "when": { "west": "pull" },
+        {   "when": { "west": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x": 90, "y":90 }
         },
-        {   "when": { "west": "push" },
+        {   "when": { "west": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x": 90, "y":90 }
         },
         {   "when": { "west": "passive" },
