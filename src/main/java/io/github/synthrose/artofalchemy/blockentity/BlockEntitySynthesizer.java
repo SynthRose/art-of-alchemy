@@ -7,7 +7,7 @@ import io.github.synthrose.artofalchemy.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import io.github.synthrose.artofalchemy.item.ItemMateria;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
@@ -100,7 +100,12 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	public BlockEntitySynthesizer() {
 		super(AoABlockEntities.SYNTHESIZER);
 	}
-	
+
+	@Override
+	public EssentiaContainer getContainer(Direction dir) {
+		return getContainer(0);
+	}
+
 	@Override
 	public EssentiaContainer getContainer(int id) {
 		if (id == 0) {

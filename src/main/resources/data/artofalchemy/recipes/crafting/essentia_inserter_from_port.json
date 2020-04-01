@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item":"artofalchemy:essentia_port" },
+		{ "item":"minecraft:glowstone_dust" },
+		{ "item":"minecraft:lapis_lazuli" }
+	],
+	"result": {
+		"item": "artofalchemy:essentia_inserter"
+	}
+}

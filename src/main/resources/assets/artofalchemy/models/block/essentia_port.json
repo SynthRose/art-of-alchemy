@@ -1,35 +1,33 @@
 {
 	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
 	"textures": {
-		"particle": "#top",
-		"top": "artofalchemy:block/essentia_port_top",
-		"side": "artofalchemy:block/essentia_port_side",
-		"bottom": "artofalchemy:block/essentia_port_bottom",
+		"particle": "artofalchemy:block/essentia_pipe_endcap",
+		"endcap": "artofalchemy:block/essentia_pipe_endcap",
+		"sidecap": "artofalchemy:block/essentia_pipe_sidecap",
 		"tube": "artofalchemy:block/essentia_pipe_tube"
 	},
 	"elements": [
 		{
-			"from": [2, 0, 2],
-			"to": [14, 2, 14],
+			"from": [4, 0, 4],
+			"to": [12, 4, 12],
 			"faces": {
-				"north": {"uv": [2, 0, 14, 2], "texture": "#side"},
-				"east": {"uv": [2, 0, 14, 2], "texture": "#side"},
-				"south": {"uv": [2, 0, 14, 2], "texture": "#side"},
-				"west": {"uv": [2, 0, 14, 2], "texture": "#side"},
-				"up": {"uv": [2, 2, 14, 14], "texture": "#top"},
-				"down": {"uv": [2, 2, 14, 14], "texture": "#bottom"}
+				"north": {"uv": [0, 0, 8, 4], "texture": "#sidecap"},
+				"east": {"uv": [0, 0, 8, 4], "texture": "#sidecap"},
+				"south": {"uv": [0, 0, 8, 4], "texture": "#sidecap"},
+				"west": {"uv": [0, 0, 8, 4], "texture": "#sidecap"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#endcap"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#endcap"}
 			}
 		},
 		{
-			"from": [7, 2, 7],
-			"to": [9, 6, 9],
+			"from": [6, 4, 6],
+			"to": [10, 5, 10],
 			"faces": {
-				"north": {"uv": [0, 0, 2, 4], "texture": "#tube"},
-				"east": {"uv": [0, 0, 2, 4], "texture": "#tube"},
-				"south": {"uv": [0, 0, 2, 4], "texture": "#tube"},
-				"west": {"uv": [0, 0, 2, 4], "texture": "#tube"},
-				"up": {"uv": [0, 6, 2, 8], "texture": "#tube"},
-				"down": {"uv": [0, 6, 2, 8], "texture": "#tube"}
+				"north": {"uv": [0, 0, 4, 1], "texture": "#tube"},
+				"east": {"uv": [0, 0, 4, 1], "texture": "#tube"},
+				"south": {"uv": [0, 0, 4, 1], "texture": "#tube"},
+				"west": {"uv": [0, 0, 4, 1], "texture": "#tube"}
 			}
 		}
 	]

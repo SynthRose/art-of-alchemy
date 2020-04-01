@@ -5,6 +5,8 @@ import io.github.synthrose.artofalchemy.item.ItemJournal;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
@@ -25,6 +27,31 @@ public class AoAHelper {
 		} else {
 			return stack.getItem();
 		}
+	}
+
+	public static Vec3i integerColor(int color) {
+		int r = (color & 0xFF0000) >> 16;
+		int g = (color & 0x00FF00) >> 8;
+		int b = (color & 0x0000FF);
+		return new Vec3i(r, g, b);
+	}
+
+	public static Vec3d decimalColor(int color) {
+		double r = (color & 0xFF0000) >> 16;
+		double g = (color & 0x00FF00) >> 8;
+		double b = (color & 0x0000FF);
+		return new Vec3d(r / 0xFF, g / 0xFF, b / 0xFF);
+	}
+
+	public static int combineColor(Vec3d color) {
+		int r = (int) (color.getX() * 0xFF);
+		int g = (int) (color.getY() * 0xFF);
+		int b = (int) (color.getZ() * 0xFF);
+		return (r << 16) | (g << 8) | (b);
+	}
+
+	public static int combineColor(Vec3i color) {
+		return (color.getX() << 16) | (color.getY() << 8) | (color.getZ());
 	}
 	
 }

@@ -100,7 +100,7 @@ public class ItemJournal extends AbstractItemFormula {
     public static boolean addFormula(ItemStack stack, Identifier formula) {
         ListTag entries = getOrCreateEntriesTag(stack);
         StringTag newEntry = StringTag.of(formula.toString());
-        if (!entries.contains(newEntry) && formula.toString() != "minecraft:air") {
+        if (!entries.contains(newEntry) && !formula.toString().equals("minecraft:air")) {
             entries.add(newEntry);
             return true;
         } else {

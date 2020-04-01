@@ -21,7 +21,6 @@ public class EssentiaContainer {
 	private boolean whitelistEnabled = false;
 	
 	public EssentiaContainer() {
-		
 	}
 	
 	public EssentiaContainer(CompoundTag tag) {
@@ -384,6 +383,10 @@ public class EssentiaContainer {
 	
 	public EssentiaStack pullContents(EssentiaContainer other) {
 		return pullContents(other, false);
+	}
+
+	public int getColor() {
+		return getContents().getColor();
 	}
 	
 	public CompoundTag toTag() {

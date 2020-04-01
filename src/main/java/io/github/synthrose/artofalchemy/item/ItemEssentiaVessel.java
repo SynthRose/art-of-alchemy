@@ -2,9 +2,10 @@ package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -38,26 +40,18 @@ public class ItemEssentiaVessel extends Item {
 	public ItemEssentiaVessel(Settings settings, Essentia type) {
 		super(settings.maxCount(1));
 		TYPE = type;
-		this.addPropertyGetter(new Identifier("level"), new ItemPropertyGetter() {
-			@Environment(EnvType.CLIENT)
-			public float call(ItemStack stack, World world, LivingEntity entity) {
-				EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
-				double level = contents.getCount();
-				if (!contents.hasUnlimitedCapacity()) {
-					level /= contents.getCapacity();
-				}
-				return (float) MathHelper.clamp(level, 0.0, 1.0);
+		this.addPropertyGetter(new Identifier("level"), (stack, world, entity) -> {
+			EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
+			double level = contents.getCount();
+			if (!contents.hasUnlimitedCapacity()) {
+				level /= contents.getCapacity();
 			}
+			return (float) MathHelper.clamp(level, 0.0, 1.0);
 		});
 	}
 	
 	public ItemEssentiaVessel(Settings settings) {
 		this(settings, null);
-	}
-
-	@Override
-	public ItemStack getStackForRender() {
-		return new ItemStack(AoAItems.ESSENTIA_VESSELS.get(null));
 	}
 	
 	public static EssentiaContainer getContainer(ItemStack stack) {
@@ -118,6 +112,25 @@ public class ItemEssentiaVessel extends Item {
 		container.in(stack);
 		return transferred;
 	}
+
+	public static int getColor(ItemStack stack) {
+		CompoundTag tag = stack.getOrCreateTag();
+		if (tag.contains("color", NbtType.INT)) {
+			return tag.getInt("color");
+		} else {
+			return 0xAA0077;
+		}
+	}
+
+	public static void setColor(ItemStack stack, int color) {
+		CompoundTag tag = stack.getOrCreateTag();
+		tag.putInt("color", color);
+	}
+
+	public static void setColor(ItemStack stack) {
+		CompoundTag tag = stack.getOrCreateTag();
+		tag.putInt("color", getContainer(stack).getColor());
+	}
 	
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext ctx) {
@@ -135,6 +148,7 @@ public class ItemEssentiaVessel extends Item {
 		
 		if (transferred != 0) {
 			be.markDirty();
+			setColor(ctx.getStack());
 			return ActionResult.SUCCESS;
 		} else {
 			return ActionResult.PASS;

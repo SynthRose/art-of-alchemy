@@ -5,6 +5,7 @@ import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
 import io.github.synthrose.artofalchemy.item.AoAItems;
+import io.github.synthrose.artofalchemy.item.ItemEssentiaVessel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -37,11 +38,7 @@ public class AoARenderers {
     	for (Entry<Essentia, Item> entry : AoAItems.ESSENTIA_VESSELS.entrySet()) {
     		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
         		if (tintIndex == 0) {
-        			if (entry.getKey() == null) {
-        				return 0xAA0077;
-        			} else {
-        				return entry.getKey().getColor();
-        			}
+        			return ItemEssentiaVessel.getColor(stack);
         		} else {
         			return 0xFFFFFF;
         		}

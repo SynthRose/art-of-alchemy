@@ -2,7 +2,6 @@ package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.MateriaRank;
 import io.github.synthrose.artofalchemy.block.BlockMateria;
-import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 

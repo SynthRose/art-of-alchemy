@@ -6,21 +6,20 @@ import io.github.synthrose.artofalchemy.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockDissolver;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
-import io.github.synthrose.artofalchemy.fluid.HasAlkahest;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
+import io.github.synthrose.artofalchemy.transport.HasAlkahest;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeDissolution;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
@@ -101,6 +100,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	
 	public BlockEntityDissolver() {
 		super(AoABlockEntities.DISSOLVER);
+	}
+
+	@Override
+	public EssentiaContainer getContainer(Direction dir) {
+		return getContainer(0);
 	}
 	
 	@Override
@@ -335,12 +339,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
 		if (dir == Direction.DOWN) {
-			Tag<Item> tag = world.getTagManager().items().get(ArtOfAlchemy.id("containers"));
-			if (tag == null) {
-				return false;
-			} else {
-				return tag.contains(stack.getItem());
-			}
+			return TagRegistry.item(ArtOfAlchemy.id("containers")).contains(stack.getItem());
 		} else {
 			return true;
 		}

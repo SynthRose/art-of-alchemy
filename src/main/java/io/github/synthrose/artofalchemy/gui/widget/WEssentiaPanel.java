@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 	
-	protected EssentiaContainer container = new EssentiaContainer();
+	protected EssentiaContainer container;
 	protected EssentiaStack required = new EssentiaStack();
 		
 	public WEssentiaPanel(EssentiaContainer container) {
@@ -29,7 +29,7 @@ public class WEssentiaPanel extends WListPanel<Essentia, WEssentiaSubPanel> {
 		this.configurator = null;
 		updateEssentia(container, required);
 	}
-	
+
 	public WEssentiaPanel() {
 		this(new EssentiaContainer());
 	}

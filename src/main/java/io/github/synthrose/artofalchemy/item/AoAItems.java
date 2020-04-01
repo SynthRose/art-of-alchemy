@@ -2,6 +2,7 @@ package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.MateriaRank;
+import io.github.synthrose.artofalchemy.block.BlockPipe;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
@@ -16,6 +17,10 @@ import java.util.Map;
 
 public class AoAItems {
 
+	public static final Item ESSENTIA_PORT = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.PASSIVE);
+	public static final Item ESSENTIA_INSERTER = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.INSERTER);
+	public static final Item ESSENTIA_EXTRACTOR = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.EXTRACTOR);
+
 	public static final Item ICON_ITEM = new Item(new Item.Settings());	
 	public static final Item AZOTH = new Item(defaults());
 	public static final Item JOURNAL = new ItemJournal(defaults());
@@ -28,6 +33,10 @@ public class AoAItems {
 	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
 
 	public static void registerItems() {
+		register("essentia_port", ESSENTIA_PORT);
+		register("essentia_inserter", ESSENTIA_INSERTER);
+		register("essentia_extractor", ESSENTIA_EXTRACTOR);
+
 		register("icon_item", ICON_ITEM);
 		register("azoth", AZOTH);
 

@@ -1,10 +1,10 @@
 {
     "multipart": [
         {   "apply": { "model": "artofalchemy:block/essentia_pipe_core" }},
-        {   "when": { "down": "pull" },
+        {   "when": { "down": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter" }
         },
-        {   "when": { "down": "push" },
+        {   "when": { "down": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor" }
         },
         {   "when": { "down": "passive" },
@@ -13,10 +13,13 @@
         {   "when": { "down": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube" }
         },
-        {   "when": { "up": "pull" },
+        {   "when": { "down": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker" }
+        },
+        {   "when": { "up": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":180 }
         },
-        {   "when": { "up": "push" },
+        {   "when": { "up": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":180 }
         },
         {   "when": { "up": "passive" },
@@ -25,10 +28,13 @@
         {   "when": { "up": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube", "x":180 }
         },
-        {   "when": { "north": "pull" },
+        {   "when": { "up": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker", "x":180 }
+        },
+        {   "when": { "north": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":90, "y":180 }
         },
-        {   "when": { "north": "push" },
+        {   "when": { "north": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":90, "y":180 }
         },
         {   "when": { "north": "passive" },
@@ -37,10 +43,13 @@
         {   "when": { "north": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube", "x":90, "y":180 }
         },
-        {   "when": { "south": "pull" },
+        {   "when": { "north": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker", "x":90, "y":180 }
+        },
+        {   "when": { "south": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x":90 }
         },
-        {   "when": { "south": "push" },
+        {   "when": { "south": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x":90 }
         },
         {   "when": { "south": "passive" },
@@ -49,10 +58,13 @@
         {   "when": { "south": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube", "x":90 }
         },
-        {   "when": { "east": "pull" },
+        {   "when": { "south": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker", "x":90 }
+        },
+        {   "when": { "east": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x": 90, "y":270 }
         },
-        {   "when": { "east": "push" },
+        {   "when": { "east": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x": 90, "y":270 }
         },
         {   "when": { "east": "passive" },
@@ -61,10 +73,13 @@
         {   "when": { "east": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube", "x": 90, "y":270 }
         },
-        {   "when": { "west": "pull" },
+        {   "when": { "east": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker", "x": 90, "y":270 }
+        },
+        {   "when": { "west": "inserter" },
             "apply": { "model": "artofalchemy:block/essentia_inserter", "x": 90, "y":90 }
         },
-        {   "when": { "west": "push" },
+        {   "when": { "west": "extractor" },
             "apply": { "model": "artofalchemy:block/essentia_extractor", "x": 90, "y":90 }
         },
         {   "when": { "west": "passive" },
@@ -72,6 +87,9 @@
         },
         {   "when": { "west": "connect" },
             "apply": { "model": "artofalchemy:block/essentia_pipe_tube", "x": 90, "y":90 }
+        },
+        {   "when": { "west": "block" },
+            "apply": { "model": "artofalchemy:block/essentia_blocker", "x": 90, "y":90 }
         }
     ]
 }

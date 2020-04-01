@@ -8,13 +8,10 @@ import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -22,7 +19,6 @@ import java.util.List;
 
 public class WFormulaListItem extends WPlainPanel {
 
-	private boolean selected = false;
 	private ItemStack journal;
 	private Item formula = Items.AIR;
 	private final WItemScalable itemDisplay;
@@ -76,7 +72,7 @@ public class WFormulaListItem extends WPlainPanel {
 		itemDisplay.getItems().add(new ItemStack(formula));
 		formulaLabel.setText(itemDisplay.getItems().get(0).getName());
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			selected = ItemJournal.getFormula(journal) == formula;
+			boolean selected = ItemJournal.getFormula(journal) == formula;
 			setButton.setEnabled(!selected);
 		}
 	}

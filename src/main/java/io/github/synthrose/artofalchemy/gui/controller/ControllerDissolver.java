@@ -6,7 +6,7 @@ import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.essentia.HasEssentia;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import io.github.synthrose.artofalchemy.gui.widget.WEssentiaPanel;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import net.minecraft.block.entity.BlockEntity;

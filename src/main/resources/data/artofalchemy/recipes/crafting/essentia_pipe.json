@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GBG",
+		"BAB",
+		"GBG"
+	],
+	"key": {
+		"A": { "item":"artofalchemy:azoth" },
+		"B": { "item":"minecraft:polished_basalt" },
+		"G": { "item":"minecraft:gold_ingot" }
+	},
+	"result": {
+		"item": "artofalchemy:essentia_pipe",
+		"count": 24
+	}
+}

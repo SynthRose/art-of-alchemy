@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"blocker": "artofalchemy:block/essentia_pipe_blocker",
+		"particle": "artofalchemy:block/essentia_pipe_blocker"
+	},
+	"elements": [
+		{
+			"from": [5, 4, 5],
+			"to": [11, 5, 11],
+			"faces": {
+				"north": {"uv": [5, 10, 11, 11], "texture": "#blocker"},
+				"east": {"uv": [10, 5, 11, 11], "rotation": 270, "texture": "#blocker"},
+				"south": {"uv": [5, 5, 11, 6], "rotation": 0, "texture": "#blocker"},
+				"west": {"uv": [5, 5, 6, 11], "rotation": 90, "texture": "#blocker"},
+				"down": {"uv": [5, 5, 11, 11], "rotation": 0, "texture": "#blocker"}
+			}
+		}
+	]
+}
