@@ -21,6 +21,7 @@ public class AoABlocks {
 	public static final Block SYNTHESIZER = new BlockSynthesizer();
 	public static final Block ANALYZER = new BlockAnalyzer();
 	public static final Block PIPE = new BlockPipe();
+	public static final Block TANK = new BlockTank();
 
 	public static final Map<MateriaRank, Block> MATERIA_BLOCKS = new HashMap<>();
 
@@ -33,6 +34,7 @@ public class AoABlocks {
 		register("synthesis_table", SYNTHESIZER);
 		register("analysis_desk", ANALYZER);
 		register("essentia_pipe", PIPE);
+		register("essentia_tank", TANK);
 		
 		registerItemless("alkahest", ALKAHEST);
 

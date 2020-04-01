@@ -8,7 +8,9 @@ import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemEssentiaVessel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -20,6 +22,9 @@ public class AoARenderers {
 
 	@Environment(EnvType.CLIENT)
 	public static void registerRenderers() {
+
+		BlockRenderLayerMap.INSTANCE.putBlock(AoABlocks.TANK, RenderLayer.getCutout());
+
 		RendererFluid.setupFluidRendering(AoAFluids.ALKAHEST, AoAFluids.ALKAHEST_FLOWING,
     			new Identifier("minecraft", "water"), 0xAA0077);
     	RendererFluid.markTranslucent(AoAFluids.ALKAHEST, AoAFluids.ALKAHEST_FLOWING);
@@ -33,7 +38,6 @@ public class AoARenderers {
     	
     	ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) ->
 			0xAA0077, AoABlocks.DISSOLVER);
-    	
     	
     	for (Entry<Essentia, Item> entry : AoAItems.ESSENTIA_VESSELS.entrySet()) {
     		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
