@@ -225,7 +225,9 @@ public class BlockPipe extends Block implements NetworkElement {
 				break;
 		}
 		if (!world.isClient()) {
-			EssentiaNetworker.get((ServerWorld) world).update(pos, getConnections(state, pos));
+			EssentiaNetworker networker = EssentiaNetworker.get((ServerWorld) world);
+			networker.remove(pos, getConnections(state, pos));
+			networker.add(pos);
 		}
 		return ActionResult.SUCCESS;
 	}
