@@ -1,7 +1,9 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemEssentiaPort;
+import io.github.synthrose.artofalchemy.transport.EssentiaNetwork;
 import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
 import io.github.synthrose.artofalchemy.transport.NetworkElement;
 import io.github.synthrose.artofalchemy.transport.NetworkNode;
@@ -20,6 +22,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager.Builder;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.StringIdentifiable;
@@ -40,7 +43,7 @@ public class BlockPipe extends Block implements NetworkElement {
 	private Map<Direction, EnumProperty<IOFace>> faces;
 
 	public BlockPipe() {
-		super(Settings.of(Material.CLAY).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.METAL));
+		super(Settings.of(Material.CLAY).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.NETHERITE));
 	}
 
 	@Override
@@ -177,6 +180,17 @@ public class BlockPipe extends Block implements NetworkElement {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ItemStack heldStack = player.getStackInHand(hand);
+		if (heldStack.getItem() == AoAItems.MYSTERIOUS_SIGIL) {
+			if (!world.isClient()) {
+				Optional<EssentiaNetwork> network = EssentiaNetworker.get((ServerWorld) world).getNetwork(pos);
+				if (network.isPresent()) {
+					player.sendMessage(new LiteralText(network.get().getUuid().toString() + " w/ " + network.get().getNodes().size() + " nodes"));
+				} else {
+					player.sendMessage(new LiteralText("no network"));
+				}
+			}
+			return ActionResult.SUCCESS;
+		}
 		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(heldStack.getItem())) {
 			return ActionResult.PASS;
 		}
@@ -184,6 +198,7 @@ public class BlockPipe extends Block implements NetworkElement {
 		switch (state.get(property)) {
 			case NONE:
 			case CONNECT:
+				world.playSound(null, pos, SoundEvents.BLOCK_NETHERITE_BLOCK_FALL, SoundCategory.BLOCKS, 0.6f, 1.0f);
 				if (heldStack.getItem() instanceof ItemEssentiaPort) {
 					world.setBlockState(pos, state.with(property,  ((ItemEssentiaPort) heldStack.getItem()).IOFACE));
 					if (!player.abilities.creativeMode) {
@@ -197,6 +212,7 @@ public class BlockPipe extends Block implements NetworkElement {
 			case INSERTER:
 			case EXTRACTOR:
 			case PASSIVE:
+				world.playSound(null, pos, SoundEvents.BLOCK_NETHERITE_BLOCK_HIT, SoundCategory.BLOCKS, 0.6f, 1.0f);
 				if (!player.abilities.creativeMode) {
 					ItemStack stack = new ItemStack(ItemEssentiaPort.getItem(state.get(property)));
 					dropStack(world, pos, stack);
@@ -209,9 +225,8 @@ public class BlockPipe extends Block implements NetworkElement {
 				break;
 		}
 		if (!world.isClient()) {
-			EssentiaNetworker.get((ServerWorld) world).update(pos);
+			EssentiaNetworker.get((ServerWorld) world).update(pos, getConnections(state, pos));
 		}
-		world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_IRON, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		return ActionResult.SUCCESS;
 	}
 

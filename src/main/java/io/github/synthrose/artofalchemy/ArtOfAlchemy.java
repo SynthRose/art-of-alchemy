@@ -29,7 +29,7 @@ public class ArtOfAlchemy implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final ItemGroup ALCHEMY_GROUP = FabricItemGroupBuilder.create(ArtOfAlchemy.id("alchemy"))
-    		.icon(() -> new ItemStack(AoAItems.ICON_ITEM)).build();
+    		.icon(() -> new ItemStack(AoAItems.MYSTERIOUS_SIGIL)).build();
 
     @Override
     public void onInitialize() {

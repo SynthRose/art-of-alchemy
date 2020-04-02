@@ -2,6 +2,9 @@ package io.github.synthrose.artofalchemy.transport;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -18,14 +21,24 @@ public class EssentiaNetwork {
     protected final Set<NetworkNode> passives = new HashSet<>();
     protected final UUID uuid = UUID.randomUUID();
     protected long lastTicked;
+    protected boolean dirty;
 
     EssentiaNetwork(World world) {
         this.world = world;
         lastTicked = world.getTime();
     }
 
+    EssentiaNetwork(World world, ListTag tag) {
+        this(world);
+        fromTag(tag);
+    }
+
     public World getWorld() {
         return world;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public Set<BlockPos> getPositions() {
@@ -40,6 +53,34 @@ public class EssentiaNetwork {
 
     public Set<NetworkNode> getNodes() {
         return nodes;
+    }
+
+    public void markDirty() {
+        dirty = true;
+    }
+
+    public void fromTag(ListTag tag) {
+        for (Tag listElement : tag) {
+            if (listElement instanceof ListTag) {
+                ListTag posTag = (ListTag) listElement;
+                BlockPos pos = new BlockPos(posTag.getInt(0), posTag.getInt(1), posTag.getInt(2));
+                if (world.getBlockState(pos).getBlock() instanceof NetworkElement) {
+                    add(pos);
+                }
+            }
+        }
+    }
+
+    public ListTag toTag() {
+        ListTag tag = new ListTag();
+        for (BlockPos pos : positions) {
+            ListTag posTag = new ListTag();
+            posTag.add(IntTag.of(pos.getX()));
+            posTag.add(IntTag.of(pos.getY()));
+            posTag.add(IntTag.of(pos.getZ()));
+            tag.add(posTag);
+        }
+        return tag;
     }
 
     public void rebuildNodes() {
@@ -95,6 +136,11 @@ public class EssentiaNetwork {
     }
 
     public void tick() {
+        if (dirty) {
+            rebuildNodes();
+            dirty = false;
+        }
+
         if (world.getTime() < lastTicked + 5) {
             return;
         }
@@ -142,10 +188,12 @@ public class EssentiaNetwork {
     }
 
     public boolean add(BlockPos pos) {
+        rebuildNodes(pos);
         return positions.add(pos.toImmutable());
     }
 
     public boolean remove(BlockPos pos) {
+        rebuildNodes(pos);
         return positions.remove(pos);
     }
 

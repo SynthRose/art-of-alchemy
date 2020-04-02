@@ -21,7 +21,7 @@ public class AoAItems {
 	public static final Item ESSENTIA_INSERTER = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.INSERTER);
 	public static final Item ESSENTIA_EXTRACTOR = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.EXTRACTOR);
 
-	public static final Item ICON_ITEM = new Item(new Item.Settings());	
+	public static final Item MYSTERIOUS_SIGIL = new Item(new Item.Settings());
 	public static final Item AZOTH = new Item(defaults());
 	public static final Item JOURNAL = new ItemJournal(defaults());
 	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(defaults().maxCount(1));
@@ -37,7 +37,7 @@ public class AoAItems {
 		register("essentia_inserter", ESSENTIA_INSERTER);
 		register("essentia_extractor", ESSENTIA_EXTRACTOR);
 
-		register("icon_item", ICON_ITEM);
+		register("icon_item", MYSTERIOUS_SIGIL);
 		register("azoth", AZOTH);
 
 		register("alchemical_journal", JOURNAL);
