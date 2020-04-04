@@ -179,6 +179,7 @@ public class BlockPipe extends Block implements NetworkElement {
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		Direction side = player.isSneaking() ? hit.getSide().getOpposite() : hit.getSide();
 		ItemStack heldStack = player.getStackInHand(hand);
 		if (heldStack.getItem() == AoAItems.MYSTERIOUS_SIGIL) {
 			if (!world.isClient()) {
@@ -194,7 +195,7 @@ public class BlockPipe extends Block implements NetworkElement {
 		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(heldStack.getItem())) {
 			return ActionResult.PASS;
 		}
-		EnumProperty<IOFace> property = getProperty(hit.getSide());
+		EnumProperty<IOFace> property = getProperty(side);
 		switch (state.get(property)) {
 			case NONE:
 			case CONNECT:
@@ -217,7 +218,7 @@ public class BlockPipe extends Block implements NetworkElement {
 					ItemStack stack = new ItemStack(ItemEssentiaPort.getItem(state.get(property)));
 					dropStack(world, pos, stack);
 				}
-				if (faceOpen(world.getBlockState(pos.offset(hit.getSide())), hit.getSide().getOpposite())) {
+				if (faceOpen(world.getBlockState(pos.offset(side)), side.getOpposite())) {
 					world.setBlockState(pos, state.with(property,  IOFace.CONNECT));
 				} else {
 					world.setBlockState(pos, state.with(property,  IOFace.NONE));

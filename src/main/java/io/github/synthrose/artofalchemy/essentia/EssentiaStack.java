@@ -82,9 +82,23 @@ public class EssentiaStack extends HashMap<Essentia, Integer> {
 	}
 	
 	// Non-mutating scalar multiplication. Can go negative - try not to break things.
-	public EssentiaStack multiply(EssentiaStack inStack, int scalar) {
+	public static EssentiaStack multiply(EssentiaStack inStack, int scalar) {
 		EssentiaStack outStack = new EssentiaStack();
 		inStack.forEach((essentia, amount) -> outStack.put(essentia, amount * scalar));
+		return outStack;
+	}
+
+	// Non-mutating scalar multiplication. Can go negative - try not to break things.
+	public static EssentiaStack multiply(EssentiaStack inStack, double scalar) {
+		EssentiaStack outStack = new EssentiaStack();
+		inStack.forEach((essentia, amount) -> outStack.put(essentia, (int) (amount * scalar)));
+		return outStack;
+	}
+
+	// Non-mutating scalar multiplication. Can go negative - try not to break things.
+	public static EssentiaStack multiplyCeil(EssentiaStack inStack, double scalar) {
+		EssentiaStack outStack = new EssentiaStack();
+		inStack.forEach((essentia, amount) -> outStack.put(essentia, (int) Math.ceil(amount * scalar)));
 		return outStack;
 	}
 	

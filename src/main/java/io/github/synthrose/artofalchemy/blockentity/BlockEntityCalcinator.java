@@ -22,8 +22,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory,
-Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {
+public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory, Tickable,
+		PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {
 	
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{0, 2};

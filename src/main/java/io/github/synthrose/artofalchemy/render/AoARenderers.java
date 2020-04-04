@@ -1,6 +1,7 @@
 package io.github.synthrose.artofalchemy.render;
 
 import io.github.synthrose.artofalchemy.block.AoABlocks;
+import io.github.synthrose.artofalchemy.blockentity.AoABlockEntities;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
@@ -9,6 +10,7 @@ import io.github.synthrose.artofalchemy.item.ItemEssentiaVessel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.Fluid;
@@ -22,7 +24,7 @@ public class AoARenderers {
 
 	@Environment(EnvType.CLIENT)
 	public static void registerRenderers() {
-
+		BlockEntityRendererRegistry.INSTANCE.register(AoABlockEntities.TANK, RendererTank::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AoABlocks.TANK, RenderLayer.getCutout());
 
 		RendererFluid.setupFluidRendering(AoAFluids.ALKAHEST, AoAFluids.ALKAHEST_FLOWING,

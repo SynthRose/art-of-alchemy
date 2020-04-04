@@ -1,17 +1,23 @@
 package io.github.synthrose.artofalchemy.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import io.github.synthrose.artofalchemy.Chain;
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityTank;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
+import io.github.synthrose.artofalchemy.transport.HasEssentia;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 
-public class BlockTank extends Block {
+import java.util.HashSet;
+
+public class BlockTank extends Block implements BlockEntityProvider {
 
     public static final BooleanProperty CONNECTED_TOP = BooleanProperty.of("connected_top");
     public static final BooleanProperty CONNECTED_BOTTOM = BooleanProperty.of("connected_bottom");
@@ -57,4 +63,10 @@ public class BlockTank extends Block {
         }
         return state;
     }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return new BlockEntityTank();
+    }
+
 }

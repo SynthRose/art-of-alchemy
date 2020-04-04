@@ -14,7 +14,7 @@ public class EssentiaContainer {
 
 	private final EssentiaStack contents = new EssentiaStack();
 	private final Set<Essentia> whitelist = new HashSet<>();
-	private Integer capacity = null;
+	private Integer capacity = 0;
 	private boolean input = true;
 	private boolean output = true;
 	private boolean infinite = false;
@@ -106,8 +106,16 @@ public class EssentiaContainer {
 		return this;
 	}
 	
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
+	}
+
+	public Integer getFreeCapacity() {
+		if (hasUnlimitedCapacity()) {
+			return null;
+		} else {
+			return getCapacity() - getCount();
+		}
 	}
 
 	public EssentiaContainer setCapacity(int capacity) {
@@ -361,12 +369,16 @@ public class EssentiaContainer {
 	
 	// Push as much as possible of this container's contents to another, returning the essentia transferred
 	public EssentiaStack pushContents(EssentiaContainer other, boolean force) {
-		return pushStack(other, this.contents, force);
+		if (other.hasUnlimitedCapacity() || other.getFreeCapacity() >= this.getCount()) {
+			return pushStack(other, this.contents, force);
+		} else {
+			return pushStack(other, EssentiaStack.multiplyCeil(this.contents, (float) other.getFreeCapacity() / this.getCount()) , force);
+		}
 	}
 	
 	// Pull as much as possible of another container's contents, returning the essentia transferred
 	public EssentiaStack pullContents(EssentiaContainer other, boolean force) {
-		return pullStack(other, other.contents, force);
+		return other.pushContents(this, force);
 	}
 	
 	public EssentiaStack pushStack(EssentiaContainer other, EssentiaStack stack) {
@@ -383,6 +395,17 @@ public class EssentiaContainer {
 	
 	public EssentiaStack pullContents(EssentiaContainer other) {
 		return pullContents(other, false);
+	}
+
+	public void mixPushContents(EssentiaContainer other) {
+		if (this.output == false || other.input == false) {
+			return;
+		}
+		EssentiaContainer mixed = new EssentiaContainer().setUnlimitedCapacity();
+		this.pushContents(mixed, true);
+		other.pushContents(mixed, true);
+		mixed.pushContents(other, true);
+		mixed.pushContents(this, true);
 	}
 
 	public int getColor() {

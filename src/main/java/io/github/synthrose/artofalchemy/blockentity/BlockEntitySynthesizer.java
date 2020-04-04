@@ -28,8 +28,8 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 
-public class BlockEntitySynthesizer extends BlockEntity implements ImplementedInventory,
-	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, SidedInventory {
+public class BlockEntitySynthesizer extends BlockEntity implements ImplementedInventory,  Tickable,
+		PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, SidedInventory {
 	
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{1, 2};
