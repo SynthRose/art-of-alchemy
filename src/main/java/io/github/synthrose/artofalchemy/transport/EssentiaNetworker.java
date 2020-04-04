@@ -33,9 +33,10 @@ public class EssentiaNetworker extends PersistentState {
 
     @Override
     public void fromTag(CompoundTag tag) {
+        System.out.println(tag.toString());
         ListTag networkList = tag.getList("networks", NbtType.LIST);
         for (Tag networkTag : networkList) {
-            if (networkTag instanceof ListTag) {
+            if (networkTag instanceof ListTag && ((ListTag) networkTag).size() > 0) {
                 networks.add(new EssentiaNetwork(world, (ListTag) networkTag));
             }
         }
@@ -44,7 +45,7 @@ public class EssentiaNetworker extends PersistentState {
             if (orphanTag instanceof ListTag) {
                 ListTag posTag = (ListTag) orphanTag;
                 BlockPos pos = new BlockPos(posTag.getInt(0), posTag.getInt(1), posTag.getInt(2));
-                orphans.add(pos);
+                orphans.add(pos.toImmutable());
             }
         }
         ListTag legacyList = tag.getList("network_positions", NbtType.LIST);
@@ -52,16 +53,19 @@ public class EssentiaNetworker extends PersistentState {
             if (orphanTag instanceof ListTag) {
                 ListTag posTag = (ListTag) orphanTag;
                 BlockPos pos = new BlockPos(posTag.getInt(0), posTag.getInt(1), posTag.getInt(2));
-                legacyOrphans.add(pos);
+                legacyOrphans.add(pos.toImmutable());
             }
         }
+        rebuildCache();
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         ListTag networkList = new ListTag();
         for (EssentiaNetwork network : networks) {
-            networkList.add(network.toTag());
+            if (network.getSize() > 0) {
+                networkList.add(network.toTag());
+            }
         }
         tag.put("networks", networkList);
         ListTag orphanList = new ListTag();
@@ -73,7 +77,18 @@ public class EssentiaNetworker extends PersistentState {
             orphanList.add(posTag);
         }
         tag.put("orphans", orphanList);
+        System.out.println(tag.toString());
+        System.out.println(cache.toString());
         return tag;
+    }
+
+    public void rebuildCache() {
+        cache.clear();
+        for (EssentiaNetwork network : networks) {
+            for (BlockPos pos : network.getPositions()) {
+                cache.put(pos.toImmutable(), network);
+            }
+        }
     }
 
     public static EssentiaNetworker get(ServerWorld world) {
@@ -88,14 +103,14 @@ public class EssentiaNetworker extends PersistentState {
         processed = 0;
         for (BlockPos pos : new HashSet<>(orphans)) {
             if (processed < PER_TICK_LIMIT) {
-                add(pos);
+                add(pos.toImmutable());
             } else {
                 break;
             }
         }
         for (BlockPos pos : new HashSet<>(legacyOrphans)) {
             if (processed < PER_TICK_LIMIT) {
-                recursiveAdd(pos);
+                recursiveAdd(pos.toImmutable());
             } else {
                 break;
             }
@@ -116,7 +131,7 @@ public class EssentiaNetworker extends PersistentState {
         }
         for (EssentiaNetwork network : networks) {
             if (network.contains(pos)) {
-                cache.put(pos, network);
+                cache.put(pos.toImmutable(), network);
                 return Optional.of(network);
             }
         }
@@ -147,8 +162,8 @@ public class EssentiaNetworker extends PersistentState {
         if (!getNetwork(pos).isPresent()) {
             // Otherwise, add it to any connected networks, creating a new one or merging if necessary
             EssentiaNetwork network = merge(getConnectedNetworks(pos).toArray(new EssentiaNetwork[0]));
-            network.add(pos);
-            cache.put(pos, network);
+            network.add(pos.toImmutable());
+            cache.put(pos.toImmutable(), network);
             markDirty();
         }
     }
@@ -165,6 +180,9 @@ public class EssentiaNetworker extends PersistentState {
             this.networks.add(mergedNetwork);
             for (EssentiaNetwork network : networks) {
                 mergedNetwork.getPositions().addAll(network.getPositions());
+                for (BlockPos pos : mergedNetwork.getPositions()) {
+                    cache.put(pos, mergedNetwork);
+                }
                 this.networks.remove(network);
             }
             mergedNetwork.rebuildNodes();
@@ -179,36 +197,27 @@ public class EssentiaNetworker extends PersistentState {
             cache.remove(pos);
             network.remove(pos);
             if (network.getSize() == 0 || connections.size() > 1) {
-                orphans.addAll(network.getPositions());
+                for (BlockPos netPos : network.getPositions()) {
+                    orphans.add(netPos.toImmutable());
+                    cache.remove(netPos);
+                }
                 networks.remove(network);
             }
             markDirty();
         });
     }
 
-    // Possibly rebuilds the networks associated with a specific position after connections are made or broken.
-    public void update(BlockPos pos, Set<BlockPos> connections) {
-        remove(pos, connections);
-        add(pos);
-    }
-
-    // Updates the nodes at a specific position. Not sufficient if connections have been made or broken.
-    public void updateNodes(BlockPos pos) {
-        getNetwork(pos).ifPresent((network) -> network.rebuildNodes(pos));
-        markDirty();
-    }
-
     @Deprecated
     public void recursiveAdd(BlockPos pos) {
         if (processed < PER_TICK_LIMIT) {
             if (!getNetwork(pos).isPresent()) {
-                add(pos);
-                orphans.remove(pos);
+                add(pos.toImmutable());
+                legacyOrphans.remove(pos);
                 Set<BlockPos> connections = getConnections(pos);
                 connections.forEach(this::recursiveAdd);
             }
         } else {
-            orphans.add(pos);
+            legacyOrphans.add(pos.toImmutable());
             ArtOfAlchemy.log(Level.WARN, "Reached essentia network processing limit at [" + pos.getX() +
                     ", " + pos.getY() + ", " + pos.getZ()+ "] in " + Registry.DIMENSION_TYPE.getId(world.getDimension().getType()));
         }

@@ -109,12 +109,14 @@ public class EssentiaNetwork {
         }
     }
 
-    public void rebuildNodes(BlockPos pos) {
-        nodes.removeIf((node) -> node.getPos() == pos);
-        pullers.removeIf((node) -> node.getPos() == pos);
-        pushers.removeIf((node) -> node.getPos() == pos);
-        passives.removeIf((node) -> node.getPos() == pos);
+    public void removeNodes(BlockPos pos) {
+        nodes.removeIf((node) -> node.getPos().equals(pos));
+        pullers.removeIf((node) -> node.getPos().equals(pos));
+        pushers.removeIf((node) -> node.getPos().equals(pos));
+        passives.removeIf((node) -> node.getPos().equals(pos));
+    }
 
+    public void addNodes(BlockPos pos) {
         Block block = world.getBlockState(pos).getBlock();
         if (block instanceof NetworkElement) {
             Set<NetworkNode> newNodes = ((NetworkElement) block).getNodes(world, pos);
@@ -188,13 +190,21 @@ public class EssentiaNetwork {
     }
 
     public boolean add(BlockPos pos) {
-        rebuildNodes(pos);
-        return positions.add(pos.toImmutable());
+        if (!positions.contains(pos)) {
+            addNodes(pos);
+            return positions.add(pos);
+        } else {
+            return false;
+        }
     }
 
     public boolean remove(BlockPos pos) {
-        rebuildNodes(pos);
-        return positions.remove(pos);
+        if (positions.contains(pos)) {
+            removeNodes(pos);
+            return positions.remove(pos);
+        } else {
+            return false;
+        }
     }
 
 }
