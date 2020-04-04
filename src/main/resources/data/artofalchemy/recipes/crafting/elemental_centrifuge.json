@@ -2,16 +2,17 @@
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
 		"GQG",
-		"BBB",
+		"RBR",
 		"GQG"
 	],
 	"key": {
 		"Q": { "item":"minecraft:quartz" },
 		"B": { "item":"minecraft:polished_basalt" },
+		"R": { "item":"minecraft:redstone" },
 		"G": { "item":"minecraft:gold_ingot" }
 	},
 	"result": {
-		"item": "artofalchemy:essentia_pipe",
-		"count": 32
+		"item": "artofalchemy:elemental_centrifuge",
+		"count": 1
 	}
 }

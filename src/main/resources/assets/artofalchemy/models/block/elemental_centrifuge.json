@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "up": "artofalchemy:block/elemental_centrifuge_0",
+    "down": "artofalchemy:block/elemental_centrifuge_0",
+    "particle": "artofalchemy:block/elemental_centrifuge_0",
+    "north": "artofalchemy:block/elemental_centrifuge_1",
+    "east": "artofalchemy:block/elemental_centrifuge_2",
+    "south": "artofalchemy:block/elemental_centrifuge_3",
+    "west": "artofalchemy:block/elemental_centrifuge_4"
+  }
+}

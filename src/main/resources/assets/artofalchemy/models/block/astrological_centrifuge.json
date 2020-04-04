@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "up": "artofalchemy:block/astrological_centrifuge_0",
+    "down": "artofalchemy:block/astrological_centrifuge_0",
+    "particle": "artofalchemy:block/astrological_centrifuge_0",
+    "north": "artofalchemy:block/astrological_centrifuge_1",
+    "east": "artofalchemy:block/astrological_centrifuge_2",
+    "south": "artofalchemy:block/astrological_centrifuge_3",
+    "west": "artofalchemy:block/astrological_centrifuge_4"
+  }
+}

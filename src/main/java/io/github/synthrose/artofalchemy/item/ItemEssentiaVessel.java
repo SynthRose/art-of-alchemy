@@ -198,6 +198,10 @@ public class ItemEssentiaVessel extends Item {
 		
 		EssentiaContainer container = getContainer(stack);
 		String prefix = tooltipPrefix();
+
+		if (((ItemEssentiaVessel) stack.getItem()).TYPE != null) {
+			tooltip.add(new TranslatableText(prefix + "deprecated").formatted(Formatting.DARK_RED));
+		}
 		
 		if (container.isInfinite()) {
 			tooltip.add(new TranslatableText(prefix + "infinite").formatted(Formatting.LIGHT_PURPLE));

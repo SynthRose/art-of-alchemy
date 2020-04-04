@@ -24,15 +24,14 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 
-public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,
-	Tickable, PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia,
-	HasAlkahest, SidedInventory {
+public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,  Tickable,
+		PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, HasAlkahest, SidedInventory {
 	
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{0};
 	private static final int[] SIDE_SLOTS = new int[]{0};
 	private final int TANK_SIZE = 4000;
-	private final float SPEED_MOD = 2.0f;
+	private final float SPEED_MOD = 0.1f;
 	private final float EFFICIENCY = 0.5f;
 	private int alkahest = 0;
 	private int maxAlkahest = TANK_SIZE;
@@ -155,7 +154,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			ItemStack container = recipe.getContainer();
 			EssentiaStack results = recipe.getEssentia();
 			
-			maxProgress = (int) (results.getCount() / SPEED_MOD);
+			maxProgress = (int) Math.sqrt(results.getCount() / SPEED_MOD);
 			if (maxProgress < 20) {
 				maxProgress = 20;
 			}

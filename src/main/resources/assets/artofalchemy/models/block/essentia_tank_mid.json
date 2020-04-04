@@ -1,0 +1,20 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"mid": "artofalchemy:block/essentia_tank_mid",
+		"particle": "artofalchemy:block/essentia_tank"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#mid"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#mid"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#mid"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#mid"}
+			}
+		}
+	]
+}

@@ -3,6 +3,9 @@
   "values": [
     "artofalchemy:essentia_pipe",
 	"artofalchemy:dissolution_chamber",
-	"artofalchemy:synthesis_table"
+	"artofalchemy:synthesis_table",
+    "artofalchemy:astrological_centrifuge",
+    "artofalchemy:elemental_centrifuge",
+    "artofalchemy:essentia_tank"
   ]
 }

@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "artofalchemy:block/elemental_centrifuge",
+			"y": 0
+		},
+		"facing=east": {
+			"model": "artofalchemy:block/elemental_centrifuge",
+			"y": 90
+		},
+		"facing=south": {
+			"model": "artofalchemy:block/elemental_centrifuge",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "artofalchemy:block/elemental_centrifuge",
+			"y": 270
+		}
+	}
+}

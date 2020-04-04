@@ -20,7 +20,10 @@ public class AoABlocks {
 	public static final Block DISSOLVER = new BlockDissolver();
 	public static final Block SYNTHESIZER = new BlockSynthesizer();
 	public static final Block ANALYZER = new BlockAnalyzer();
+	public static final Block ASTRO_CENTRIFUGE = new BlockAstroCentrifuge();
+	public static final Block ELEMENT_CENTRIFUGE = new BlockElementCentrifuge();
 	public static final Block PIPE = new BlockPipe();
+	public static final Block TANK = new BlockTank();
 
 	public static final Map<MateriaRank, Block> MATERIA_BLOCKS = new HashMap<>();
 
@@ -32,6 +35,9 @@ public class AoABlocks {
 		register("dissolution_chamber", DISSOLVER);
 		register("synthesis_table", SYNTHESIZER);
 		register("analysis_desk", ANALYZER);
+		register("astrological_centrifuge", ASTRO_CENTRIFUGE);
+		register("elemental_centrifuge", ELEMENT_CENTRIFUGE);
+		register("essentia_tank", TANK);
 		register("essentia_pipe", PIPE);
 		
 		registerItemless("alkahest", ALKAHEST);

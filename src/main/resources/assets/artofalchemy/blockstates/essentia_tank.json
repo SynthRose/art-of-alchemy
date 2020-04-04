@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"connected_top=false,connected_bottom=false": {
+			"model": "artofalchemy:block/essentia_tank"
+		},
+		"connected_top=true,connected_bottom=false": {
+			"model": "artofalchemy:block/essentia_tank_top"
+		},
+		"connected_top=true,connected_bottom=true": {
+			"model": "artofalchemy:block/essentia_tank_mid"
+		},
+		"connected_top=false,connected_bottom=true": {
+			"model": "artofalchemy:block/essentia_tank_bottom"
+		}
+	}
+}
