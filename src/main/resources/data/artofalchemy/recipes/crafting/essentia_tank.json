@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GBG",
+		"BAB",
+		"GBG"
+	],
+	"key": {
+		"A": { "item":"artofalchemy:azoth" },
+		"B": { "item":"minecraft:glass" },
+		"G": { "item":"minecraft:gold_ingot" }
+	},
+	"result": {
+		"item": "artofalchemy:essentia_tank",
+		"count": 2
+	}
+}

@@ -2,16 +2,17 @@
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
 		"GQG",
-		"BBB",
+		"LBL",
 		"GQG"
 	],
 	"key": {
 		"Q": { "item":"minecraft:quartz" },
 		"B": { "item":"minecraft:polished_basalt" },
+		"L": { "item":"minecraft:lapis_lazuli" },
 		"G": { "item":"minecraft:gold_ingot" }
 	},
 	"result": {
-		"item": "artofalchemy:essentia_pipe",
-		"count": 32
+		"item": "artofalchemy:astrological_centrifuge",
+		"count": 1
 	}
 }

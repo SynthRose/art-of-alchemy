@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "artofalchemy:block/astrological_centrifuge_0"
+  }
+}

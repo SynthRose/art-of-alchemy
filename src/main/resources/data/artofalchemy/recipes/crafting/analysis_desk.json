@@ -1,12 +1,13 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"AAA",
-		"QTQ",
+		"QQQ",
+		"FTB",
 		"QQQ"
 	],
 	"key": {
-		"A": { "item":"artofalchemy:azoth" },
+		"F": { "item":"minecraft:feather" },
+		"B": { "item":"minecraft:glass_bottle" },
 		"T": { "item":"minecraft:crafting_table" },
 		"Q": { "item":"minecraft:quartz" }
 	},

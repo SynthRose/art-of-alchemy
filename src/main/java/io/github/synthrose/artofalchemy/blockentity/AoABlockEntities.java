@@ -12,6 +12,8 @@ public class AoABlockEntities {
 	public static final BlockEntityType<?> DISSOLVER = BlockEntityType.Builder.create(BlockEntityDissolver::new, AoABlocks.DISSOLVER).build(null);
 	public static final BlockEntityType<?> SYNTHESIZER = BlockEntityType.Builder.create(BlockEntitySynthesizer::new, AoABlocks.SYNTHESIZER).build(null);
 	public static final BlockEntityType<BlockEntityTank> TANK = BlockEntityType.Builder.create(BlockEntityTank::new, AoABlocks.TANK).build(null);
+	public static final BlockEntityType<?> ASTRO_CENTRIFUGE = BlockEntityType.Builder.create(BlockEntityAstroCentrifuge::new, AoABlocks.ASTRO_CENTRIFUGE).build(null);
+	public static final BlockEntityType<?> ELEMENT_CENTRIFUGE = BlockEntityType.Builder.create(BlockEntityAstroCentrifuge::new, AoABlocks.ELEMENT_CENTRIFUGE).build(null);
 
 	public static void registerBlockEntities() {
 		register("calcination_furnace", CALCINATOR);

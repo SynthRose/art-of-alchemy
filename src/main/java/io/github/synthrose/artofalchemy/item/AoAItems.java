@@ -24,7 +24,7 @@ public class AoAItems {
 	public static final Item MYSTERIOUS_SIGIL = new Item(new Item.Settings());
 	public static final Item AZOTH = new Item(defaults());
 	public static final Item JOURNAL = new ItemJournal(defaults());
-	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(defaults().maxCount(1));
+	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(new Item.Settings().maxCount(1));
 
 	public static final Map<MateriaRank, Item> MATERIA_DUSTS = new HashMap<>();
 	
@@ -33,15 +33,18 @@ public class AoAItems {
 	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
 
 	public static void registerItems() {
+		register("icon_item", MYSTERIOUS_SIGIL);
+		register("alchemical_journal", JOURNAL);
+		register("alchemy_formula", ALCHEMY_FORMULA);
+
+		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
+				new ItemEssentiaVessel(defaults(), null)));
+
 		register("essentia_port", ESSENTIA_PORT);
 		register("essentia_inserter", ESSENTIA_INSERTER);
 		register("essentia_extractor", ESSENTIA_EXTRACTOR);
 
-		register("icon_item", MYSTERIOUS_SIGIL);
 		register("azoth", AZOTH);
-
-		register("alchemical_journal", JOURNAL);
-		register("alchemy_formula", ALCHEMY_FORMULA);
 
 		// Register materia dusts
 		for (MateriaRank rank : MateriaRank.values()) {
@@ -57,13 +60,11 @@ public class AoAItems {
 			ESSENTIA_BUCKETS.put(essentia, register(itemId,
 					new BucketItem(AoAFluids.ESSENTIA_FLUIDS.get(essentia), defaults().maxCount(1))));
 		});
-		
-		// Register essentia vessels; add-on essentia vessels will be registered to THEIR namespace
-		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
-				new ItemEssentiaVessel(defaults(), null)));
+
+		// Register deprecated essentia vessels; add-on essentia vessels will be registered to THEIR namespace
 		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
 			Identifier itemId = new Identifier(id.getNamespace(), "essentia_vessel_" + id.getPath());
-			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(defaults(), essentia)));
+			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(new Item.Settings(), essentia)));
 		});
 	}
 	
