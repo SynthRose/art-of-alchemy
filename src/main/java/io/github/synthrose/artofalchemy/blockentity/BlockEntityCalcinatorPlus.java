@@ -4,7 +4,7 @@ import io.github.synthrose.artofalchemy.block.AoABlocks;
 
 public class BlockEntityCalcinatorPlus extends BlockEntityCalcinator {
 
-	private final int OPERATION_TIME = 100;
+	private final int OPERATION_TIME = 60;
 	private final float EFFICIENCY = 1.00f;
 
 	public BlockEntityCalcinatorPlus() {

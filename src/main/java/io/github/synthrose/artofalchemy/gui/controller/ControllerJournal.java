@@ -71,17 +71,6 @@ public class ControllerJournal extends CottonCraftingController {
 			}
 		};
 		root.add(searchBar, 22, 14, 6 * 18 + 6, 12);
-
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			clearButton = new WButton(new LiteralText("❌"));
-			clearButton.setAlignment(Alignment.CENTER);
-			clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
-			clearButton.setOnClick(() -> {
-				ItemJournal.setFormula(this.journal, Items.AIR);
-				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
-			});
-			root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
-		}
 		
 		WSprite background = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/rune_bg.png"));
 		root.add(background, 0, 2 * 18 + 10, 9 * 18, 5 * 18);
@@ -92,8 +81,18 @@ public class ControllerJournal extends CottonCraftingController {
 
 		WLabel title = new WLabel(journal.getName());
 		title.setAlignment(Alignment.CENTER);
-		root.add(title, 0, 0, 9 * 18, 18);
-		
+		root.add(title, 2 * 18, 0, 5 * 18, 18);
+
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			clearButton = new WButton(new LiteralText("❌"));
+			clearButton.setAlignment(Alignment.CENTER);
+			clearButton.setParent(root);
+			root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
+			clearButton.setOnClick(() -> {
+				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
+			});
+		}
+
 		root.add(this.createPlayerInventoryPanel(), 0, 8 * 18);
 		
 		root.validate(this);
@@ -117,7 +116,7 @@ public class ControllerJournal extends CottonCraftingController {
 		}
 		ItemStack stack = super.onSlotClick(slotNumber, button, action, player);
 		tryAddPage();
-		refresh();
+		refresh(journal);
 		return stack;
 	}
 
@@ -132,11 +131,15 @@ public class ControllerJournal extends CottonCraftingController {
 		}
 	}
 
-	public void refresh() {
-		if (journal.getItem() instanceof ItemJournal) {
-			formulaList.refresh(journal, searchBar.getText());
+	public void refresh(ItemStack journal) {
+		if (journal == null) {
+			journal = playerInventory.player.getStackInHand(hand);
+		}
+		this.journal = journal;
+		if (this.journal.getItem() instanceof ItemJournal) {
+			formulaList.refresh(this.journal, searchBar.getText());
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-				clearButton.setEnabled(ItemJournal.getFormula(journal) != Items.AIR);
+				clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
 			}
 		} else {
 			this.close(playerInventory.player);

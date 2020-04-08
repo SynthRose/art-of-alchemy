@@ -30,7 +30,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	protected static final int[] TOP_SLOTS = new int[]{0};
 	protected static final int[] BOTTOM_SLOTS = new int[]{0, 2};
 	protected static final int[] SIDE_SLOTS = new int[]{1, 2};
-	private final int OPERATION_TIME = 200;
+	private final int OPERATION_TIME = 120;
 	private final float EFFICIENCY = 0.50f;
 	protected int fuel = 0;
 	protected int maxFuel = 20;

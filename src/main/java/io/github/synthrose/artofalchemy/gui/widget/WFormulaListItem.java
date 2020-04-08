@@ -54,7 +54,6 @@ public class WFormulaListItem extends WPlainPanel {
 			setButton.setParent(this);
 			add(setButton, 7 * 18 - 1, -3, 20, 20);
 			setButton.setOnClick(() -> {
-				ItemJournal.setFormula(this.journal, this.formula);
 				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(this.formula));
 			});
 		}

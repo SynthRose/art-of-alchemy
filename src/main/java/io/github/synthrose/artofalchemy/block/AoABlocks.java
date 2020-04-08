@@ -15,14 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AoABlocks {
-	
-	public static final Block CALCINATOR = new BlockCalcinator();
-	public static final Block CALCINATOR_PLUS = new BlockCalcinatorPlus();
-	public static final Block DISSOLVER = new BlockDissolver();
-	public static final Block DISSOLVER_PLUS = new BlockDissolverPlus();
-	public static final Block SYNTHESIZER = new BlockSynthesizer();
-	public static final Block SYNTHESIZER_PLUS = new BlockSynthesizerPlus();
+
 	public static final Block ANALYZER = new BlockAnalyzer();
+	public static final Block CALCINATOR = new BlockCalcinator();
+	public static final Block DISSOLVER = new BlockDissolver();
+	public static final Block SYNTHESIZER = new BlockSynthesizer();
+	public static final Block CALCINATOR_PLUS = new BlockCalcinatorPlus();
+	public static final Block DISSOLVER_PLUS = new BlockDissolverPlus();
+	public static final Block SYNTHESIZER_PLUS = new BlockSynthesizerPlus();
 	public static final Block ASTRO_CENTRIFUGE = new BlockAstroCentrifuge();
 	public static final Block ELEMENT_CENTRIFUGE = new BlockElementCentrifuge();
 	public static final Block PIPE = new BlockPipe();
