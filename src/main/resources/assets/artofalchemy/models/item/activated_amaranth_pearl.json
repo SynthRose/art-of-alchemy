@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "artofalchemy:item/activated_amaranth_pearl"
+  }
+}

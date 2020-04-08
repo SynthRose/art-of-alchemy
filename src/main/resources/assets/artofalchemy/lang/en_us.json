@@ -1,6 +1,10 @@
 {
 	"item.artofalchemy.icon_item": "Mysterious Sigil",
 	"item.artofalchemy.azoth": "Azoth",
+	"item.artofalchemy.amaranth_pearl": "Amaranth Pearl",
+	"item.artofalchemy.cracked_amaranth_pearl": "Cracked Amaranth Pearl",
+	"item.artofalchemy.activated_amaranth_pearl": "Activated Amaranth Pearl",
+	"item.artofalchemy.philosophers_stone": "Philosopher's Stone",
 
 	"item.artofalchemy.alchemical_journal": "Alchemical Journal",
 	"item.artofalchemy.alchemical_journal.tooltip_entries": "%d entries",
