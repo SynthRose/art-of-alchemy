@@ -1,0 +1,7 @@
+{
+	"parent": "artofalchemy:block/calcination_furnace_plus",
+	"textures": {
+		"front": "artofalchemy:block/calcination_furnace_plus_lit_front",
+		"top": "artofalchemy:block/calcination_furnace_plus_lit_top"
+	}
+}

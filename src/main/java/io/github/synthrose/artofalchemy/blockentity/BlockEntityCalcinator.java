@@ -10,8 +10,10 @@ import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -24,16 +26,16 @@ import net.minecraft.util.math.MathHelper;
 
 public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory, Tickable,
 		PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {
-	
-	private static final int[] TOP_SLOTS = new int[]{0};
-	private static final int[] BOTTOM_SLOTS = new int[]{0, 2};
-	private static final int[] SIDE_SLOTS = new int[]{1};
-	private final int OPERATION_TIME = 100;
+
+	protected static final int[] TOP_SLOTS = new int[]{0};
+	protected static final int[] BOTTOM_SLOTS = new int[]{0, 2};
+	protected static final int[] SIDE_SLOTS = new int[]{1, 2};
+	private final int OPERATION_TIME = 200;
 	private final float EFFICIENCY = 0.50f;
-	private int fuel = 0;
-	private int maxFuel = 20;
-	private int progress = 0;
-	private int maxProgress = OPERATION_TIME;
+	protected int fuel = 0;
+	protected int maxFuel = 20;
+	protected int progress = 0;
+	protected int maxProgress = getOperationTime();
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
@@ -80,7 +82,11 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	};
 	
 	public BlockEntityCalcinator() {
-		super(AoABlockEntities.CALCINATOR);
+		this(AoABlockEntities.CALCINATOR);
+	}
+
+	protected BlockEntityCalcinator(BlockEntityType type) {
+		super(type);
 	}
 	
 	private boolean isBurning() {
@@ -97,7 +103,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 			ItemStack outStack = recipe.getOutput();
 			ItemStack container = recipe.getContainer();
 			
-			float factor = EFFICIENCY * recipe.getFactor();
+			float factor = getEfficiency() * recipe.getFactor();
 			if (inSlot.isDamageable()) {
 				factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			}
@@ -124,7 +130,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 		ItemStack outStack = recipe.getOutput();
 		ItemStack container = recipe.getContainer(); 
 				
-		float factor = EFFICIENCY * recipe.getFactor();
+		float factor = getEfficiency() * recipe.getFactor();
 		if (inSlot.isDamageable()) {
 			factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 		}
@@ -161,7 +167,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 		fuel = tag.getInt("fuel");
 		progress = tag.getInt("progress");
 		maxFuel = tag.getInt("maxFuel");
-		maxProgress = OPERATION_TIME;
+		maxProgress = getOperationTime();
 	}
 
 	@Override
@@ -191,7 +197,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 			ItemStack fuelSlot = items.get(1);
 			
 			if (wasBurning) {
-				fuel = MathHelper.clamp(fuel - 2, 0, maxFuel);
+				fuel = MathHelper.clamp(fuel - 1, 0, maxFuel);
 			}
 			
 			if (!inSlot.isEmpty() && (isBurning() || FuelHelper.isFuel(fuelSlot))) {
@@ -287,5 +293,12 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 			return true;
 		}
 	}
-	
+
+	public int getOperationTime() {
+		return OPERATION_TIME;
+	}
+
+	public float getEfficiency() {
+		return EFFICIENCY;
+	}
 }

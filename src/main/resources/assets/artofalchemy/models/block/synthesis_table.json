@@ -3,6 +3,6 @@
 	"textures": {
 		"top": "artofalchemy:block/synthesis_table_top",
 		"side": "artofalchemy:block/synthesis_table_side",
-		"bottom": "artofalchemy:block/synthesis_table_bottom"
+		"bottom": "artofalchemy:block/blank_stone"
 	}
 }

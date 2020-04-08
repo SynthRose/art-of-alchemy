@@ -1,0 +1,9 @@
+{
+	"parent": "block/orientable_with_bottom",
+	"textures": {
+		"front": "artofalchemy:block/calcination_furnace_plus_front",
+		"side": "artofalchemy:block/calcination_furnace_plus_side",
+		"top": "artofalchemy:block/calcination_furnace_plus_top",
+		"bottom": "artofalchemy:block/bordered_dark"
+	}
+}

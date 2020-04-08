@@ -37,7 +37,11 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 	}
 	
 	public BlockCalcinator() {
-		super(SETTINGS);
+		this(SETTINGS);
+	}
+
+	protected BlockCalcinator(Settings settings) {
+		super(settings);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
 	}
 	

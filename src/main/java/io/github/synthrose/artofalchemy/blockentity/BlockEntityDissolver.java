@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -31,10 +32,10 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	private static final int[] BOTTOM_SLOTS = new int[]{0};
 	private static final int[] SIDE_SLOTS = new int[]{0};
 	private final int TANK_SIZE = 4000;
-	private final float SPEED_MOD = 0.1f;
+	private final float SPEED_MOD = 0.05f;
 	private final float EFFICIENCY = 0.5f;
 	private int alkahest = 0;
-	private int maxAlkahest = TANK_SIZE;
+	private int maxAlkahest = getTankSize();
 	private int progress = 0;
 	private int maxProgress = 100;
 	private int status = 0;
@@ -46,7 +47,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	protected EssentiaContainer essentia = new EssentiaContainer()
-		.setCapacity(TANK_SIZE)
+		.setCapacity(getTankSize())
 		.setInput(false)
 		.setOutput(true);
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
@@ -98,7 +99,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	};
 	
 	public BlockEntityDissolver() {
-		super(AoABlockEntities.DISSOLVER);
+		this(AoABlockEntities.DISSOLVER);
+	}
+
+	protected BlockEntityDissolver(BlockEntityType type) {
+		super(type);
 	}
 
 	@Override
@@ -154,16 +159,16 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			ItemStack container = recipe.getContainer();
 			EssentiaStack results = recipe.getEssentia();
 			
-			maxProgress = (int) Math.sqrt(results.getCount() / SPEED_MOD);
-			if (maxProgress < 20) {
-				maxProgress = 20;
+			maxProgress = (int) Math.sqrt(results.getCount() / getSpeedMod());
+			if (maxProgress < 2/getSpeedMod()) {
+				maxProgress = (int) (2/getSpeedMod());
 			}
 			
 			if (container != ItemStack.EMPTY && inSlot.getCount() != container.getCount()) {
 				 return updateStatus(1);
 			}
 			
-			float factor = EFFICIENCY * recipe.getFactor();
+			float factor = getEfficiency() * recipe.getFactor();
 			if (inSlot.isDamageable()) {
 				factor *= 1.0 - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			}
@@ -187,7 +192,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		EssentiaStack results = recipe.getEssentia();
 		ItemStack container = recipe.getContainer();
 		
-		float factor = EFFICIENCY * recipe.getFactor();
+		float factor = getEfficiency() * recipe.getFactor();
 		if (inSlot.isDamageable()) {
 			factor *= 1.0 - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 		}
@@ -224,7 +229,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 		maxProgress = tag.getInt("max_progress");
 		status = tag.getInt("status");
 		essentia = new EssentiaContainer(tag.getCompound("essentia"));
-		maxAlkahest = TANK_SIZE;
+		maxAlkahest = getTankSize();
 	}
 
 	@Override
@@ -343,5 +348,16 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 			return true;
 		}
 	}
-	
+
+	public int getTankSize() {
+		return TANK_SIZE;
+	}
+
+	public float getSpeedMod() {
+		return SPEED_MOD;
+	}
+
+	public float getEfficiency() {
+		return EFFICIENCY;
+	}
 }

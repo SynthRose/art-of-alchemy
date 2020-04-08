@@ -25,9 +25,10 @@ public class RecipeSynthesis implements Recipe<Inventory> {
 	protected final EssentiaStack essentia;
 	protected final Ingredient container;
 	protected final int cost;
+	protected final int tier;
 	
 	public RecipeSynthesis(Identifier id, String group, Ingredient target, Ingredient materia, EssentiaStack essentia,
-			Ingredient container, int cost) {
+			Ingredient container, int cost, int tier) {
 		this.id = id;
 		this.group = group;
 		this.target = target;
@@ -35,6 +36,7 @@ public class RecipeSynthesis implements Recipe<Inventory> {
 		this.essentia = essentia;
 		this.container = container;
 		this.cost = cost;
+		this.tier = tier;
 	}
 
 	@Override
@@ -74,12 +76,8 @@ public class RecipeSynthesis implements Recipe<Inventory> {
 		return cost;
 	}
 	
-	public int getXp(ItemStack input) {
-		int tier = 1;
-		if (input.getItem() instanceof ItemMateria) {
-			tier = ((ItemMateria) input.getItem()).getTier() + 1;
-		}
-		return Math.max(1, cost * tier + (essentia.getCount() / 48));
+	public int getTier() {
+		return tier;
 	}
 	
 	@Override

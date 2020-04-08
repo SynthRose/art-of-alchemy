@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"filled=false,lit=false": {
+			"model": "artofalchemy:block/dissolution_chamber_plus"
+		},
+		"filled=true,lit=false": {
+			"model": "artofalchemy:block/dissolution_chamber_plus_filled"
+		},
+		"filled=false,lit=true": {
+			"model": "artofalchemy:block/dissolution_chamber_plus_lit"
+		},
+		"filled=true,lit=true": {
+			"model": "artofalchemy:block/dissolution_chamber_plus_lit_filled"
+		}
+	}
+}

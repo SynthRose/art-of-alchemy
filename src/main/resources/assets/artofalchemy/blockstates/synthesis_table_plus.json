@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"lit=false": {
+			"model": "artofalchemy:block/synthesis_table_plus"
+		},
+		"lit=true": {
+			"model": "artofalchemy:block/synthesis_table_plus_lit"
+		}
+	}
+}

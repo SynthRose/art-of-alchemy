@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
@@ -34,9 +35,9 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{1, 2};
 	private static final int[] SIDE_SLOTS = new int[]{1, 2};
-	private final double SPEED_MOD = 2.0;
-	private final int TANK_SIZE = 4000;
-	private int xp = 0;
+	private static final int MAX_TIER = 3;
+	private static final float SPEED_MOD = 0.05f;
+	private static final int TANK_SIZE = 4000;
 	private int progress = 0;
 	private int maxProgress = 200;
 	private int status = 0;
@@ -46,34 +47,31 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	// Status 3: Needs materia
 	// Status 4: Needs essentia
 	// Status 5: Needs container
-	// Status 6: Needs XP (no message)
+	// Status 6: Target is too complex
 	private boolean lit = false;
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	protected EssentiaContainer essentiaContainer = new EssentiaContainer()
-		.setCapacity(TANK_SIZE)
+		.setCapacity(getTankSize())
 		.setInput(true)
 		.setOutput(false);
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
 		
 		@Override
 		public int size() {
-			return 4;
+			return 3;
 		}
 		
 		@Override
 		public void set(int index, int value) {
 			switch(index) {
 			case 0:
-				xp = value;
-				break;
-			case 1:
 				progress = value;
 				break;
-			case 2:
+			case 1:
 				maxProgress = value;
 				break;
-			case 3:
+			case 2:
 				status = value;
 				break;
 			}
@@ -83,12 +81,10 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 		public int get(int index) {
 			switch(index) {
 			case 0:
-				return xp;
-			case 1:
 				return progress;
-			case 2:
+			case 1:
 				return maxProgress;
-			case 3:
+			case 2:
 				return status;
 			default:
 				return 0;
@@ -96,9 +92,13 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 		}
 		
 	};
-	
+
 	public BlockEntitySynthesizer() {
-		super(AoABlockEntities.SYNTHESIZER);
+		this(AoABlockEntities.SYNTHESIZER);
+	}
+
+	protected BlockEntitySynthesizer(BlockEntityType type) {
+		super(type);
 	}
 
 	@Override
@@ -119,28 +119,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	public int getNumContainers() {
 		return 1;
 	}
-	
-	public boolean hasXp() {
-		return xp > 0;
-	}
-	
-	public int getXp() {
-		return xp;
-	}
-	
-	public boolean setXp(int amount) {
-		if (amount >= 0) {
-			xp = amount;
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean addXp(int amount) {
-		return setXp(xp + amount);
-	}
-	
+
 	private boolean updateStatus(int status) {
 		if (this.status != status) {
 			this.status = status;
@@ -156,6 +135,8 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 		
 		if (recipe == null || targetSlot.isEmpty()) {
 			return updateStatus(2);
+		} else if (recipe.getTier() > getMaxTier()) {
+			return updateStatus(6);
 		} else if (inSlot.isEmpty()) {
 			return updateStatus(3);
 		} else if (essentiaContainer.isEmpty()) {
@@ -167,12 +148,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 			int cost = recipe.getCost();
 
 			Item target = AoAHelper.getTarget(targetSlot);
-			
-			int tier = 1;
-			if (inSlot.getItem() instanceof ItemMateria) {
-				tier = ((ItemMateria) inSlot.getItem()).getTier() + 1;
-			}
-			
+
 			if (!materia.test(inSlot) || inSlot.getCount() < cost) {
 				return updateStatus(3);
 			}
@@ -192,10 +168,9 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 					return updateStatus(5);
 				}
 			} else {
-				maxProgress = (int) (essentia.getCount() / SPEED_MOD);
-				maxProgress += tier * cost * 5;
-				if (maxProgress < 40) {
-					maxProgress = 40;
+				maxProgress = (int) Math.sqrt(essentia.getCount() / getSpeedMod());
+				if (maxProgress < 2/getSpeedMod()) {
+					maxProgress = (int) (2/getSpeedMod());
 				}
 				if (outSlot.isEmpty()) {
 					return updateStatus(0);
@@ -237,7 +212,6 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
-		tag.putInt("xp", xp);
 		tag.putInt("progress", progress);
 		tag.putInt("max_progress", maxProgress);
 		tag.putInt("status", status);
@@ -250,7 +224,6 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	public void fromTag(BlockState state, CompoundTag tag) {
 		super.fromTag(state, tag);
 		Inventories.fromTag(tag, items);
-		xp = tag.getInt("xp");
 		progress = tag.getInt("progress");
 		maxProgress = tag.getInt("max_progress");
 		status = tag.getInt("status");
@@ -288,18 +261,11 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 			
 			if (targetSlot.isEmpty()) {
 				updateStatus(2);
-			} else if (inSlot.isEmpty()) {
-				updateStatus(3);
 			} else {
 				RecipeSynthesis recipe = world.getRecipeManager()
 						.getFirstMatch(AoARecipes.SYNTHESIS, this, world).orElse(null);
 				
 				if (canCraft(recipe)) {
-//					if (xp >= recipe.getXp(inSlot)) {
-//						isWorking = true;
-//					} else {
-//						updateStatus(6);
-//					}
 					isWorking = true;
 				}
 			
@@ -409,5 +375,17 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 			return true;
 		}
 	}
-	
+
+	public int getMaxTier() {
+		return MAX_TIER;
+	}
+
+	public float getSpeedMod() {
+		return SPEED_MOD;
+	}
+
+	public int getTankSize() {
+		return TANK_SIZE;
+	}
+
 }

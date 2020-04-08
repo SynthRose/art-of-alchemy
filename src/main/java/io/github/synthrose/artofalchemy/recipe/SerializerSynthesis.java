@@ -2,11 +2,14 @@ package io.github.synthrose.artofalchemy.recipe;
 
 import com.google.gson.JsonObject;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
+import io.github.synthrose.artofalchemy.item.ItemMateria;
+import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.registry.Registry;
 
 public class SerializerSynthesis implements RecipeSerializer<RecipeSynthesis> {
 
@@ -21,7 +24,14 @@ public class SerializerSynthesis implements RecipeSerializer<RecipeSynthesis> {
 			container = Ingredient.fromJson(JsonHelper.getObject(json, "container"));
 		}
 		int cost = JsonHelper.getInt(json, "cost", 1);
-		return new RecipeSynthesis(id, group, target, materia, essentia, container, cost);
+		int tier = JsonHelper.getInt(json, "tier", -1);
+		if (tier == -1 && !materia.isEmpty()) {
+			Item item = Registry.ITEM.get(materia.getIds().getInt(0));
+			if (item instanceof ItemMateria) {
+				tier = ((ItemMateria) item).getTier();
+			}
+		}
+		return new RecipeSynthesis(id, group, target, materia, essentia, container, cost, tier);
 	}
 
 	@Override
@@ -32,7 +42,8 @@ public class SerializerSynthesis implements RecipeSerializer<RecipeSynthesis> {
 		EssentiaStack essentia = new EssentiaStack(buf.readCompoundTag());
 		Ingredient container = Ingredient.fromPacket(buf);
 		int cost = buf.readVarInt();
-		return new RecipeSynthesis(id, group, target, materia, essentia, container, cost);
+		int tier = buf.readVarInt();
+		return new RecipeSynthesis(id, group, target, materia, essentia, container, cost, tier);
 	}
 
 	@Override
@@ -43,6 +54,7 @@ public class SerializerSynthesis implements RecipeSerializer<RecipeSynthesis> {
 		buf.writeCompoundTag(recipe.essentia.toTag());
 		recipe.container.write(buf);
 		buf.writeVarInt(recipe.cost);
+		buf.writeVarInt(recipe.tier);
 	}
 	
 

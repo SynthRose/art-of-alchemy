@@ -33,7 +33,6 @@ public class EssentiaNetworker extends PersistentState {
 
     @Override
     public void fromTag(CompoundTag tag) {
-        System.out.println(tag.toString());
         ListTag networkList = tag.getList("networks", NbtType.LIST);
         for (Tag networkTag : networkList) {
             if (networkTag instanceof ListTag && ((ListTag) networkTag).size() > 0) {
@@ -77,8 +76,6 @@ public class EssentiaNetworker extends PersistentState {
             orphanList.add(posTag);
         }
         tag.put("orphans", orphanList);
-        System.out.println(tag.toString());
-        System.out.println(cache.toString());
         return tag;
     }
 

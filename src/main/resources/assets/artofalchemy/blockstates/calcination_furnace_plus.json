@@ -1,0 +1,36 @@
+{
+	"variants": {
+		"facing=north,lit=false": {
+			"model": "artofalchemy:block/calcination_furnace_plus",
+			"y": 0
+		},
+		"facing=east,lit=false": {
+			"model": "artofalchemy:block/calcination_furnace_plus",
+			"y": 90
+		},
+		"facing=south,lit=false": {
+			"model": "artofalchemy:block/calcination_furnace_plus",
+			"y": 180
+		},
+		"facing=west,lit=false": {
+			"model": "artofalchemy:block/calcination_furnace_plus",
+			"y": 270
+		},
+		"facing=north,lit=true": {
+			"model": "artofalchemy:block/calcination_furnace_plus_lit",
+			"y": 0
+		},
+		"facing=east,lit=true": {
+			"model": "artofalchemy:block/calcination_furnace_plus_lit",
+			"y": 90
+		},
+		"facing=south,lit=true": {
+			"model": "artofalchemy:block/calcination_furnace_plus_lit",
+			"y": 180
+		},
+		"facing=west,lit=true": {
+			"model": "artofalchemy:block/calcination_furnace_plus_lit",
+			"y": 270
+		}
+	}
+}
