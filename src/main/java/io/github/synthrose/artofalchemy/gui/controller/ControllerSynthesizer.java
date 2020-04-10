@@ -41,7 +41,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		root.add(inSlot, 4 * 18, 18 - 4);
 		
 		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 1);
-		root.add(outSlot, 6 * 18, 2 * 18);
+		root.add(outSlot, 6 * 18 + 4, 2 * 18);
 		
 		WSprite targetIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/target.png"));
 		root.add(targetIcon, 4 * 18, 3 * 18 + 4, 18, 18);
@@ -49,19 +49,8 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		WItemSlot targetSlot = WItemSlot.of(blockInventory, 2);
 		root.add(targetSlot, 4 * 18, 3 * 18 + 4);
 		
-//		WButton button = new WButton();
-//		button.setOnClick(() -> {
-//			ctx.run((world, pos) -> {
-//				BlockEntity be = world.getBlockEntity(pos);
-//				if (be instanceof BlockEntitySynthesizer) {
-//					((BlockEntitySynthesizer) be).addXp(100);
-//				}
-//			});
-//		});
-//		root.add(button, 4, 3, 4, 1);
-		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
-				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_cyan.png"), 1, 2, Direction.RIGHT);
+				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_cyan.png"), 0, 1, Direction.RIGHT);
 		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 18);
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.synthesis_table"), WLabel.DEFAULT_TEXT_COLOR);
@@ -69,7 +58,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		root.add(title, 0, -1, 9 * 18, 18);
 
 		WDynamicLabel alert = new WDynamicLabel(() -> {
-			switch (propertyDelegate.get(3)) {
+			switch (propertyDelegate.get(2)) {
 			case 2:
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".target_warning");
 			case 3:
@@ -78,21 +67,17 @@ public class ControllerSynthesizer extends CottonCraftingController {
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".essentia_warning");
 			case 5:
 				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".container_warning");
+			case 6:
+				return I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".tier_warning");
 			default:
 				return "";
 			}
 		}, 0xFF5555);
 		alert.setAlignment(Alignment.CENTER);
 		root.add(alert, 0, -1 * 18, 9 * 18, 18);
-		
-//		WDynamicLabel xpLabel = new WDynamicLabel(() -> {
-//			return Integer.toString(propertyDelegate.get(0));
-//		}, 0xAAFF55);
-//		xpLabel.setAlignment(Alignment.CENTER);
-//		root.add(xpLabel, 0, -2, 9, 1);
-		
+
 		essentiaPanel = new WEssentiaPanel(getEssentia(ctx), getRequirements(ctx));
-		root.add(essentiaPanel, 4, 18 - 7, 3 * 18, 4 * 18);
+		root.add(essentiaPanel, 2, 18 - 7, 3 * 18, 4 * 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
 		

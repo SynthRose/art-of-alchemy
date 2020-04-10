@@ -21,6 +21,7 @@ public class AoANetworking {
 	public static final Identifier ESSENTIA_PACKET = ArtOfAlchemy.id("update_essentia");
 	public static final Identifier ESSENTIA_PACKET_REQ = ArtOfAlchemy.id("update_essentia_req");
 	public static final Identifier JOURNAL_SELECT_PACKET = ArtOfAlchemy.id("journal_select");
+	public static final Identifier JOURNAL_REFRESH_PACKET = ArtOfAlchemy.id("journal_refresh");
 
 	public static void initializeNetworking() {
 		ServerSidePacketRegistry.INSTANCE.register(JOURNAL_SELECT_PACKET,
@@ -29,7 +30,9 @@ public class AoANetworking {
 					ctx.getTaskQueue().execute(() -> {
 						ItemStack stack = ctx.getPlayer().getStackInHand(ctx.getPlayer().getActiveHand());
 						if (stack.getItem() instanceof ItemJournal) {
-							ItemJournal.setFormula(stack, id);
+							System.out.println(id);
+							System.out.println(ItemJournal.setFormula(stack, id));
+							sendJournalRefreshPacket(ctx.getPlayer(), stack);
 						}
 					});
 				});
@@ -58,6 +61,12 @@ public class AoANetworking {
 		data.writeBlockPos(pos);
 		
 		players.forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ESSENTIA_PACKET_REQ, data));
+	}
+
+	public static void sendJournalRefreshPacket(PlayerEntity player, ItemStack journal) {
+		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+		data.writeItemStack(journal);
+		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, JOURNAL_REFRESH_PACKET, data);
 	}
 
 }

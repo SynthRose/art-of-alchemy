@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"###",
+		"#O#",
+		"###"
+	],
+	"key": {
+		"#": { "item":"artofalchemy:azoth" },
+		"O": { "item":"minecraft:ender_eye" }
+	},
+	"result": {
+		"item": "artofalchemy:amaranth_pearl",
+		"count": 1
+	}
+}

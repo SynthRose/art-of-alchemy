@@ -30,7 +30,7 @@ public class ControllerCalcinator extends CottonCraftingController {
 		root.add(fuelSlot, 2 * 18, 3 * 18);
 		
 		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 2);
-		root.add(outSlot, 6 * 18, 2 * 18);
+		root.add(outSlot, 6 * 18 + 4, 2 * 18);
 		
 		WBar fuelBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/fire_off.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/fire_on.png"),

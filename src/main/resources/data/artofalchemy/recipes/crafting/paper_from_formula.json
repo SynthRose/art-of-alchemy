@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "tag":"artofalchemy:formulae" }
+	],
+	"result": {
+		"item": "minecraft:paper"
+	}
+}

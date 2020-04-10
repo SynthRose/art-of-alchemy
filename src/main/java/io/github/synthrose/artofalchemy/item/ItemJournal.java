@@ -48,9 +48,10 @@ public class ItemJournal extends AbstractItemFormula {
     }
 
     public static boolean setFormula(ItemStack stack, Identifier formula) {
-        if (hasFormula(stack, formula) && formula != Registry.ITEM.getId(Items.AIR)) {
+        if (hasFormula(stack, formula) || formula == Registry.ITEM.getId(Items.AIR)) {
             CompoundTag tag = stack.getOrCreateTag();
             tag.put("selected", StringTag.of(formula.toString()));
+            stack.setTag(tag);
             return true;
         } else {
             return false;
@@ -90,7 +91,11 @@ public class ItemJournal extends AbstractItemFormula {
     }
 
     public static boolean hasFormula(ItemStack stack, Identifier formula) {
-        return getOrCreateEntriesTag(stack).contains(StringTag.of(formula.toString()));
+        if (formula.equals(Registry.ITEM.getId(Items.AIR))) {
+            return true;
+        } else {
+            return getOrCreateEntriesTag(stack).contains(StringTag.of(formula.toString()));
+        }
     }
 
     public static boolean hasFormula(ItemStack stack, Item formula) {
@@ -100,7 +105,7 @@ public class ItemJournal extends AbstractItemFormula {
     public static boolean addFormula(ItemStack stack, Identifier formula) {
         ListTag entries = getOrCreateEntriesTag(stack);
         StringTag newEntry = StringTag.of(formula.toString());
-        if (!entries.contains(newEntry) && !formula.toString().equals("minecraft:air")) {
+        if (!hasFormula(stack, new Identifier(newEntry.asString()))) {
             entries.add(newEntry);
             return true;
         } else {

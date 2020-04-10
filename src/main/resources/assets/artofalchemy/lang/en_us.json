@@ -1,6 +1,10 @@
 {
 	"item.artofalchemy.icon_item": "Mysterious Sigil",
 	"item.artofalchemy.azoth": "Azoth",
+	"item.artofalchemy.amaranth_pearl": "Amaranth Pearl",
+	"item.artofalchemy.cracked_amaranth_pearl": "Cracked Amaranth Pearl",
+	"item.artofalchemy.activated_amaranth_pearl": "Activated Amaranth Pearl",
+	"item.artofalchemy.philosophers_stone": "Philosopher's Stone",
 
 	"item.artofalchemy.alchemical_journal": "Alchemical Journal",
 	"item.artofalchemy.alchemical_journal.tooltip_entries": "%d entries",
@@ -12,6 +16,10 @@
 	"block.artofalchemy.dissolution_chamber": "Dissolution Chamber",
 	"block.artofalchemy.synthesis_table": "Synthesis Table",
 	"block.artofalchemy.analysis_desk": "Analysis Desk",
+	"block.artofalchemy.calcination_furnace_plus": "Calcination Furnace +",
+	"block.artofalchemy.dissolution_chamber_plus": "Dissolution Chamber +",
+	"block.artofalchemy.synthesis_table_plus": "Synthesis Table +",
+	"block.artofalchemy.projection_altar": "Projection Altar",
 	"block.artofalchemy.astrological_centrifuge": "Astrological Centrifuge",
 	"block.artofalchemy.elemental_centrifuge": "Elemental Centrifuge",
 
@@ -123,6 +131,7 @@
 	"gui.artofalchemy.materia_warning": "Needs materia!",
 	"gui.artofalchemy.essentia_warning": "Needs essentia!",
 	"gui.artofalchemy.container_warning": "Needs a container to fill!",
+	"gui.artofalchemy.tier_warning": "Target rank is too high!",
 	"gui.artofalchemy.empty": "Empty",
 	"gui.artofalchemy.essentia_amount": "%d/%d",
 	"gui.artofalchemy.required_amount": "!%d",

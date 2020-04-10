@@ -38,8 +38,8 @@ public class AoARenderers {
     		RendererFluid.markTranslucent(still, flowing);
     	});
     	
-    	ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) ->
-			0xAA0077, AoABlocks.DISSOLVER);
+    	ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> 0xAA0077,
+				AoABlocks.DISSOLVER, AoABlocks.DISSOLVER_PLUS);
     	
     	for (Entry<Essentia, Item> entry : AoAItems.ESSENTIA_VESSELS.entrySet()) {
     		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {

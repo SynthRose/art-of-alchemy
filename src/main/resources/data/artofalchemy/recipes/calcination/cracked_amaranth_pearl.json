@@ -1,0 +1,9 @@
+{
+  "type": "artofalchemy:calcination",
+  "ingredient": {
+    "item": "artofalchemy:amaranth_pearl"
+  },
+  "result": {
+    "item": "artofalchemy:cracked_amaranth_pearl"
+  }
+}

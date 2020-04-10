@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GPG",
+		"Q#Q",
+		"GBG"
+	],
+	"key": {
+		"#": { "item":"minecraft:enchanting_table" },
+		"B": { "item":"minecraft:polished_basalt" },
+		"P": { "item":"artofalchemy:philosophers_stone" },
+		"G": { "item":"minecraft:gold_ingot" },
+		"Q": { "item":"minecraft:quartz" }
+	},
+	"result": {
+		"item": "artofalchemy:projection_altar"
+	}
+}

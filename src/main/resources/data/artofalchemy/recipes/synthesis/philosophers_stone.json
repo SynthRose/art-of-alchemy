@@ -1,0 +1,25 @@
+{
+  "type": "artofalchemy:synthesis",
+  "target": {
+    "item": "artofalchemy:philosophers_stone"
+  },
+  "materia": {
+    "item": "artofalchemy:activated_amaranth_pearl"
+  },
+  "essentia": {
+    "artofalchemy:mercury": 300,
+    "artofalchemy:venus": 300,
+    "artofalchemy:tellus": 300,
+    "artofalchemy:mars": 300,
+    "artofalchemy:jupiter": 300,
+    "artofalchemy:saturn": 300,
+    "artofalchemy:uranus": 300,
+    "artofalchemy:neptune": 300,
+    "artofalchemy:ceres": 300,
+    "artofalchemy:pluto": 300,
+    "artofalchemy:diana": 300,
+    "artofalchemy:apollo": 300,
+    "artofalchemy:void": 300
+  },
+  "cost": 1
+}

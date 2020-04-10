@@ -67,7 +67,7 @@ public class ControllerDissolver extends CottonCraftingController {
 		
 		EssentiaContainer essentia = getEssentia(ctx);
 		essentiaPanel = new WEssentiaPanel(essentia);
-		root.add(essentiaPanel, 6 * 18 - 2, 18 - 7, 3 * 18, 4 * 18);
+		root.add(essentiaPanel, 6 * 18 - 1, 18 - 7, 3 * 18, 4 * 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
 		

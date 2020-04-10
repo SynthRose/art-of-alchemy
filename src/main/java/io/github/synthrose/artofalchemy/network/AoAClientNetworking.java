@@ -10,6 +10,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
@@ -49,17 +50,23 @@ public class AoAClientNetworking {
 						}
 					});
 				});
+
+		ClientSidePacketRegistry.INSTANCE.register(AoANetworking.JOURNAL_REFRESH_PACKET,
+				(ctx, data) -> {
+					ItemStack journal = data.readItemStack();
+					ctx.getTaskQueue().execute(() -> {
+						Screen screen = MinecraftClient.getInstance().currentScreen;
+						if (screen instanceof ScreenJournal) {
+							((ScreenJournal) screen).refresh(journal);
+						}
+					});
+				});
 	}
 
 	public static void sendJournalSelectPacket(Identifier id) {
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeIdentifier(id);
 		ClientSidePacketRegistry.INSTANCE.sendToServer(AoANetworking.JOURNAL_SELECT_PACKET, data);
-
-		Screen screen = MinecraftClient.getInstance().currentScreen;
-		if (screen instanceof ScreenJournal) {
-			((ScreenJournal) screen).refresh();
-		}
 	}
 
 }

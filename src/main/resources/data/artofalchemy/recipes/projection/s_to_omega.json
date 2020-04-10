@@ -1,0 +1,12 @@
+{
+  "type": "artofalchemy:projection",
+  "ingredient": {
+    "item": "artofalchemy:materia_s"
+  },
+  "cost": 8,
+  "result": {
+    "item": "artofalchemy:materia_omega"
+  },
+  "alkahest": 10000,
+  "comment": "This recipe cannot actually be crafted with the default tank size. This is intentional."
+}

@@ -44,7 +44,11 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 	}
 
 	public BlockDissolver() {
-		super(SETTINGS);
+		this(SETTINGS);
+	}
+
+	protected BlockDissolver(Settings settings) {
+		super(settings);
 		setDefaultState(getDefaultState().with(FILLED, false).with(LIT, false));
 	}
 

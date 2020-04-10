@@ -1,9 +1,6 @@
 package io.github.synthrose.artofalchemy.gui.screen;
 
-import io.github.synthrose.artofalchemy.block.BlockAnalyzer;
-import io.github.synthrose.artofalchemy.block.BlockCalcinator;
-import io.github.synthrose.artofalchemy.block.BlockDissolver;
-import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
+import io.github.synthrose.artofalchemy.block.*;
 import io.github.synthrose.artofalchemy.gui.controller.*;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import net.fabricmc.api.EnvType;
@@ -27,6 +24,9 @@ public class AoAScreens {
 						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
 		ScreenProviderRegistry.INSTANCE.registerFactory(BlockAnalyzer.getId(), (syncId, id, player, buf) ->
 				new ScreenAnalyzer(new ControllerAnalyzer(syncId, player.inventory,
+						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
+		ScreenProviderRegistry.INSTANCE.registerFactory(BlockProjector.getId(), (syncId, id, player, buf) ->
+				new ScreenProjector(new ControllerProjector(syncId, player.inventory,
 						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
 		ScreenProviderRegistry.INSTANCE.registerFactory(ItemJournal.getId(), (syncId, id, player, buf) ->
 				new ScreenJournal(new ControllerJournal(syncId, player.inventory,

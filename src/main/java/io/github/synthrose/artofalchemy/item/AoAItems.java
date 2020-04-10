@@ -9,7 +9,9 @@ import io.github.synthrose.artofalchemy.fluid.AoAFluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -23,11 +25,21 @@ public class AoAItems {
 
 	public static final Item MYSTERIOUS_SIGIL = new Item(new Item.Settings());
 	public static final Item AZOTH = new Item(defaults());
+	public static final Item AMARANTH_PEARL = new Item(defaults());
+	public static final Item CRACKED_AMARANTH_PEARL = new Item(defaults());
+	public static final Item ACTIVATED_AMARANTH_PEARL = new Item(defaults().rarity(Rarity.UNCOMMON));
+	public static final Item PHILOSOPHERS_STONE = new Item(defaults().rarity(Rarity.EPIC)) {
+		@Override
+		public boolean hasEnchantmentGlint(ItemStack stack) {
+			return true;
+		}
+	};
+
 	public static final Item JOURNAL = new ItemJournal(defaults());
 	public static final Item ALCHEMY_FORMULA = new ItemAlchemyFormula(new Item.Settings().maxCount(1));
 
 	public static final Map<MateriaRank, Item> MATERIA_DUSTS = new HashMap<>();
-	
+
 	public static final Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
 	public static final Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
 	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
@@ -45,6 +57,10 @@ public class AoAItems {
 		register("essentia_extractor", ESSENTIA_EXTRACTOR);
 
 		register("azoth", AZOTH);
+		register("amaranth_pearl", AMARANTH_PEARL);
+		register("cracked_amaranth_pearl", CRACKED_AMARANTH_PEARL);
+		register("activated_amaranth_pearl", ACTIVATED_AMARANTH_PEARL);
+		register("philosophers_stone", PHILOSOPHERS_STONE);
 
 		// Register materia dusts
 		for (MateriaRank rank : MateriaRank.values()) {

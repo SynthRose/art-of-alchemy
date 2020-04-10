@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GPG",
+		"B#B",
+		"GBG"
+	],
+	"key": {
+		"#": { "item":"artofalchemy:calcination_furnace" },
+		"B": { "item":"minecraft:polished_basalt" },
+		"P": { "item":"artofalchemy:philosophers_stone" },
+		"G": { "item":"minecraft:gold_ingot" }
+	},
+	"result": {
+		"item": "artofalchemy:calcination_furnace_plus"
+	}
+}

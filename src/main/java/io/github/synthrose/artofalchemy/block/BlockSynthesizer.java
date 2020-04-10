@@ -40,7 +40,11 @@ public class BlockSynthesizer extends Block implements BlockEntityProvider {
 	}
 
 	public BlockSynthesizer() {
-		super(SETTINGS);
+		this(SETTINGS);
+	}
+
+	protected BlockSynthesizer(Settings settings) {
+		super(settings);
 		setDefaultState(getDefaultState().with(LIT, false));
 	}
 	
