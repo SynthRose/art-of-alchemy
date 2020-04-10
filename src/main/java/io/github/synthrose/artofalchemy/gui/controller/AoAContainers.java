@@ -1,9 +1,6 @@
 package io.github.synthrose.artofalchemy.gui.controller;
 
-import io.github.synthrose.artofalchemy.block.BlockAnalyzer;
-import io.github.synthrose.artofalchemy.block.BlockCalcinator;
-import io.github.synthrose.artofalchemy.block.BlockDissolver;
-import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
+import io.github.synthrose.artofalchemy.block.*;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -23,6 +20,9 @@ public class AoAContainers {
 						ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 		ContainerProviderRegistry.INSTANCE.registerFactory(BlockAnalyzer.getId(), (syncId, id, player, buf) ->
 				new ControllerAnalyzer(syncId, player.inventory,
+						ScreenHandlerContext.create(player.world, buf.readBlockPos())));
+		ContainerProviderRegistry.INSTANCE.registerFactory(BlockProjector.getId(), (syncId, id, player, buf) ->
+				new ControllerProjector(syncId, player.inventory,
 						ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 		ContainerProviderRegistry.INSTANCE.registerFactory(ItemJournal.getId(), (syncId, id, player, buf) ->
 				new ControllerJournal(syncId, player.inventory,

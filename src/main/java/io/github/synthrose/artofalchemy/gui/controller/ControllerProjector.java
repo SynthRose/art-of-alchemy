@@ -11,10 +11,10 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ControllerCalcinator extends CottonCraftingController {
+public class ControllerProjector extends CottonCraftingController {
 
-	public ControllerCalcinator(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(AoARecipes.CALCINATION, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+	public ControllerProjector(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+		super(AoARecipes.PROJECTION, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		WGridPanel root = new WGridPanel(1);
 		setRootPanel(root);
@@ -24,25 +24,23 @@ public class ControllerCalcinator extends CottonCraftingController {
 		root.add(background, 0, 0, 9 * 18, 5 * 18);
 		
 		WItemSlot itemSlot = WItemSlot.of(blockInventory, 0);
-		root.add(itemSlot, 2 * 18, 18);
+		root.add(itemSlot, 2 * 18, 2 * 18);
+
+		WBar tankBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/tank_empty.png"),
+				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/tank_full.png"),
+				0, 1, Direction.UP);
+		tankBar.withTooltip("gui." + ArtOfAlchemy.MOD_ID + ".alkahest_tooltip");
+		root.add(tankBar, 0, 18, 2 * 18, 3 * 18);
 		
-		WItemSlot fuelSlot = WItemSlot.of(blockInventory, 1);
-		root.add(fuelSlot, 2 * 18, 3 * 18);
-		
-		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 2);
+		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 1);
 		root.add(outSlot, 6 * 18 + 4, 2 * 18);
 		
-		WBar fuelBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/fire_off.png"),
-				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/fire_on.png"),
-				0, 1, Direction.UP);
-		root.add(fuelBar, 2 * 18, 2 * 18, 18, 18);
-		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
-				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_yellow.png"),
+				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_green.png"),
 				2, 3, Direction.RIGHT);
 		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 18);
 		
-		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.calcination_furnace"),
+		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.projection_altar"),
 				WLabel.DEFAULT_TEXT_COLOR);
 		title.setAlignment(Alignment.CENTER);
 		root.add(title, 0, -1, 9 * 18, 18);

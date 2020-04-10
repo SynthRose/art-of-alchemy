@@ -41,7 +41,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		root.add(inSlot, 4 * 18, 18 - 4);
 		
 		WItemSlot outSlot = WItemSlot.outputOf(blockInventory, 1);
-		root.add(outSlot, 6 * 18, 2 * 18);
+		root.add(outSlot, 6 * 18 + 4, 2 * 18);
 		
 		WSprite targetIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/target.png"));
 		root.add(targetIcon, 4 * 18, 3 * 18 + 4, 18, 18);
@@ -77,7 +77,7 @@ public class ControllerSynthesizer extends CottonCraftingController {
 		root.add(alert, 0, -1 * 18, 9 * 18, 18);
 
 		essentiaPanel = new WEssentiaPanel(getEssentia(ctx), getRequirements(ctx));
-		root.add(essentiaPanel, 4, 18 - 7, 3 * 18, 4 * 18);
+		root.add(essentiaPanel, 2, 18 - 7, 3 * 18, 4 * 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
 		

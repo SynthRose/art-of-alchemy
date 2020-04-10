@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"lit=false": {
+			"model": "artofalchemy:block/projection_altar"
+		},
+		"lit=true": {
+			"model": "artofalchemy:block/projection_altar_lit"
+		}
+	}
+}

@@ -17,6 +17,9 @@ public class AoARecipes {
 	public static RecipeType<RecipeSynthesis> SYNTHESIS;
 	public static RecipeSerializer<RecipeSynthesis> SYNTHESIS_SERIALIZER;
 
+	public static RecipeType<RecipeProjection> PROJECTION;
+	public static RecipeSerializer<RecipeProjection> PROJECTION_SERIALIZER;
+
 	public static void registerRecipes() {
 		CALCINATION = register("calcination");
 		CALCINATION_SERIALIZER = register("calcination", new SerializerCalcination());
@@ -26,6 +29,9 @@ public class AoARecipes {
 		
 		SYNTHESIS = register("synthesis");
 		SYNTHESIS_SERIALIZER = register("synthesis", new SerializerSynthesis());
+
+		PROJECTION = register("projection");
+		PROJECTION_SERIALIZER = register("projection", new SerializerProjection());
 	}
 	
 	public static <T extends Recipe<?>> RecipeType<T> register(String name) {

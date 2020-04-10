@@ -20,6 +20,7 @@ public class AoABlocks {
 	public static final Block CALCINATOR = new BlockCalcinator();
 	public static final Block DISSOLVER = new BlockDissolver();
 	public static final Block SYNTHESIZER = new BlockSynthesizer();
+	public static final Block PROJECTOR = new BlockProjector();
 	public static final Block CALCINATOR_PLUS = new BlockCalcinatorPlus();
 	public static final Block DISSOLVER_PLUS = new BlockDissolverPlus();
 	public static final Block SYNTHESIZER_PLUS = new BlockSynthesizerPlus();
@@ -34,13 +35,14 @@ public class AoABlocks {
 	public static final Map<Essentia, Block> ESSENTIA = new HashMap<>();
 	
 	public static void registerBlocks() {
-		register("calcination_furnace", CALCINATOR);
-		register("calcination_furnace_plus", CALCINATOR_PLUS);
-		register("dissolution_chamber", DISSOLVER);
-		register("dissolution_chamber_plus", DISSOLVER_PLUS);
-		register("synthesis_table", SYNTHESIZER);
-		register("synthesis_table_plus", SYNTHESIZER_PLUS);
 		register("analysis_desk", ANALYZER);
+		register("calcination_furnace", CALCINATOR);
+		register("dissolution_chamber", DISSOLVER);
+		register("synthesis_table", SYNTHESIZER);
+		register("projection_altar", PROJECTOR);
+		register("calcination_furnace_plus", CALCINATOR_PLUS);
+		register("dissolution_chamber_plus", DISSOLVER_PLUS);
+		register("synthesis_table_plus", SYNTHESIZER_PLUS);
 		register("astrological_centrifuge", ASTRO_CENTRIFUGE);
 		register("elemental_centrifuge", ELEMENT_CENTRIFUGE);
 		register("essentia_tank", TANK);

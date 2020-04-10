@@ -1,0 +1,11 @@
+{
+  "type": "artofalchemy:projection",
+  "ingredient": {
+    "item": "artofalchemy:materia_d"
+  },
+  "cost": 8,
+  "result": {
+    "item": "artofalchemy:materia_c"
+  },
+  "alkahest": 25
+}
