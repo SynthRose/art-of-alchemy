@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy;
+package io.github.synthrose.artofalchemy.util;
 
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.item.Item;

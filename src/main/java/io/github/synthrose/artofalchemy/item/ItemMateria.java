@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy.item;
 
-import io.github.synthrose.artofalchemy.MateriaRank;
+import io.github.synthrose.artofalchemy.util.MateriaRank;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

@@ -6,7 +6,7 @@ import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;

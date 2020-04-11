@@ -3,7 +3,7 @@ package io.github.synthrose.artofalchemy.gui.controller;
 import io.github.cottonmc.cotton.gui.CottonCraftingController;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.gui.widget.WFormulaList;
 import io.github.synthrose.artofalchemy.item.AbstractItemFormula;

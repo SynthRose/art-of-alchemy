@@ -1,8 +1,9 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockDissolver;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
@@ -31,11 +32,11 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{0};
 	private static final int[] SIDE_SLOTS = new int[]{0};
-	private final int TANK_SIZE = 4000;
-	private final float SPEED_MOD = 0.05f;
-	private final float EFFICIENCY = 0.5f;
+	private int tankSize;
+	private float speedMod;
+	private float yield;
 	private int alkahest = 0;
-	private int maxAlkahest = getTankSize();
+	protected int maxAlkahest = getTankSize();
 	private int progress = 0;
 	private int maxProgress = 100;
 	private int status = 0;
@@ -46,10 +47,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	private boolean lit = false;
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
-	protected EssentiaContainer essentia = new EssentiaContainer()
-		.setCapacity(getTankSize())
-		.setInput(false)
-		.setOutput(true);
+	protected EssentiaContainer essentia;
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
 		
 		@Override
@@ -100,6 +98,15 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	
 	public BlockEntityDissolver() {
 		this(AoABlockEntities.DISSOLVER);
+		AoAConfig.DissolverSettings settings = AoAConfig.get().dissolverSettings;
+		tankSize = settings.tankBasic;
+		speedMod = settings.speedBasic;
+		yield = settings.yieldBasic;
+		maxAlkahest = getTankSize();
+		essentia = new EssentiaContainer()
+				.setCapacity(getTankSize())
+				.setInput(false)
+				.setOutput(true);
 	}
 
 	protected BlockEntityDissolver(BlockEntityType type) {
@@ -350,14 +357,14 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	}
 
 	public int getTankSize() {
-		return TANK_SIZE;
+		return tankSize;
 	}
 
 	public float getSpeedMod() {
-		return SPEED_MOD;
+		return speedMod;
 	}
 
 	public float getEfficiency() {
-		return EFFICIENCY;
+		return yield;
 	}
 }

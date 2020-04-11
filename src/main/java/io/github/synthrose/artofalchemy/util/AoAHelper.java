@@ -1,4 +1,4 @@
-package io.github.synthrose.artofalchemy;
+package io.github.synthrose.artofalchemy.util;
 
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
 import io.github.synthrose.artofalchemy.item.ItemJournal;

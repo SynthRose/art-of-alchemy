@@ -1,16 +1,16 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.AoAConfig;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.FuelHelper;
-import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.util.FuelHelper;
+import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockCalcinator;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.tag.TagRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -30,8 +30,8 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	protected static final int[] TOP_SLOTS = new int[]{0};
 	protected static final int[] BOTTOM_SLOTS = new int[]{0, 2};
 	protected static final int[] SIDE_SLOTS = new int[]{1, 2};
-	private final int OPERATION_TIME = 120;
-	private final float EFFICIENCY = 0.50f;
+	private int operationTime;
+	private float yield;
 	protected int fuel = 0;
 	protected int maxFuel = 20;
 	protected int progress = 0;
@@ -83,6 +83,10 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	
 	public BlockEntityCalcinator() {
 		this(AoABlockEntities.CALCINATOR);
+		AoAConfig.CalcinatorSettings settings = AoAConfig.get().calcinatorSettings;
+		operationTime = settings.opTimeBasic;
+		yield = settings.yieldBasic;
+		maxProgress = getOperationTime();
 	}
 
 	protected BlockEntityCalcinator(BlockEntityType type) {
@@ -103,7 +107,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 			ItemStack outStack = recipe.getOutput();
 			ItemStack container = recipe.getContainer();
 			
-			float factor = getEfficiency() * recipe.getFactor();
+			float factor = getYield() * recipe.getFactor();
 			if (inSlot.isDamageable()) {
 				factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 			}
@@ -130,7 +134,7 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 		ItemStack outStack = recipe.getOutput();
 		ItemStack container = recipe.getContainer(); 
 				
-		float factor = getEfficiency() * recipe.getFactor();
+		float factor = getYield() * recipe.getFactor();
 		if (inSlot.isDamageable()) {
 			factor *= 1.0F - (float) inSlot.getDamage() / inSlot.getMaxDamage();
 		}
@@ -295,10 +299,10 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	}
 
 	public int getOperationTime() {
-		return OPERATION_TIME;
+		return operationTime;
 	}
 
-	public float getEfficiency() {
-		return EFFICIENCY;
+	public float getYield() {
+		return yield;
 	}
 }

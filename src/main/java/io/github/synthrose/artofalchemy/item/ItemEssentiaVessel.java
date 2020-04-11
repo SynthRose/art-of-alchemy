@@ -1,5 +1,6 @@
 package io.github.synthrose.artofalchemy.item;
 
+import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.transport.HasEssentia;
@@ -28,15 +29,14 @@ import java.util.List;
 
 public class ItemEssentiaVessel extends Item {
 	
-	public static final int DEFAULT_MULTI_CAPACITY = 4000;
-	public static final int DEFAULT_SINGLE_CAPACITY = 4000;
-	
-	public final Essentia TYPE;
+	public final int capacity;
+	public final Essentia type;
 	private String translationKey;
 	
 	public ItemEssentiaVessel(Settings settings, Essentia type) {
 		super(settings.maxCount(1));
-		TYPE = type;
+		capacity = AoAConfig.get().vesselCapacity;
+		this.type = type;
 		this.addPropertyGetter(new Identifier("level"), (stack, world, entity) -> {
 			EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
 			double level = contents.getCount();
@@ -55,22 +55,23 @@ public class ItemEssentiaVessel extends Item {
 		CompoundTag tag = stack.getTag();
 		EssentiaContainer container = EssentiaContainer.of(stack);
 		Essentia type = null;
+		int capacity = 0;
 		if (stack.getItem() instanceof ItemEssentiaVessel) {
-			type = ((ItemEssentiaVessel) stack.getItem()).TYPE;
+			type = ((ItemEssentiaVessel) stack.getItem()).type;
+			capacity = ((ItemEssentiaVessel) stack.getItem()).capacity;
 		}
 		if (container == null) {
-			container = new EssentiaContainer().setCapacity(DEFAULT_SINGLE_CAPACITY);
+			container = new EssentiaContainer().setCapacity(capacity);
 			if (type != null) {
 				container.whitelist(type).setWhitelistEnabled(true);
-				container.setCapacity(DEFAULT_MULTI_CAPACITY);
 			}
 		}
 		return container;
 	}
 	
 	public void setContainer(ItemStack stack, EssentiaContainer container) {
-		if (TYPE != null) {
-			container.setWhitelist(new HashSet<>()).whitelist(TYPE).setWhitelistEnabled(true);
+		if (type != null) {
+			container.setWhitelist(new HashSet<>()).whitelist(type).setWhitelistEnabled(true);
 		}
 		container.in(stack);
 	}
@@ -199,7 +200,7 @@ public class ItemEssentiaVessel extends Item {
 		EssentiaContainer container = getContainer(stack);
 		String prefix = tooltipPrefix();
 
-		if (((ItemEssentiaVessel) stack.getItem()).TYPE != null) {
+		if (((ItemEssentiaVessel) stack.getItem()).type != null) {
 			tooltip.add(new TranslatableText(prefix + "deprecated").formatted(Formatting.DARK_RED));
 		}
 		

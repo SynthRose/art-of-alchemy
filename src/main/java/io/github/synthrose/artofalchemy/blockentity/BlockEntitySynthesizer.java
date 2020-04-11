@@ -1,14 +1,14 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.AoAConfig;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockSynthesizer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
 import io.github.synthrose.artofalchemy.transport.HasEssentia;
-import io.github.synthrose.artofalchemy.item.ItemMateria;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeSynthesis;
@@ -35,9 +35,9 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{1, 2};
 	private static final int[] SIDE_SLOTS = new int[]{1, 2};
-	private static final int MAX_TIER = 3;
-	private static final float SPEED_MOD = 0.05f;
-	private static final int TANK_SIZE = 4000;
+	private int maxTier;
+	private float speedMod;
+	private int tankSize;
 	private int progress = 0;
 	private int maxProgress = 200;
 	private int status = 0;
@@ -51,10 +51,7 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	private boolean lit = false;
 	
 	protected final DefaultedList<ItemStack> items = DefaultedList.ofSize(3, ItemStack.EMPTY);
-	protected EssentiaContainer essentiaContainer = new EssentiaContainer()
-		.setCapacity(getTankSize())
-		.setInput(true)
-		.setOutput(false);
+	protected EssentiaContainer essentiaContainer;
 	protected final PropertyDelegate delegate = new PropertyDelegate() {
 		
 		@Override
@@ -95,6 +92,14 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 
 	public BlockEntitySynthesizer() {
 		this(AoABlockEntities.SYNTHESIZER);
+		AoAConfig.SynthesizerSettings settings = AoAConfig.get().synthesizerSettings;
+		tankSize = settings.tankBasic;
+		speedMod = settings.speedBasic;
+		maxTier = settings.maxTierBasic.tier;
+		essentiaContainer = new EssentiaContainer()
+				.setCapacity(getTankSize())
+				.setInput(true)
+				.setOutput(false);
 	}
 
 	protected BlockEntitySynthesizer(BlockEntityType type) {
@@ -377,15 +382,15 @@ public class BlockEntitySynthesizer extends BlockEntity implements ImplementedIn
 	}
 
 	public int getMaxTier() {
-		return MAX_TIER;
+		return maxTier;
 	}
 
 	public float getSpeedMod() {
-		return SPEED_MOD;
+		return speedMod;
 	}
 
 	public int getTankSize() {
-		return TANK_SIZE;
+		return tankSize;
 	}
 
 }

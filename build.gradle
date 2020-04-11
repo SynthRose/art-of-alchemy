@@ -11,13 +11,14 @@ version = project.mod_version + "+" + project.minecraft_version
 group = project.maven_group
 
 if (System.env.RUN_COUNT) { // only change version if we're in github's workflow environment - full releases shouldn't have the +build
-	version = project.mod_version + "-" + System.env.RUN_COUNT // automatically increments every time the workflow runs, but won't affect fabric.mod.json dependencies
+	version = version + "+build." + System.env.RUN_COUNT // automatically increments every time the workflow runs, but won't affect fabric.mod.json dependencies
 }
 
 minecraft {
 }
 
 repositories {
+	jcenter()
 	maven {
 		name = "CottonMC"
 		url = "http://server.bbkr.space:8081/artifactory/libs-release"
@@ -32,9 +33,13 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "io.github.cottonmc:LibGui:${project.libgui_version}"
+	modImplementation "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
+	modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
 	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
 
 	include "io.github.cottonmc:LibGui:${project.libgui_version}"
+	include "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
+	include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
 }
 
 processResources {

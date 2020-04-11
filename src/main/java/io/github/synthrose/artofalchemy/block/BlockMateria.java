@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy.block;
 
-import io.github.synthrose.artofalchemy.MateriaRank;
+import io.github.synthrose.artofalchemy.util.MateriaRank;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.minecraft.block.Block;

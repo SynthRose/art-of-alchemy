@@ -1,9 +1,6 @@
 package io.github.synthrose.artofalchemy.block;
 
-import io.github.synthrose.artofalchemy.Chain;
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityTank;
-import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -14,8 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
-
-import java.util.HashSet;
 
 public class BlockTank extends Block implements BlockEntityProvider {
 

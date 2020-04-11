@@ -83,27 +83,4 @@ public class WEssentiaSubPanel extends WPlainPanel {
 		return amount;
 	}
 
-	@Environment(EnvType.CLIENT)
-	@Override
-	public void addInformation(List<String> information) {
-		if (essentia != null) {
-			Identifier id = RegistryEssentia.INSTANCE.getId(essentia);
-			String essentiaName = I18n.translate("fluid." + id.getNamespace() + ".essentia_" + id.getPath());
-			String amtTip;
-			if (required > 0) {
-				amtTip = I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".essentia_amount", amount, required);
-			} else {
-				amtTip = amount.toString();
-			}
-			information.add(essentiaName);
-			information.add(amtTip);
-		} else {
-			information.add(I18n.translate("gui." + ArtOfAlchemy.MOD_ID + ".empty"));
-		}
-		
-		super.addInformation(information);
-	}
-	
-	
-
 }

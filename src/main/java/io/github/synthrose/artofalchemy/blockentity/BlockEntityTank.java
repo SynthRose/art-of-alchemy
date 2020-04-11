@@ -1,5 +1,6 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
+import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
@@ -14,10 +15,8 @@ import net.minecraft.util.math.Direction;
 
 public class BlockEntityTank extends BlockEntity implements Tickable, HasEssentia, BlockEntityClientSerializable {
 
-    private final int TANK_SIZE = 8000;
-
     protected EssentiaContainer essentia = new EssentiaContainer()
-            .setCapacity(TANK_SIZE)
+            .setCapacity(AoAConfig.get().tankCapacity)
             .setInput(true)
             .setOutput(true);
 

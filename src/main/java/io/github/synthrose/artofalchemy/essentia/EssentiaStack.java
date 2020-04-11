@@ -2,7 +2,7 @@ package io.github.synthrose.artofalchemy.essentia;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
