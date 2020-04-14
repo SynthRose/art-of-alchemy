@@ -1,7 +1,8 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import io.github.synthrose.artofalchemy.ImplementedInventory;
+import io.github.synthrose.artofalchemy.AoAConfig;
+import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockDissolver;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeProjection;
@@ -25,8 +26,8 @@ public class BlockEntityProjector extends BlockEntity implements ImplementedInve
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{1};
 	private static final int[] SIDE_SLOTS = new int[]{0, 1};
-	private final int TANK_SIZE = 8000;
-	private final int OPERATION_TIME = 180;
+	private int tankSize;
+	private int operationTime;
 	private int alkahest = 0;
 	private int maxAlkahest = getTankSize();
 	private int progress = 0;
@@ -79,6 +80,11 @@ public class BlockEntityProjector extends BlockEntity implements ImplementedInve
 
 	public BlockEntityProjector() {
 		this(AoABlockEntities.PROJECTOR);
+		AoAConfig.ProjectorSettings settings = AoAConfig.get().projectorSettings;
+		operationTime = settings.opTime;
+		tankSize = settings.tankSize;
+		maxProgress = getOperationTime();
+		maxAlkahest = getTankSize();
 	}
 
 	protected BlockEntityProjector(BlockEntityType type) {
@@ -268,11 +274,11 @@ public class BlockEntityProjector extends BlockEntity implements ImplementedInve
 	}
 
 	public int getTankSize() {
-		return TANK_SIZE;
+		return tankSize;
 	}
 
 	public int getOperationTime() {
-		return OPERATION_TIME;
+		return operationTime;
 	}
 
 }

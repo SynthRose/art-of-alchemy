@@ -1,5 +1,6 @@
 package io.github.synthrose.artofalchemy.transport;
 
+import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
@@ -16,8 +17,9 @@ import org.apache.logging.log4j.Level;
 
 import java.util.*;
 
+// Thanks, 2xsaiko!
 public class EssentiaNetworker extends PersistentState {
-    public static final int PER_TICK_LIMIT = 1024;
+    public final int processingLimit;
     protected final ServerWorld world;
     protected final Set<EssentiaNetwork> networks = new HashSet<>();
     protected final Set<BlockPos> orphans = new HashSet<>();
@@ -29,6 +31,7 @@ public class EssentiaNetworker extends PersistentState {
     public EssentiaNetworker(ServerWorld world) {
         super(getName(world.dimension));
         this.world = world;
+        processingLimit = AoAConfig.get().networkProcessingLimit;
     }
 
     @Override
@@ -99,14 +102,14 @@ public class EssentiaNetworker extends PersistentState {
     public void tick() {
         processed = 0;
         for (BlockPos pos : new HashSet<>(orphans)) {
-            if (processed < PER_TICK_LIMIT) {
+            if (processed < processingLimit) {
                 add(pos.toImmutable());
             } else {
                 break;
             }
         }
         for (BlockPos pos : new HashSet<>(legacyOrphans)) {
-            if (processed < PER_TICK_LIMIT) {
+            if (processed < processingLimit) {
                 recursiveAdd(pos.toImmutable());
             } else {
                 break;
@@ -206,7 +209,7 @@ public class EssentiaNetworker extends PersistentState {
 
     @Deprecated
     public void recursiveAdd(BlockPos pos) {
-        if (processed < PER_TICK_LIMIT) {
+        if (processed < processingLimit) {
             if (!getNetwork(pos).isPresent()) {
                 add(pos.toImmutable());
                 legacyOrphans.remove(pos);

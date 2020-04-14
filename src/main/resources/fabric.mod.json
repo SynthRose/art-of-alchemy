@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "artofalchemy",
-  "version": "0.5.0+20w15a",
+  "version": "$version",
   "name": "Art of Alchemy",
   "description": "An industrial magic mod that allows you to unleash the power of transmutation!",
   "authors": [
@@ -9,7 +9,11 @@
   ],
   "contributors": [],
   "contact": {
-    "sources": "https://github.com/SynthRose/art-of-alchemy"
+    "sources": "https://github.com/SynthRose/art-of-alchemy",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/art-of-alchemy",
+    "issues": "https://github.com/SynthRose/art-of-alchemy/issues",
+    "discord": "SynthRose#8312",
+    "twitter": "https://twitter.com/synth_rose"
   },
   "license": "MIT",
   "icon": "assets/artofalchemy/icon.png",
@@ -21,12 +25,15 @@
     "client": [
       "io.github.synthrose.artofalchemy.ArtOfAlchemyClient"
     ],
-    "server": []
+    "modmenu": [
+      "io.github.synthrose.artofalchemy.integration.AoAxModMenu"
+    ]
   },
   "mixins": [
     "artofalchemy.mixins.json"
   ],
   "depends": {
+    "autoconfig1u": ">=2.0.0",
   	"libgui": ">=1.8.0",
     "fabricloader": ">=0.4.0",
     "fabric": "*"

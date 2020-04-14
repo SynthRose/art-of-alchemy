@@ -1,10 +1,9 @@
 package io.github.synthrose.artofalchemy.recipe;
 
 
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
-import io.github.synthrose.artofalchemy.item.ItemMateria;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;

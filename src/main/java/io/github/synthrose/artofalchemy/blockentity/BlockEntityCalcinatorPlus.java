@@ -1,24 +1,28 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
-import io.github.synthrose.artofalchemy.block.AoABlocks;
+import io.github.synthrose.artofalchemy.AoAConfig;
 
 public class BlockEntityCalcinatorPlus extends BlockEntityCalcinator {
 
-	private final int OPERATION_TIME = 60;
-	private final float EFFICIENCY = 1.00f;
+	private int operationTime;
+	private float yield;
 
 	public BlockEntityCalcinatorPlus() {
 		super(AoABlockEntities.CALCINATOR_PLUS);
+		AoAConfig.CalcinatorSettings settings = AoAConfig.get().calcinatorSettings;
+		operationTime = settings.opTimePlus;
+		yield = settings.yieldPlus;
+		maxProgress = getOperationTime();
 	}
 
 	@Override
 	public int getOperationTime() {
-		return OPERATION_TIME;
+		return operationTime;
 	}
 
 	@Override
-	public float getEfficiency() {
-		return EFFICIENCY;
+	public float getYield() {
+		return yield;
 	}
 
 }

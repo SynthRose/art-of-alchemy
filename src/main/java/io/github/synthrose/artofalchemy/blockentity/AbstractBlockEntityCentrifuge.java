@@ -1,5 +1,6 @@
 package io.github.synthrose.artofalchemy.blockentity;
 
+import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.transport.HasEssentia;
@@ -16,9 +17,11 @@ import java.util.Set;
 
 abstract public class AbstractBlockEntityCentrifuge extends BlockEntity implements HasEssentia, Tickable {
 
-    public static final int TANK_SIZE = 4000;
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    protected EssentiaContainer input = new EssentiaContainer().setCapacity(TANK_SIZE).setInput(true).setOutput(false);
+    protected EssentiaContainer input = new EssentiaContainer()
+            .setCapacity(AoAConfig.get().centrifugeCapacity)
+            .setInput(true)
+            .setOutput(false);
     protected EssentiaContainer[] outputs;
 
     public AbstractBlockEntityCentrifuge(BlockEntityType<?> type) {
@@ -63,6 +66,11 @@ abstract public class AbstractBlockEntityCentrifuge extends BlockEntity implemen
 
     protected static EssentiaContainer outputOf(Essentia... essentia) {
         Set<Essentia> whitelist = new HashSet<>(Arrays.asList(essentia));
-        return new EssentiaContainer().setOutput(true).setInput(false).setCapacity(TANK_SIZE).setWhitelist(whitelist).setWhitelistEnabled(true);
+        return new EssentiaContainer()
+                .setCapacity(AoAConfig.get().centrifugeCapacity)
+                .setOutput(true)
+                .setInput(false)
+                .setWhitelist(whitelist)
+                .setWhitelistEnabled(true);
     }
 }

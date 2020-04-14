@@ -1,8 +1,7 @@
 package io.github.synthrose.artofalchemy.render;
 
-import io.github.synthrose.artofalchemy.AoAHelper;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
-import io.github.synthrose.artofalchemy.block.BlockTank;
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityTank;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.MateriaRank;
+import io.github.synthrose.artofalchemy.util.MateriaRank;
 import io.github.synthrose.artofalchemy.block.BlockPipe;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
