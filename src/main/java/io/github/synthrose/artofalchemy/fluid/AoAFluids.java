@@ -3,7 +3,7 @@ package io.github.synthrose.artofalchemy.fluid;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
-import net.minecraft.fluid.BaseFluid;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class AoAFluids {
 	
-	public static BaseFluid ALKAHEST;
-	public static BaseFluid ALKAHEST_FLOWING;
-	public static final Map<Essentia, BaseFluid> ESSENTIA_FLUIDS = new HashMap<>();
-	public static final Map<Essentia, BaseFluid> ESSENTIA_FLUIDS_FLOWING = new HashMap<>();
+	public static FlowableFluid ALKAHEST;
+	public static FlowableFluid ALKAHEST_FLOWING;
+	public static final Map<Essentia, FlowableFluid> ESSENTIA_FLUIDS = new HashMap<>();
+	public static final Map<Essentia, FlowableFluid> ESSENTIA_FLUIDS_FLOWING = new HashMap<>();
 
 	public static void registerFluids() {
 		ALKAHEST 			= register("alkahest", new FluidAlkahest.Still());
@@ -30,11 +30,11 @@ public class AoAFluids {
 		});
 	}
 	
-	public static BaseFluid register(String name, BaseFluid fluid) {
+	public static FlowableFluid register(String name, FlowableFluid fluid) {
 		return register(ArtOfAlchemy.id(name), fluid);
 	}
 	
-	public static BaseFluid register(Identifier id, BaseFluid fluid) {
+	public static FlowableFluid register(Identifier id, FlowableFluid fluid) {
 		return Registry.register(Registry.FLUID, id, fluid);
 	}
 	

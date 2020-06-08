@@ -1,13 +1,16 @@
 package io.github.synthrose.artofalchemy;
 
+import com.mojang.serialization.Lifecycle;
 import io.github.synthrose.artofalchemy.block.AoABlocks;
 import io.github.synthrose.artofalchemy.blockentity.AoABlockEntities;
 import io.github.synthrose.artofalchemy.dispenser.AoADispenserBehavior;
 import io.github.synthrose.artofalchemy.essentia.AoAEssentia;
+import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
 import io.github.synthrose.artofalchemy.gui.controller.AoAContainers;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
+import io.github.synthrose.artofalchemy.mixin.RegistryAccessor;
 import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
@@ -26,6 +29,10 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.DefaultedRegistry;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.registry.SimpleRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +44,7 @@ public class ArtOfAlchemy implements ModInitializer {
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
-    public static final ItemGroup ALCHEMY_GROUP = FabricItemGroupBuilder.create(ArtOfAlchemy.id("alchemy"))
+    public static final ItemGroup ALCHEMY_GROUP = FabricItemGroupBuilder.create(id("alchemy"))
     		.icon(() -> new ItemStack(AoAItems.MYSTERIOUS_SIGIL)).build();
 
     @Override

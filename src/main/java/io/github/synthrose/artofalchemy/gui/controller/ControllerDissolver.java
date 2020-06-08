@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy.gui.controller;
 
-import io.github.cottonmc.cotton.gui.CottonCraftingController;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
@@ -8,7 +8,6 @@ import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.transport.HasEssentia;
 import io.github.synthrose.artofalchemy.gui.widget.WEssentiaPanel;
-import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -17,14 +16,14 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public class ControllerDissolver extends CottonCraftingController {
+public class ControllerDissolver extends SyncedGuiDescription {
 	
 	final BlockPos pos;
 	final WEssentiaPanel essentiaPanel;
 	
 	@SuppressWarnings("MethodCallSideOnly")
 	public ControllerDissolver(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(AoARecipes.DISSOLUTION, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+		super(syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		pos = ctx.run((world, pos) -> pos, null);
 		
@@ -46,7 +45,7 @@ public class ControllerDissolver extends CottonCraftingController {
 		
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_magenta.png"), 2, 3, Direction.RIGHT);
-		root.add(progressBar, 3 * 18, 2 * 18, 3 * 18, 18);
+		root.add(progressBar, 3 * 18, 2 * 18 + 1, 3 * 18, 18);
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.dissolution_chamber"), WLabel.DEFAULT_TEXT_COLOR);
 		title.setAlignment(Alignment.CENTER);

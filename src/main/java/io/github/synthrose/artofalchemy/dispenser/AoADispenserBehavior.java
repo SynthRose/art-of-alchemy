@@ -36,7 +36,7 @@ public class AoADispenserBehavior {
 	};
 
 	public static void registerDispenserBehavior() {
-		AoAItems.ESSENTIA_VESSELS.forEach((essentia, item) -> DispenserBlock.registerBehavior(item, VESSEL_BEHAVIOR));
+		DispenserBlock.registerBehavior(AoAItems.ESSENTIA_VESSEL, VESSEL_BEHAVIOR);
 		DispenserBlock.registerBehavior(AoAItems.ALKAHEST_BUCKET, ALKAHEST_BEHAVIOR);
 	}
 	

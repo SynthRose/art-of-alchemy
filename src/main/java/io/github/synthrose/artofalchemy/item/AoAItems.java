@@ -1,17 +1,20 @@
 package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.util.MateriaRank;
 import io.github.synthrose.artofalchemy.block.BlockPipe;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
+import net.fabricmc.fabric.mixin.object.builder.ModelPredicateProviderRegistrySpecificAccessor;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class AoAItems {
 	public static final Item ESSENTIA_PORT = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.PASSIVE);
 	public static final Item ESSENTIA_INSERTER = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.INSERTER);
 	public static final Item ESSENTIA_EXTRACTOR = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.EXTRACTOR);
+	public static final Item ESSENTIA_VESSEL = new ItemEssentiaVessel(defaults());
 
 	public static final Item MYSTERIOUS_SIGIL = new Item(new Item.Settings());
 	public static final Item AZOTH = new Item(defaults());
@@ -42,19 +46,16 @@ public class AoAItems {
 
 	public static final Item ALKAHEST_BUCKET = new BucketItem(AoAFluids.ALKAHEST, defaults().maxCount(1));
 	public static final Map<Essentia, Item> ESSENTIA_BUCKETS = new HashMap<>();
-	public static final Map<Essentia, Item> ESSENTIA_VESSELS = new HashMap<>();
 
 	public static void registerItems() {
 		register("icon_item", MYSTERIOUS_SIGIL);
 		register("alchemical_journal", JOURNAL);
 		register("alchemy_formula", ALCHEMY_FORMULA);
 
-		ESSENTIA_VESSELS.put(null, register(ArtOfAlchemy.id("essentia_vessel"),
-				new ItemEssentiaVessel(defaults(), null)));
-
 		register("essentia_port", ESSENTIA_PORT);
 		register("essentia_inserter", ESSENTIA_INSERTER);
 		register("essentia_extractor", ESSENTIA_EXTRACTOR);
+		register("essentia_vessel", ESSENTIA_VESSEL);
 
 		register("azoth", AZOTH);
 		register("amaranth_pearl", AMARANTH_PEARL);
@@ -77,18 +78,23 @@ public class AoAItems {
 					new BucketItem(AoAFluids.ESSENTIA_FLUIDS.get(essentia), defaults().maxCount(1))));
 		});
 
-		// Register deprecated essentia vessels; add-on essentia vessels will be registered to THEIR namespace
-		RegistryEssentia.INSTANCE.forEach((Essentia essentia, Identifier id) -> {
-			Identifier itemId = new Identifier(id.getNamespace(), "essentia_vessel_" + id.getPath());
-			ESSENTIA_VESSELS.put(essentia, register(itemId, new ItemEssentiaVessel(new Item.Settings(), essentia)));
-		});
+		ModelPredicateProviderRegistrySpecificAccessor.callRegister(ESSENTIA_VESSEL,
+				new Identifier("level"), (stack, world, entity) -> {
+					EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
+					double level = contents.getCount();
+					if (!contents.hasUnlimitedCapacity()) {
+						level /= contents.getCapacity();
+					}
+					return (float) MathHelper.clamp(level, 0.0, 1.0);
+				});
 	}
 	
 	public static Item register(String name, Item item) {
 		return register(ArtOfAlchemy.id(name), item);
 	}
 
-	public static Item register(Identifier id, Item item) {
+	public static Item register(Identifier id, Item item)
+	{
 		return Registry.register(Registry.ITEM, id, item);
 	}
 

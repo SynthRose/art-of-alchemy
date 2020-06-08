@@ -32,9 +32,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
+import net.minecraft.world.WorldAccess;
 import java.util.*;
 
 public class BlockPipe extends Block implements NetworkElement {
@@ -43,7 +42,7 @@ public class BlockPipe extends Block implements NetworkElement {
 	private Map<Direction, EnumProperty<IOFace>> faces;
 
 	public BlockPipe() {
-		super(Settings.of(Material.CLAY).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.NETHERITE));
+		super(Settings.of(Material.ORGANIC_PRODUCT).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.NETHERITE));
 	}
 
 	@Override
@@ -148,7 +147,7 @@ public class BlockPipe extends Block implements NetworkElement {
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, IWorld world, BlockPos pos, BlockPos posFrom) {
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (faceOpen(state, direction) && faceOpen(newState, direction.getOpposite())) {
 			return state.with(getProperty(direction), IOFace.CONNECT);
 		} else if (state.get(getProperty(direction)) == IOFace.CONNECT) {
@@ -167,7 +166,7 @@ public class BlockPipe extends Block implements NetworkElement {
 	}
 
 	@Override
-	public void onBroken(IWorld world, BlockPos pos, BlockState state) {
+	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		super.onBroken(world, pos, state);
 		if (!world.isClient()) {
 			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
@@ -185,9 +184,9 @@ public class BlockPipe extends Block implements NetworkElement {
 			if (!world.isClient()) {
 				Optional<EssentiaNetwork> network = EssentiaNetworker.get((ServerWorld) world).getNetwork(pos);
 				if (network.isPresent()) {
-					player.sendMessage(new LiteralText(network.get().getUuid().toString() + " w/ " + network.get().getNodes().size() + " nodes"));
+					player.sendSystemMessage(new LiteralText(network.get().getUuid().toString() + " w/ " + network.get().getNodes().size() + " nodes"), new UUID(0, 0));
 				} else {
-					player.sendMessage(new LiteralText("no network"));
+					player.sendSystemMessage(new LiteralText("no network"), new UUID(0, 0));
 				}
 			}
 			return ActionResult.SUCCESS;

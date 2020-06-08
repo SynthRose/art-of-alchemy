@@ -21,7 +21,7 @@ repositories {
 	jcenter()
 	maven {
 		name = "CottonMC"
-		url = "http://server.bbkr.space:8081/artifactory/libs-release"
+		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
 }
 

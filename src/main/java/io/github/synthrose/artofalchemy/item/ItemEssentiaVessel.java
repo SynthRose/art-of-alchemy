@@ -20,7 +20,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -37,14 +36,6 @@ public class ItemEssentiaVessel extends Item {
 		super(settings.maxCount(1));
 		capacity = AoAConfig.get().vesselCapacity;
 		this.type = type;
-		this.addPropertyGetter(new Identifier("level"), (stack, world, entity) -> {
-			EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
-			double level = contents.getCount();
-			if (!contents.hasUnlimitedCapacity()) {
-				level /= contents.getCapacity();
-			}
-			return (float) MathHelper.clamp(level, 0.0, 1.0);
-		});
 	}
 	
 	public ItemEssentiaVessel(Settings settings) {
@@ -52,7 +43,6 @@ public class ItemEssentiaVessel extends Item {
 	}
 	
 	public static EssentiaContainer getContainer(ItemStack stack) {
-		CompoundTag tag = stack.getTag();
 		EssentiaContainer container = EssentiaContainer.of(stack);
 		Essentia type = null;
 		int capacity = 0;
@@ -138,9 +128,9 @@ public class ItemEssentiaVessel extends Item {
 		
 		if (player != null) {
 			if (transferred > 0) {
-				player.addMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
+				player.sendMessage(new TranslatableText(tooltipPrefix() + "pulled", +transferred), true);
 			} else if (transferred < 0) {
-				player.addMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
+				player.sendMessage(new TranslatableText(tooltipPrefix() + "pushed", -transferred), true);
 			}
 		}
 		
@@ -160,22 +150,22 @@ public class ItemEssentiaVessel extends Item {
 			EssentiaContainer container = getContainer(stack);
 			float pitch;
 			if (container.isInput() && container.isOutput()) {
-				user.addMessage(new TranslatableText(tooltipPrefix() + "input"), true);
+				user.sendMessage(new TranslatableText(tooltipPrefix() + "input"), true);
 				container.setInput(true);
 				container.setOutput(false);
 				pitch = 0.80f;
 			} else if (container.isInput() && !container.isOutput()) {
-				user.addMessage(new TranslatableText(tooltipPrefix() + "output"), true);
+				user.sendMessage(new TranslatableText(tooltipPrefix() + "output"), true);
 				container.setInput(false);
 				container.setOutput(true);
 				pitch = 0.95f;
 			} else if (!container.isInput() && container.isOutput()){
-				user.addMessage(new TranslatableText(tooltipPrefix() + "locked"), true);
+				user.sendMessage(new TranslatableText(tooltipPrefix() + "locked"), true);
 				container.setInput(false);
 				container.setOutput(false);
 				pitch = 1.05f;
 			} else {
-				user.addMessage(new TranslatableText(tooltipPrefix() + "unlocked"), true);
+				user.sendMessage(new TranslatableText(tooltipPrefix() + "unlocked"), true);
 				container.setInput(true);
 				container.setOutput(true);
 				pitch = 0.65f;
@@ -269,10 +259,8 @@ public class ItemEssentiaVessel extends Item {
 	@Override
 	protected String getOrCreateTranslationKey() {
 		if (translationKey == null) {
-			translationKey = Util.createTranslationKey("item",
-				Registry.ITEM.getId(AoAItems.ESSENTIA_VESSELS.get(null)));
+			translationKey = Util.createTranslationKey("item", Registry.ITEM.getId(AoAItems.ESSENTIA_VESSEL));
 		}
-
 		return this.translationKey;
 	}
 	

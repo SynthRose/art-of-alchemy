@@ -40,16 +40,14 @@ public class AoARenderers {
     	
     	ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> 0xAA0077,
 				AoABlocks.DISSOLVER, AoABlocks.DISSOLVER_PLUS);
-    	
-    	for (Entry<Essentia, Item> entry : AoAItems.ESSENTIA_VESSELS.entrySet()) {
-    		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-        		if (tintIndex == 0) {
-        			return ItemEssentiaVessel.getColor(stack);
-        		} else {
-        			return 0xFFFFFF;
-        		}
-        	}, entry.getValue());
-    	}
+
+		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+			if (tintIndex == 0) {
+				return ItemEssentiaVessel.getColor(stack);
+			} else {
+				return 0xFFFFFF;
+			}
+		}, AoAItems.ESSENTIA_VESSEL);
     	
 	}
 

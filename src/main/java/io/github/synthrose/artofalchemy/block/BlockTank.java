@@ -10,7 +10,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 
 public class BlockTank extends Block implements BlockEntityProvider {
 
@@ -41,7 +41,7 @@ public class BlockTank extends Block implements BlockEntityProvider {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, IWorld world, BlockPos pos, BlockPos posFrom) {
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         if (posFrom.equals(pos.offset(Direction.DOWN))) {
             if (newState.getBlock() == this) {
                 return state.with(CONNECTED_TOP, true);

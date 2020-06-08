@@ -12,7 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.PersistentState;
-import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
 import org.apache.logging.log4j.Level;
 
 import java.util.*;
@@ -29,7 +29,7 @@ public class EssentiaNetworker extends PersistentState {
     protected final Map<BlockPos, EssentiaNetwork> cache = new HashMap<>();
 
     public EssentiaNetworker(ServerWorld world) {
-        super(getName(world.dimension));
+        super(getName(world.getDimension()));
         this.world = world;
         processingLimit = AoAConfig.get().networkProcessingLimit;
     }
@@ -92,11 +92,11 @@ public class EssentiaNetworker extends PersistentState {
     }
 
     public static EssentiaNetworker get(ServerWorld world) {
-        return world.getPersistentStateManager().getOrCreate(() -> new EssentiaNetworker(world), getName(world.dimension));
+        return world.getPersistentStateManager().getOrCreate(() -> new EssentiaNetworker(world), getName(world.getDimension()));
     }
 
-    public static String getName(Dimension dimension) {
-        return "essentia" + dimension.getType().getSuffix();
+    public static String getName(DimensionType dimension) {
+        return "essentia" + dimension.getSuffix();
     }
 
     public void tick() {
@@ -219,7 +219,7 @@ public class EssentiaNetworker extends PersistentState {
         } else {
             legacyOrphans.add(pos.toImmutable());
             ArtOfAlchemy.log(Level.WARN, "Reached essentia network processing limit at [" + pos.getX() +
-                    ", " + pos.getY() + ", " + pos.getZ()+ "] in " + Registry.DIMENSION_TYPE.getId(world.getDimension().getType()));
+                    ", " + pos.getY() + ", " + pos.getZ()+ "] in " + world.getDimension().getSuffix());
         }
     }
 

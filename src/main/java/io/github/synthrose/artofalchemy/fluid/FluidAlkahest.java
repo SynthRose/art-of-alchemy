@@ -5,7 +5,7 @@ import io.github.synthrose.artofalchemy.item.AoAItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.BaseFluid;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
@@ -14,10 +14,10 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-abstract class FluidAlkahest extends BaseFluid {
+abstract class FluidAlkahest extends FlowableFluid {
 
 	@Override
 	public Fluid getStill() {
@@ -40,7 +40,7 @@ abstract class FluidAlkahest extends BaseFluid {
 	}
 
 	@Override
-	protected void beforeBreakingBlock(IWorld world, BlockPos pos, BlockState state) {
+	protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = state.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
 		Block.dropStacks(state, world.getWorld(), pos, blockEntity);
 	}

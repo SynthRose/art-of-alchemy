@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy.gui.controller;
 
-import io.github.cottonmc.cotton.gui.CottonCraftingController;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Alignment;
 import io.github.synthrose.artofalchemy.util.AoAHelper;
@@ -13,8 +13,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -25,7 +25,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ControllerJournal extends CottonCraftingController {
+public class ControllerJournal extends SyncedGuiDescription {
 
 	Hand hand;
 	WTextField searchBar;
@@ -34,7 +34,7 @@ public class ControllerJournal extends CottonCraftingController {
 	WFormulaList formulaList;
 	ItemStack journal;
 
-	Inventory inventory = new BasicInventory(1) {
+	Inventory inventory = new SimpleInventory(1) {
 		@Override
 		public boolean isValid(int slot, ItemStack stack) {
 			return (stack.getItem() instanceof AbstractItemFormula) && !(stack.getItem() instanceof ItemJournal);
@@ -43,7 +43,7 @@ public class ControllerJournal extends CottonCraftingController {
 
 	@SuppressWarnings("MethodCallSideOnly")
 	public ControllerJournal(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx, Hand hand) {
-		super(null, syncId, playerInventory);
+		super(syncId, playerInventory);
 		blockInventory = inventory;
 
 		this.hand = hand;
@@ -54,7 +54,7 @@ public class ControllerJournal extends CottonCraftingController {
 		root.setSize(160, 128 + 18 * 5);
 
 		WSprite slotIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/add_formula.png"));
-		root.add(slotIcon, 1, 16, 16, 16);
+		root.add(slotIcon, 2, 17, 16, 16);
 
 		WItemSlot slot = WItemSlot.of(inventory, 0);
 		root.add(slot, 1, 16);
@@ -91,6 +91,7 @@ public class ControllerJournal extends CottonCraftingController {
 			clearButton.setOnClick(() -> {
 				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
 			});
+			clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
 		}
 
 		root.add(this.createPlayerInventoryPanel(), 0, 8 * 18);

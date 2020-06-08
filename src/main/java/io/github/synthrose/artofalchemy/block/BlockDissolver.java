@@ -78,7 +78,7 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY,
 						SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return ActionResult.SUCCESS;
-			} else if (AoAItems.ESSENTIA_VESSELS.containsValue(inHand.getItem())) {
+			} else if (inHand.getItem() == AoAItems.ESSENTIA_VESSEL) {
 				ItemUsageContext itemContext = new ItemUsageContext(player, hand, hit);
 				ActionResult itemResult = inHand.useOnBlock(itemContext);
 				if (itemResult != ActionResult.PASS) {
@@ -102,14 +102,14 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 	}
 
 	@Override
-	public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof BlockEntityDissolver) {
 				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
 			}
 
-			super.onBlockRemoved(state, world, pos, newState, moved);
+			super.onStateReplaced(state, world, pos, newState, moved);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package io.github.synthrose.artofalchemy.gui.controller;
 
-import io.github.cottonmc.cotton.gui.CottonCraftingController;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
@@ -12,8 +12,8 @@ import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemAlchemyFormula;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
@@ -23,9 +23,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ControllerAnalyzer extends CottonCraftingController {
+public class ControllerAnalyzer extends SyncedGuiDescription {
 
-	Inventory inventory = new BasicInventory(4) {
+	Inventory inventory = new SimpleInventory(4) {
 		@Override
 		public boolean isValid(int slot, ItemStack stack) {
 			if (slot == 0) {
@@ -37,7 +37,7 @@ public class ControllerAnalyzer extends CottonCraftingController {
 	};
 
 	public ControllerAnalyzer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(null, syncId, playerInventory);
+		super(syncId, playerInventory);
 		blockInventory = inventory;
 
 		WGridPanel root = new WGridPanel(1);
@@ -48,19 +48,19 @@ public class ControllerAnalyzer extends CottonCraftingController {
 		root.add(background, 0, 0, 9 * 18, 5 * 18);
 
 		WSprite paperIcon = new WSprite(new Identifier("minecraft", "textures/item/paper.png"));
-		root.add(paperIcon, 2 * 18 + 4, 2 * 18, 16, 16);
+		root.add(paperIcon, 2 * 18 + 5, 2 * 18 + 1, 16, 16);
 
 		WItemSlot paperSlot = WItemSlot.of(inventory, 0);
 		root.add(paperSlot, 2 * 18 + 4, 2 * 18);
 
 		WSprite inkIcon = new WSprite(new Identifier("minecraft", "textures/item/ink_sac.png"));
-		root.add(inkIcon, 4 * 18, 18 - 4, 16, 16);
+		root.add(inkIcon, 4 * 18 + 1, 18 - 3, 16, 16);
 		
 		WItemSlot inkSlot = WItemSlot.of(inventory, 1);
 		root.add(inkSlot, 4 * 18, 18 - 4);
 
 		WSprite targetIcon = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/target.png"));
-		root.add(targetIcon, 4 * 18, 3 * 18 + 4, 18, 18);
+		root.add(targetIcon, 4 * 18 + 1, 3 * 18 + 5, 18, 18);
 
 		WItemSlot targetSlot = WItemSlot.of(inventory, 2);
 		root.add(targetSlot, 4 * 18, 3 * 18 + 4);
