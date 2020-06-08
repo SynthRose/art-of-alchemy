@@ -4,7 +4,7 @@ An alchemical mod for Minecraft 1.16.x / Fabric.
 ## Mod Requirements & Acknowledgments
 To use this mod, you will need:
 
-* Minecraft 20w13b
+* Minecraft 1.16
 * The [Fabric](https://fabricmc.net/) mod loader
 * The [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
@@ -60,9 +60,3 @@ a fork of the mod with your dream feature, or submit a pull request?
 **I found a bug! Can you fix it?**  
 Oh no! Submit an [issue](https://github.com/SynthRose/art-of-alchemy/issues) here and hopefully I can get
 it fixed soon. Please include any relevant crash reports, what you were doing, expected behavior, and other context.
-
-**Your code stinks.**  
-I know, sorry :( 
-
-**Is the Minecraft bee trans?**  
-Obviously.
