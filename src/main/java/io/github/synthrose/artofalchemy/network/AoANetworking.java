@@ -32,8 +32,7 @@ public class AoANetworking {
 					ctx.getTaskQueue().execute(() -> {
 						ItemStack stack = ctx.getPlayer().getStackInHand(hand);
 						if (stack.getItem() instanceof ItemJournal) {
-							System.out.println(id);
-							System.out.println(ItemJournal.setFormula(stack, id));
+							ItemJournal.setFormula(stack, id);
 							sendJournalRefreshPacket(ctx.getPlayer(), stack);
 						}
 					});

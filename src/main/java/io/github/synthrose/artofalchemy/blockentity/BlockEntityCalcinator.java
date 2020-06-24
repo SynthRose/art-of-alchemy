@@ -2,14 +2,14 @@ package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.github.synthrose.artofalchemy.AoAConfig;
-import io.github.synthrose.artofalchemy.gui.handler.HandlerCalcinator;
-import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.util.FuelHelper;
-import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockCalcinator;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerCalcinator;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
+import io.github.synthrose.artofalchemy.util.FuelHelper;
+import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.tag.TagRegistry;

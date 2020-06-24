@@ -1,8 +1,8 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.blockentity.BlockEntitySynthesizer;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.item.AoAItems;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -100,6 +100,27 @@ public class BlockSynthesizer extends BlockWithEntity {
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
+	}
+
+	@Override
+	public boolean hasComparatorOutput(BlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+		BlockEntity be = world.getBlockEntity(pos);
+		if (be instanceof BlockEntitySynthesizer) {
+			EssentiaContainer container = ((BlockEntitySynthesizer) be).getContainer();
+			double fillLevel = (double) container.getCount() / container.getCapacity();
+			if (fillLevel == 0.0) {
+				return 0;
+			} else {
+				return 1 + (int) (fillLevel * 14);
+			}
+		} else {
+			return 0;
+		}
 	}
 
 }

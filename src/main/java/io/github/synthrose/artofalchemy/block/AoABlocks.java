@@ -1,11 +1,11 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.util.MateriaRank;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.BlockItemMateria;
+import io.github.synthrose.artofalchemy.util.MateriaRank;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;

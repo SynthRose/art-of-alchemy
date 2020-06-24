@@ -39,14 +39,16 @@ recombined in a Synthesis Table with a small sample of a desired substance to cr
 ## Questions & Answers
 
 **What sort of state is the mod in?**  
-Coming along! The three core machines - the Calcination Furnace, Dissolution Chamber, and Projection Table - are there, as is the Alchemical Journal. Most vanilla raw resources have recipes, but many crafted items still lack them, as do modded resources such as from [CottonResources](https://github.com/CottonMC/CottonResources) or [TechReborn](https://github.com/TechReborn/TechReborn). If you want to help make recipes for the mod, you can head over to [this spreadsheet](https://docs.google.com/spreadsheets/d/154XPt0xTNqfSSH5Ybp8lZ18sUFIr32FTcV5lL-OhrOQ/edit?usp=sharing) and suggest changes.
+Art of Alchemy is currently on release candidates, meaning that the mod is in a comfortable enough state
+to consider it "done," but I haven't rigorously tested enough to release 1.0.0. This milestone should be
+reached soon!
 
 **Can you port this to Forge or an older Minecraft version?**  
 No. I work on this mod in my spare time for fun; writing a port and maintaining multiple versions of the
 mod just doesn't interest me. However, this project is licensed under MIT, so you are welcome to do it
 yourself.
 
-**Can you update the mod to the latest snapshot?**  
+**Can you update the mod to the latest version?**  
 If the mod isn't up to date already, I'll update it when I get to it. In some cases, I have to wait for
 dependencies to update before updating *Art of Alchemy*. Other times, I just haven't gotten around to it
 yet. If you're impatient, you're welcome to update it yourself and submit a pull request.

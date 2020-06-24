@@ -7,6 +7,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ public class WFormulaListItem extends WPlainPanel {
 	private final WLabel formulaLabel;
 	private final Hand hand;
 //	private final WLabel typeLabel;
-	private WButton setButton = null;
+	private WButton setButton;
 
 	@SuppressWarnings("MethodCallSideOnly")
 	public WFormulaListItem(ItemStack journal, Item formula, Hand hand) {
@@ -74,6 +75,8 @@ public class WFormulaListItem extends WPlainPanel {
 		itemDisplay.getItems().add(new ItemStack(formula));
 		formulaLabel.setText(itemDisplay.getItems().get(0).getName());
 		boolean selected = ItemJournal.getFormula(journal) == formula;
-		setButton.setEnabled(!selected);
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			setButton.setEnabled(!selected);
+		}
 	}
 }

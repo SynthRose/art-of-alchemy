@@ -1,6 +1,5 @@
 package io.github.synthrose.artofalchemy.block;
 
-import io.github.synthrose.artofalchemy.blockentity.BlockEntityDissolverPlus;
 import io.github.synthrose.artofalchemy.blockentity.BlockEntitySynthesizerPlus;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;

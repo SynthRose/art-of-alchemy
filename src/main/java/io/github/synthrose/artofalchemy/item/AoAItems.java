@@ -34,7 +34,7 @@ public class AoAItems {
 	public static final Item ACTIVATED_AMARANTH_PEARL = new Item(defaults().rarity(Rarity.UNCOMMON));
 	public static final Item PHILOSOPHERS_STONE = new Item(defaults().rarity(Rarity.EPIC)) {
 		@Override
-		public boolean hasEnchantmentGlint(ItemStack stack) {
+		public boolean hasGlint(ItemStack stack) {
 			return true;
 		}
 	};

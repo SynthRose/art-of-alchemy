@@ -1,10 +1,6 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityCalcinator;
-import io.github.synthrose.artofalchemy.gui.handler.AoAHandlers;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

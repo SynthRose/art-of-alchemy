@@ -1,7 +1,11 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityTank;
-import net.minecraft.block.*;
+import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
@@ -10,6 +14,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 public class BlockTank extends Block implements BlockEntityProvider {
@@ -64,4 +69,24 @@ public class BlockTank extends Block implements BlockEntityProvider {
         return new BlockEntityTank();
     }
 
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof BlockEntityTank) {
+            EssentiaContainer container = ((BlockEntityTank) be).getContainer();
+            double fillLevel = (double) container.getCount() / container.getCapacity();
+            if (fillLevel == 0.0) {
+                return 0;
+            } else {
+                return 1 + (int) (fillLevel * 14);
+            }
+        } else {
+            return 0;
+        }
+    }
 }
