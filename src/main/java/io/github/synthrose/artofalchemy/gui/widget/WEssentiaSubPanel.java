@@ -3,13 +3,10 @@ package io.github.synthrose.artofalchemy.gui.widget;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -33,11 +30,11 @@ public class WEssentiaSubPanel extends WPlainPanel {
 		sprite.setParent(this);
 		add(sprite, 25, -4, 18, 18);
 		
-		amtLabel.setAlignment(Alignment.RIGHT);
+		amtLabel.setHorizontalAlignment(HorizontalAlignment.RIGHT);
 		amtLabel.setParent(this);
 		add(amtLabel, 8, -4);
 		
-		typeLabel.setAlignment(Alignment.LEFT);
+		typeLabel.setHorizontalAlignment(HorizontalAlignment.LEFT);
 		typeLabel.setParent(this);
 		add(typeLabel, -3, 5);
 	}

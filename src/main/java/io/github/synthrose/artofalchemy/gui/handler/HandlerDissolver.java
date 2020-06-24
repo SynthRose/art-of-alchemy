@@ -1,9 +1,9 @@
-package io.github.synthrose.artofalchemy.gui.controller;
+package io.github.synthrose.artofalchemy.gui.handler;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.transport.HasEssentia;
@@ -16,14 +16,14 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public class ControllerDissolver extends SyncedGuiDescription {
+public class HandlerDissolver extends SyncedGuiDescription {
 	
 	final BlockPos pos;
 	final WEssentiaPanel essentiaPanel;
 	
 	@SuppressWarnings("MethodCallSideOnly")
-	public ControllerDissolver(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+	public HandlerDissolver(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+		super(AoAHandlers.DISSOLVER, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		pos = ctx.run((world, pos) -> pos, null);
 		
@@ -48,7 +48,7 @@ public class ControllerDissolver extends SyncedGuiDescription {
 		root.add(progressBar, 3 * 18, 2 * 18 + 1, 3 * 18, 18);
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.dissolution_chamber"), WLabel.DEFAULT_TEXT_COLOR);
-		title.setAlignment(Alignment.CENTER);
+		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(title, 0, -1, 9 * 18, 18);
 		
 		WDynamicLabel alert = new WDynamicLabel(() -> {
@@ -61,7 +61,7 @@ public class ControllerDissolver extends SyncedGuiDescription {
 				return "";
 			}
 		}, 0xFF5555);
-		alert.setAlignment(Alignment.CENTER);
+		alert.setAlignment(HorizontalAlignment.CENTER);
 		root.add(alert, 0, -1 * 18, 9 * 18, 18);
 		
 		EssentiaContainer essentia = getEssentia(ctx);

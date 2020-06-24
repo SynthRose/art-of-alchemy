@@ -3,6 +3,8 @@ package io.github.synthrose.artofalchemy.blockentity;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.github.synthrose.artofalchemy.AoAConfig;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerCalcinator;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerDissolver;
 import io.github.synthrose.artofalchemy.util.ImplementedInventory;
 import io.github.synthrose.artofalchemy.block.BlockDissolver;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
@@ -13,21 +15,30 @@ import io.github.synthrose.artofalchemy.network.AoANetworking;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeDissolution;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 
-public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,  Tickable,
-		PropertyDelegateHolder, BlockEntityClientSerializable, HasEssentia, HasAlkahest, SidedInventory {
+public class BlockEntityDissolver extends BlockEntity implements ImplementedInventory,  Tickable, PropertyDelegateHolder,
+		BlockEntityClientSerializable, HasEssentia, HasAlkahest, SidedInventory, ExtendedScreenHandlerFactory {
 	
 	private static final int[] TOP_SLOTS = new int[]{0};
 	private static final int[] BOTTOM_SLOTS = new int[]{0};
@@ -111,6 +122,21 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 
 	protected BlockEntityDissolver(BlockEntityType type) {
 		super(type);
+	}
+
+	@Override
+	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+		return new HandlerDissolver(syncId, inv, ScreenHandlerContext.create(world, pos));
+	}
+
+	@Override
+	public Text getDisplayName() {
+		return new LiteralText("");
+	}
+
+	@Override
+	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+		buf.writeBlockPos(pos);
 	}
 
 	@Override
@@ -248,7 +274,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	public boolean isValid(int slot, ItemStack stack) {
 		return true;
 	}
-	
+
 
 	@Override
 	public void tick() {
@@ -306,7 +332,7 @@ public class BlockEntityDissolver extends BlockEntity implements ImplementedInve
 	public PropertyDelegate getPropertyDelegate() {
 		return delegate;
 	}
-	
+
 	@Override
 	public void markDirty() {
 		super.markDirty();

@@ -1,11 +1,11 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityCalcinator;
+import io.github.synthrose.artofalchemy.gui.handler.AoAHandlers;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -22,7 +22,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class BlockCalcinator extends Block implements BlockEntityProvider {
+public class BlockCalcinator extends BlockWithEntity {
 	
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty LIT = Properties.LIT;
@@ -59,14 +59,11 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
 			BlockHitResult hit) {
 		
-		if (world.isClient) {
-			return ActionResult.SUCCESS;
-		}
-		
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof BlockEntityCalcinator) {
-			ContainerProviderRegistry.INSTANCE.openContainer(getId(), player,
-					(packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
+		if (!world.isClient) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof BlockEntityCalcinator) {
+				player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+			}
 		}
 		
 		return ActionResult.SUCCESS;
@@ -95,6 +92,11 @@ public class BlockCalcinator extends Block implements BlockEntityProvider {
 
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return state.rotate(mirror.getRotation(state.get(FACING)));
+	}
+
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
 	}
 
 }

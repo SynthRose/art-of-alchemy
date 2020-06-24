@@ -1,14 +1,14 @@
-package io.github.synthrose.artofalchemy.gui.controller;
+package io.github.synthrose.artofalchemy.gui.handler;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
-import io.github.synthrose.artofalchemy.util.AoAHelper;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.gui.widget.WFormulaList;
 import io.github.synthrose.artofalchemy.item.AbstractItemFormula;
 import io.github.synthrose.artofalchemy.item.ItemJournal;
 import io.github.synthrose.artofalchemy.network.AoAClientNetworking;
+import io.github.synthrose.artofalchemy.util.AoAHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,12 +25,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ControllerJournal extends SyncedGuiDescription {
+public class HandlerJournal extends SyncedGuiDescription {
 
 	Hand hand;
 	WTextField searchBar;
-	// When LibGUI fixes the dedi server crash, these hacks will be removed
-	WButton clearButton = null;
+	WButton clearButton;
 	WFormulaList formulaList;
 	ItemStack journal;
 
@@ -42,8 +41,8 @@ public class ControllerJournal extends SyncedGuiDescription {
 	};
 
 	@SuppressWarnings("MethodCallSideOnly")
-	public ControllerJournal(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx, Hand hand) {
-		super(syncId, playerInventory);
+	public HandlerJournal(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx, Hand hand) {
+		super(AoAHandlers.JOURNAL, syncId, playerInventory);
 		blockInventory = inventory;
 
 		this.hand = hand;
@@ -75,24 +74,22 @@ public class ControllerJournal extends SyncedGuiDescription {
 		WSprite background = new WSprite(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/rune_bg.png"));
 		root.add(background, 0, 2 * 18 + 10, 9 * 18, 5 * 18);
 
-		formulaList = new WFormulaList(journal);
+		formulaList = new WFormulaList(journal, hand);
 		formulaList.refresh();
 		root.add(formulaList, 0, 2 * 18, 9 * 18 - 2, 6 * 17 - 1);
 
 		WLabel title = new WLabel(journal.getName());
-		title.setAlignment(Alignment.CENTER);
+		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(title, 2 * 18, 0, 5 * 18, 18);
 
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			clearButton = new WButton(new LiteralText("❌"));
-			clearButton.setAlignment(Alignment.CENTER);
-			clearButton.setParent(root);
-			root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
-			clearButton.setOnClick(() -> {
-				AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR));
-			});
-			clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
-		}
+		clearButton = new WButton(new LiteralText("❌"));
+		clearButton.setAlignment(HorizontalAlignment.CENTER);
+		clearButton.setParent(root);
+		root.add(clearButton, 7 * 18 + 14, 14, 20, 20);
+		clearButton.setOnClick(() -> {
+			AoAClientNetworking.sendJournalSelectPacket(Registry.ITEM.getId(Items.AIR), hand);
+		});
+		clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
 
 		root.add(this.createPlayerInventoryPanel(), 0, 8 * 18);
 		
@@ -139,9 +136,7 @@ public class ControllerJournal extends SyncedGuiDescription {
 		this.journal = journal;
 		if (this.journal.getItem() instanceof ItemJournal) {
 			formulaList.refresh(this.journal, searchBar.getText());
-			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-				clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
-			}
+			clearButton.setEnabled(ItemJournal.getFormula(this.journal) != Items.AIR);
 		} else {
 			this.close(playerInventory.player);
 		}

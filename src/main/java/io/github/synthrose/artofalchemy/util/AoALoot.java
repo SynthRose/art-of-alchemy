@@ -42,7 +42,7 @@ public class AoALoot {
                             .withEntry(ItemEntry.builder(AoAItems.ALCHEMY_FORMULA).build())
                             .withFunction(new LootFunction() {
                                 @Override
-                                public LootFunctionType method_29321() {
+                                public LootFunctionType getType() {
                                     return null;
                                 }
 

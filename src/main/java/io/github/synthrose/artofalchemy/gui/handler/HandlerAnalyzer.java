@@ -1,11 +1,11 @@
-package io.github.synthrose.artofalchemy.gui.controller;
+package io.github.synthrose.artofalchemy.gui.handler;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.item.AoAItems;
@@ -23,7 +23,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ControllerAnalyzer extends SyncedGuiDescription {
+public class HandlerAnalyzer extends SyncedGuiDescription {
 
 	Inventory inventory = new SimpleInventory(4) {
 		@Override
@@ -36,8 +36,8 @@ public class ControllerAnalyzer extends SyncedGuiDescription {
 		}
 	};
 
-	public ControllerAnalyzer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(syncId, playerInventory);
+	public HandlerAnalyzer(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+		super(AoAHandlers.ANALYZER, syncId, playerInventory);
 		blockInventory = inventory;
 
 		WGridPanel root = new WGridPanel(1);
@@ -73,7 +73,7 @@ public class ControllerAnalyzer extends SyncedGuiDescription {
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.analysis_desk"),
 				WLabel.DEFAULT_TEXT_COLOR);
-		title.setAlignment(Alignment.CENTER);
+		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(title, 0, -1, 9 * 18, 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);
@@ -91,13 +91,14 @@ public class ControllerAnalyzer extends SyncedGuiDescription {
 
 	@Override
 	public ItemStack onSlotClick(int slotNumber, int button, SlotActionType action, PlayerEntity player) {
+		System.out.println(slotNumber);
 		int outputBefore = inventory.getStack(3).getCount();
 		ItemStack stack = super.onSlotClick(slotNumber, button, action, player);
 		if (stack == null) {
 			stack = ItemStack.EMPTY;
 		}
 		int outputAfter = inventory.getStack(3).getCount();
-		if (!stack.isEmpty() && slotNumber == 39 && outputAfter < outputBefore) {
+		if (!stack.isEmpty() && slotNumber == 3 && outputAfter < outputBefore) {
 			inventory.getStack(0).decrement(outputBefore - outputAfter);
 			inventory.getStack(1).decrement(outputBefore - outputAfter);
 		}
@@ -117,7 +118,7 @@ public class ControllerAnalyzer extends SyncedGuiDescription {
 			}
 			inventory.markDirty();
 			((ServerPlayerEntity) playerInventory.player).networkHandler.sendPacket(
-					new ScreenHandlerSlotUpdateS2CPacket(syncId, 39, inventory.getStack(3)));
+					new ScreenHandlerSlotUpdateS2CPacket(syncId, 3, inventory.getStack(3)));
 		}
 	}
 

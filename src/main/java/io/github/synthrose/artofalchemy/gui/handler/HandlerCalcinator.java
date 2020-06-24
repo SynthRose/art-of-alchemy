@@ -1,19 +1,19 @@
-package io.github.synthrose.artofalchemy.gui.controller;
+package io.github.synthrose.artofalchemy.gui.handler;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ControllerCalcinator extends SyncedGuiDescription {
+public class HandlerCalcinator extends SyncedGuiDescription {
 
-	public ControllerCalcinator(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+	public HandlerCalcinator(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+		super(AoAHandlers.CALCINATOR, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		WGridPanel root = new WGridPanel(1);
 		setRootPanel(root);
@@ -35,7 +35,7 @@ public class ControllerCalcinator extends SyncedGuiDescription {
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/fire_on.png"),
 				0, 1, Direction.UP);
 		root.add(fuelBar, 2 * 18 + 1, 2 * 18 + 1, 18, 18);
-		
+
 		WBar progressBar = new WBar(new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_off.png"),
 				new Identifier(ArtOfAlchemy.MOD_ID, "textures/gui/progress_yellow.png"),
 				2, 3, Direction.RIGHT);
@@ -43,7 +43,7 @@ public class ControllerCalcinator extends SyncedGuiDescription {
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.calcination_furnace"),
 				WLabel.DEFAULT_TEXT_COLOR);
-		title.setAlignment(Alignment.CENTER);
+		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(title, 0, -1, 9 * 18, 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);

@@ -2,6 +2,7 @@ package io.github.synthrose.artofalchemy.blockentity;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.github.synthrose.artofalchemy.AoAConfig;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerCalcinator;
 import io.github.synthrose.artofalchemy.util.AoAHelper;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import io.github.synthrose.artofalchemy.util.FuelHelper;
@@ -10,22 +11,31 @@ import io.github.synthrose.artofalchemy.block.BlockCalcinator;
 import io.github.synthrose.artofalchemy.recipe.AoARecipes;
 import io.github.synthrose.artofalchemy.recipe.RecipeCalcination;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
 public class BlockEntityCalcinator extends BlockEntity implements ImplementedInventory, Tickable,
-		PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory {
+		PropertyDelegateHolder, BlockEntityClientSerializable, SidedInventory, ExtendedScreenHandlerFactory {
 
 	protected static final int[] TOP_SLOTS = new int[]{0};
 	protected static final int[] BOTTOM_SLOTS = new int[]{0, 2};
@@ -92,7 +102,22 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	protected BlockEntityCalcinator(BlockEntityType type) {
 		super(type);
 	}
-	
+
+	@Override
+	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+		return new HandlerCalcinator(syncId, inv, ScreenHandlerContext.create(world, pos));
+	}
+
+	@Override
+	public Text getDisplayName() {
+		return new LiteralText("");
+	}
+
+	@Override
+	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+		buf.writeBlockPos(pos);
+	}
+
 	private boolean isBurning() {
 		return fuel > 0;
 	}
@@ -305,4 +330,5 @@ public class BlockEntityCalcinator extends BlockEntity implements ImplementedInv
 	public float getYield() {
 		return yield;
 	}
+
 }

@@ -1,19 +1,19 @@
-package io.github.synthrose.artofalchemy.gui.controller;
+package io.github.synthrose.artofalchemy.gui.handler;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.WBar.Direction;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ControllerProjector extends SyncedGuiDescription {
+public class HandlerProjector extends SyncedGuiDescription {
 
-	public ControllerProjector(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
+	public HandlerProjector(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+		super(AoAHandlers.PROJECTOR, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
 		
 		WGridPanel root = new WGridPanel(1);
 		setRootPanel(root);
@@ -41,7 +41,7 @@ public class ControllerProjector extends SyncedGuiDescription {
 		
 		WLabel title = new WLabel(new TranslatableText("block.artofalchemy.projection_altar"),
 				WLabel.DEFAULT_TEXT_COLOR);
-		title.setAlignment(Alignment.CENTER);
+		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(title, 0, -1, 9 * 18, 18);
 		
 		root.add(this.createPlayerInventoryPanel(), 0, 5 * 18);

@@ -1,16 +1,15 @@
 package io.github.synthrose.artofalchemy.gui.screen;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
-import io.github.synthrose.artofalchemy.gui.controller.ControllerCalcinator;
-import io.github.synthrose.artofalchemy.gui.controller.ControllerProjector;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerProjector;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 
 @Environment(EnvType.CLIENT)
-public class ScreenProjector extends CottonInventoryScreen<ControllerProjector> {
+public class ScreenProjector extends CottonInventoryScreen<HandlerProjector> {
 
-	public ScreenProjector(ControllerProjector container, PlayerEntity player) {
+	public ScreenProjector(HandlerProjector container, PlayerEntity player) {
 		super(container, player);
 	}
 

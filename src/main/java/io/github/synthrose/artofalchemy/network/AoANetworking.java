@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -27,8 +28,9 @@ public class AoANetworking {
 		ServerSidePacketRegistry.INSTANCE.register(JOURNAL_SELECT_PACKET,
 				(ctx, data) -> {
 					Identifier id = data.readIdentifier();
+					Hand hand = data.readEnumConstant(Hand.class);
 					ctx.getTaskQueue().execute(() -> {
-						ItemStack stack = ctx.getPlayer().getStackInHand(ctx.getPlayer().getActiveHand());
+						ItemStack stack = ctx.getPlayer().getStackInHand(hand);
 						if (stack.getItem() instanceof ItemJournal) {
 							System.out.println(id);
 							System.out.println(ItemJournal.setFormula(stack, id));

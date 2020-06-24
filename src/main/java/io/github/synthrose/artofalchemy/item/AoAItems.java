@@ -77,16 +77,7 @@ public class AoAItems {
 			ESSENTIA_BUCKETS.put(essentia, register(itemId,
 					new BucketItem(AoAFluids.ESSENTIA_FLUIDS.get(essentia), defaults().maxCount(1))));
 		});
-
-		ModelPredicateProviderRegistrySpecificAccessor.callRegister(ESSENTIA_VESSEL,
-				new Identifier("level"), (stack, world, entity) -> {
-					EssentiaContainer contents = ItemEssentiaVessel.getContainer(stack);
-					double level = contents.getCount();
-					if (!contents.hasUnlimitedCapacity()) {
-						level /= contents.getCapacity();
-					}
-					return (float) MathHelper.clamp(level, 0.0, 1.0);
-				});
+		
 	}
 	
 	public static Item register(String name, Item item) {

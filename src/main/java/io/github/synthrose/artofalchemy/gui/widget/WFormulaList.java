@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
@@ -13,13 +14,15 @@ import java.util.Map;
 public class WFormulaList extends WListPanel<Item, WFormulaListItem> {
 
     protected ItemStack journal;
+    private final Hand hand;
 
-    public WFormulaList(ItemStack journal) {
-        super(ItemJournal.getEntries(journal), () -> new WFormulaListItem(journal), null);
+    public WFormulaList(ItemStack journal, Hand hand) {
+        super(ItemJournal.getEntries(journal), () -> new WFormulaListItem(journal, hand), null);
         this.configurator = (formula, listItem) -> {
             listItem.refresh(this.journal, formula);
             listItem.setSize(8 * 18, 16);
         };
+        this.hand = hand;
         this.cellHeight = 16;
         this.journal = journal;
     }

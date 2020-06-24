@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -63,9 +64,10 @@ public class AoAClientNetworking {
 				});
 	}
 
-	public static void sendJournalSelectPacket(Identifier id) {
+	public static void sendJournalSelectPacket(Identifier id, Hand hand) {
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeIdentifier(id);
+		data.writeEnumConstant(hand);
 		ClientSidePacketRegistry.INSTANCE.sendToServer(AoANetworking.JOURNAL_SELECT_PACKET, data);
 	}
 

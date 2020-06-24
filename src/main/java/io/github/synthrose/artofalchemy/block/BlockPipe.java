@@ -168,11 +168,24 @@ public class BlockPipe extends Block implements NetworkElement {
 	@Override
 	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		super.onBroken(world, pos, state);
-		if (!world.isClient()) {
-			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
-		}
 		for (Direction dir : faces.keySet()) {
 			dropStack((World) world, pos, new ItemStack(ItemEssentiaPort.getItem(state.get(getProperty(dir)))));
+		}
+	}
+
+	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		super.onBlockAdded(state, world, pos, oldState, notify);
+		if (!world.isClient()) {
+			EssentiaNetworker.get((ServerWorld) world).add(pos);
+		}
+	}
+
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean notify) {
+		super.onStateReplaced(state, world, pos, newState, notify);
+		if (!world.isClient()) {
+			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
 		}
 	}
 

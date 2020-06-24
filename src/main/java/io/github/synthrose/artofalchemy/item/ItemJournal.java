@@ -1,16 +1,23 @@
 package io.github.synthrose.artofalchemy.item;
 
+import io.github.synthrose.artofalchemy.gui.handler.HandlerJournal;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -120,11 +127,22 @@ public class ItemJournal extends AbstractItemFormula {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            ContainerProviderRegistry.INSTANCE.openContainer(getId(), user,
-                    (packetByteBuf -> {
-                        packetByteBuf.writeBlockPos(user.getBlockPos());
-                        packetByteBuf.writeEnumConstant(hand);
-                    }));
+            user.openHandledScreen(new ExtendedScreenHandlerFactory() {
+                @Override
+                public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+                    buf.writeEnumConstant(hand);
+                }
+
+                @Override
+                public Text getDisplayName() {
+                    return new LiteralText("");
+                }
+
+                @Override
+                public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+                    return new HandlerJournal(syncId, inv, ScreenHandlerContext.EMPTY, hand);
+                }
+            });
         }
         return super.use(world, user, hand);
     }

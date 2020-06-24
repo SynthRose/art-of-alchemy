@@ -7,6 +7,7 @@ import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.GraphicsMode;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -36,7 +37,13 @@ public class RendererTank extends BlockEntityRenderer<BlockEntityTank> {
     public void render(BlockEntityTank blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         Matrix4f model = matrices.peek().getModel();
         Matrix3f normal = matrices.peek().getNormal();
-        VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+        VertexConsumer buffer;
+        if (client.options.graphicsMode == GraphicsMode.FABULOUS) {
+            // Translucent-layer quads don't show up under Fabulous settings, so here's a hacky workaround :)
+            buffer = vertexConsumers.getBuffer(RenderLayer.getTranslucentMovingBlock());
+        } else {
+            buffer = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+        }
         Sprite sprite = client.getBlockRenderManager().getModel(AoABlocks.ALKAHEST.getDefaultState()).getSprite();
         BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
         Collection<Property<?>> properties = state.getProperties();

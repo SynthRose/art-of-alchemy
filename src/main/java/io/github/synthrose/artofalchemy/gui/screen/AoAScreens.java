@@ -1,36 +1,26 @@
 package io.github.synthrose.artofalchemy.gui.screen;
 
-import io.github.synthrose.artofalchemy.block.*;
-import io.github.synthrose.artofalchemy.gui.controller.*;
-import io.github.synthrose.artofalchemy.item.ItemJournal;
+import io.github.synthrose.artofalchemy.gui.handler.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.util.Hand;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 
 @Environment(EnvType.CLIENT)
 public class AoAScreens {
 
 	public static void registerScreens() {
-		ScreenProviderRegistry.INSTANCE.registerFactory(BlockCalcinator.getId(), (syncId, id, player, buf) ->
-				new ScreenCalcinator(new ControllerCalcinator(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-		ScreenProviderRegistry.INSTANCE.registerFactory(BlockDissolver.getId(), (syncId, id, player, buf) ->
-				new ScreenDissolver(new ControllerDissolver(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-		ScreenProviderRegistry.INSTANCE.registerFactory(BlockSynthesizer.getId(), (syncId, id, player, buf) ->
-				new ScreenSynthesizer(new ControllerSynthesizer(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-		ScreenProviderRegistry.INSTANCE.registerFactory(BlockAnalyzer.getId(), (syncId, id, player, buf) ->
-				new ScreenAnalyzer(new ControllerAnalyzer(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-		ScreenProviderRegistry.INSTANCE.registerFactory(BlockProjector.getId(), (syncId, id, player, buf) ->
-				new ScreenProjector(new ControllerProjector(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-		ScreenProviderRegistry.INSTANCE.registerFactory(ItemJournal.getId(), (syncId, id, player, buf) ->
-				new ScreenJournal(new ControllerJournal(syncId, player.inventory,
-						ScreenHandlerContext.create(player.world, buf.readBlockPos()), buf.readEnumConstant(Hand.class)), player));
+		ScreenRegistry.<HandlerCalcinator, ScreenCalcinator>register(AoAHandlers.CALCINATOR,
+				(desc, inventory, title) -> new ScreenCalcinator(desc, inventory.player));
+		ScreenRegistry.<HandlerDissolver, ScreenDissolver>register(AoAHandlers.DISSOLVER,
+				(desc, inventory, title) -> new ScreenDissolver(desc, inventory.player));
+		ScreenRegistry.<HandlerSynthesizer, ScreenSynthesizer>register(AoAHandlers.SYNTHESIZER,
+				(desc, inventory, title) -> new ScreenSynthesizer(desc, inventory.player));
+		ScreenRegistry.<HandlerAnalyzer, ScreenAnalyzer>register(AoAHandlers.ANALYZER,
+				(desc, inventory, title) -> new ScreenAnalyzer(desc, inventory.player));
+		ScreenRegistry.<HandlerProjector, ScreenProjector>register(AoAHandlers.PROJECTOR,
+				(desc, inventory, title) -> new ScreenProjector(desc, inventory.player));
+		ScreenRegistry.<HandlerJournal, ScreenJournal>register(AoAHandlers.JOURNAL,
+				(desc, inventory, title) -> new ScreenJournal(desc, inventory.player));
 	}
 
 }

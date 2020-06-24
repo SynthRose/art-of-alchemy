@@ -3,10 +3,7 @@ package io.github.synthrose.artofalchemy.block;
 import io.github.synthrose.artofalchemy.blockentity.BlockEntityDissolver;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -29,7 +26,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class BlockDissolver extends Block implements BlockEntityProvider {
+public class BlockDissolver extends BlockWithEntity {
 	
 	public static final BooleanProperty FILLED = BooleanProperty.of("filled");
 	public static final BooleanProperty LIT = Properties.LIT;
@@ -86,8 +83,7 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 				}
 			}
 			if (!world.isClient()) {
-				ContainerProviderRegistry.INSTANCE.openContainer(getId(), player,
-						(packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
+				player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 			}
 			return ActionResult.SUCCESS;
 		} else {
@@ -111,6 +107,11 @@ public class BlockDissolver extends Block implements BlockEntityProvider {
 
 			super.onStateReplaced(state, world, pos, newState, moved);
 		}
+	}
+
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
 	}
 
 }

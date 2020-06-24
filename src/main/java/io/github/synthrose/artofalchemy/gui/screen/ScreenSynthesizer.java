@@ -3,17 +3,17 @@ package io.github.synthrose.artofalchemy.gui.screen;
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
 import io.github.synthrose.artofalchemy.essentia.EssentiaStack;
-import io.github.synthrose.artofalchemy.gui.controller.ControllerSynthesizer;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerSynthesizer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
-public class ScreenSynthesizer extends CottonInventoryScreen<ControllerSynthesizer>
+public class ScreenSynthesizer extends CottonInventoryScreen<HandlerSynthesizer>
 	implements EssentiaScreen {
 
-	public ScreenSynthesizer(ControllerSynthesizer container, PlayerEntity player) {
+	public ScreenSynthesizer(HandlerSynthesizer container, PlayerEntity player) {
 		super(container, player);
 	}
 

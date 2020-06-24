@@ -2,17 +2,17 @@ package io.github.synthrose.artofalchemy.gui.screen;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
 import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
-import io.github.synthrose.artofalchemy.gui.controller.ControllerDissolver;
+import io.github.synthrose.artofalchemy.gui.handler.HandlerDissolver;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
-public class ScreenDissolver extends CottonInventoryScreen<ControllerDissolver>
+public class ScreenDissolver extends CottonInventoryScreen<HandlerDissolver>
 	implements EssentiaScreen {
 
-	public ScreenDissolver(ControllerDissolver container, PlayerEntity player) {
+	public ScreenDissolver(HandlerDissolver container, PlayerEntity player) {
 		super(container, player);
 	}
 
