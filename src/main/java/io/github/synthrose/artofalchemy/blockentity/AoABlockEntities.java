@@ -28,6 +28,8 @@ public class AoABlockEntities {
 		register("synthesis_table_plus", SYNTHESIZER_PLUS);
 		register("projector", PROJECTOR);
 		register("essentia_tank", TANK);
+		register("astral_centrifuge", ASTRO_CENTRIFUGE);
+		register("elemental_centrifuge", ELEMENT_CENTRIFUGE);
 	}
 	
 	public static void register(String name, BlockEntityType<? extends BlockEntity> blockEntity) {

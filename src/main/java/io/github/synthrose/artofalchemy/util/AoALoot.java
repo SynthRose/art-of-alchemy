@@ -18,17 +18,12 @@ import net.minecraft.util.Identifier;
 public class AoALoot {
 
     public static final Identifier[] LOOT_TABLES = new Identifier[]{
-            LootTables.SIMPLE_DUNGEON_CHEST,
-            LootTables.END_CITY_TREASURE_CHEST,
             LootTables.NETHER_BRIDGE_CHEST,
-            LootTables.ABANDONED_MINESHAFT_CHEST,
-            LootTables.SHIPWRECK_TREASURE_CHEST,
             LootTables.DESERT_PYRAMID_CHEST,
             LootTables.JUNGLE_TEMPLE_CHEST,
             LootTables.STRONGHOLD_LIBRARY_CHEST,
-            LootTables.PILLAGER_OUTPOST_CHEST,
             LootTables.WOODLAND_MANSION_CHEST,
-            LootTables.BURIED_TREASURE_CHEST,
+            LootTables.BASTION_BRIDGE_CHEST,
             LootTables.FISHING_TREASURE_GAMEPLAY
     };
 

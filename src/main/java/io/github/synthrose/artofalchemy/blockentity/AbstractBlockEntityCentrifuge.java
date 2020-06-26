@@ -45,7 +45,7 @@ abstract public class AbstractBlockEntityCentrifuge extends BlockEntity implemen
         if (horiz == -1) {
             return input;
         } else {
-            horiz = (horiz + world.getBlockState(pos).get(FACING).getHorizontal()) % 4;
+            horiz = (horiz - world.getBlockState(pos).get(FACING).getHorizontal() + 4) % 4;
             return outputs[horiz];
         }
     }
