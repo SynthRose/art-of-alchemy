@@ -1,20 +1,18 @@
 package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
-import io.github.synthrose.artofalchemy.essentia.EssentiaContainer;
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe;
 import io.github.synthrose.artofalchemy.util.MateriaRank;
 import io.github.synthrose.artofalchemy.block.BlockPipe;
 import io.github.synthrose.artofalchemy.essentia.Essentia;
 import io.github.synthrose.artofalchemy.essentia.RegistryEssentia;
 import io.github.synthrose.artofalchemy.fluid.AoAFluids;
-import net.fabricmc.fabric.mixin.object.builder.ModelPredicateProviderRegistrySpecificAccessor;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -22,9 +20,9 @@ import java.util.Map;
 
 public class AoAItems {
 
-	public static final Item ESSENTIA_PORT = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.PASSIVE);
-	public static final Item ESSENTIA_INSERTER = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.INSERTER);
-	public static final Item ESSENTIA_EXTRACTOR = new ItemEssentiaPort(defaults(), BlockPipe.IOFace.EXTRACTOR);
+	public static final Item ESSENTIA_PORT = new ItemEssentiaPort(defaults(), BlockEntityPipe.IOFace.PASSIVE);
+	public static final Item ESSENTIA_INSERTER = new ItemEssentiaPort(defaults(), BlockEntityPipe.IOFace.INSERTER);
+	public static final Item ESSENTIA_EXTRACTOR = new ItemEssentiaPort(defaults(), BlockEntityPipe.IOFace.EXTRACTOR);
 	public static final Item ESSENTIA_VESSEL = new ItemEssentiaVessel(defaults());
 
 	public static final Item MYSTERIOUS_SIGIL = new Item(new Item.Settings());

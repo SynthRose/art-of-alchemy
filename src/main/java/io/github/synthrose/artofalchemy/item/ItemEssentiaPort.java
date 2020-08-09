@@ -1,23 +1,22 @@
 package io.github.synthrose.artofalchemy.item;
 
 import io.github.synthrose.artofalchemy.block.AoABlocks;
-import io.github.synthrose.artofalchemy.block.BlockPipe;
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 
 public class ItemEssentiaPort extends Item {
-    public final BlockPipe.IOFace IOFACE;
+    public final BlockEntityPipe.IOFace IOFACE;
 
-    public ItemEssentiaPort(Settings settings, BlockPipe.IOFace ioFace) {
+    public ItemEssentiaPort(Settings settings, BlockEntityPipe.IOFace ioFace) {
         super(settings);
         IOFACE = ioFace;
     }
 
-    public static Item getItem(BlockPipe.IOFace ioFace) {
+    public static Item getItem(BlockEntityPipe.IOFace ioFace) {
         switch (ioFace) {
             case INSERTER:
                 return AoAItems.ESSENTIA_INSERTER;

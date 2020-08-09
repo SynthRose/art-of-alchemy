@@ -17,7 +17,8 @@ public class AoABlockEntities {
 	public static final BlockEntityType<?> PROJECTOR = BlockEntityType.Builder.create(BlockEntityProjector::new, AoABlocks.PROJECTOR).build(null);
 	public static final BlockEntityType<BlockEntityTank> TANK = BlockEntityType.Builder.create(BlockEntityTank::new, AoABlocks.TANK).build(null);
 	public static final BlockEntityType<?> ASTRO_CENTRIFUGE = BlockEntityType.Builder.create(BlockEntityAstroCentrifuge::new, AoABlocks.ASTRO_CENTRIFUGE).build(null);
-	public static final BlockEntityType<?> ELEMENT_CENTRIFUGE = BlockEntityType.Builder.create(BlockEntityAstroCentrifuge::new, AoABlocks.ELEMENT_CENTRIFUGE).build(null);
+	public static final BlockEntityType<?> ELEMENT_CENTRIFUGE = BlockEntityType.Builder.create(BlockEntityElementCentrifuge::new, AoABlocks.ELEMENT_CENTRIFUGE).build(null);
+	public static final BlockEntityType<?> PIPE = BlockEntityType.Builder.create(BlockEntityPipe::new, AoABlocks.PIPE).build(null);
 
 	public static void registerBlockEntities() {
 		register("calcination_furnace", CALCINATOR);
@@ -30,6 +31,7 @@ public class AoABlockEntities {
 		register("essentia_tank", TANK);
 		register("astral_centrifuge", ASTRO_CENTRIFUGE);
 		register("elemental_centrifuge", ELEMENT_CENTRIFUGE);
+		register("pipe", PIPE);
 	}
 	
 	public static void register(String name, BlockEntityType<? extends BlockEntity> blockEntity) {

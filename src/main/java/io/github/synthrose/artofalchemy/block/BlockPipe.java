@@ -1,6 +1,8 @@
 package io.github.synthrose.artofalchemy.block;
 
 import io.github.synthrose.artofalchemy.ArtOfAlchemy;
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe;
+import io.github.synthrose.artofalchemy.blockentity.BlockEntityPipe.IOFace;
 import io.github.synthrose.artofalchemy.item.AoAItems;
 import io.github.synthrose.artofalchemy.item.ItemEssentiaPort;
 import io.github.synthrose.artofalchemy.transport.EssentiaNetwork;
@@ -8,10 +10,8 @@ import io.github.synthrose.artofalchemy.transport.EssentiaNetworker;
 import io.github.synthrose.artofalchemy.transport.NetworkElement;
 import io.github.synthrose.artofalchemy.transport.NetworkNode;
 import net.fabricmc.fabric.api.tag.TagRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -20,12 +20,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager.Builder;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -37,10 +34,9 @@ import net.minecraft.world.WorldAccess;
 
 import java.util.*;
 
-public class BlockPipe extends Block implements NetworkElement {
+public class BlockPipe extends Block implements NetworkElement, BlockEntityProvider {
 
 	private static VoxelShape boundingBox = VoxelShapes.cuboid(0.25, 0.25, 0.25, 0.75, 0.75, 0.75);
-	private Map<Direction, EnumProperty<IOFace>> faces;
 
 	public BlockPipe() {
 		super(Settings.of(Material.ORGANIC_PRODUCT).strength(0.1f).nonOpaque().noCollision().sounds(BlockSoundGroup.NETHERITE));
@@ -66,17 +62,28 @@ public class BlockPipe extends Block implements NetworkElement {
 		return boundingBox;
 	}
 
-	@Override
-	protected void appendProperties(Builder<Block, BlockState> builder) {
-		this.faces = new HashMap<>();
-		for (Direction dir : Direction.values()) {
-			faces.put(dir, EnumProperty.of(dir.asString(), IOFace.class));
-			builder.add(faces.get(dir));
+	private Map<Direction, IOFace> getFaces(World world, BlockPos pos) {
+		BlockEntity be = world.getBlockEntity(pos);
+		if (be instanceof BlockEntityPipe) {
+			return ((BlockEntityPipe) be).getFaces();
+		} else {
+			Map<Direction, IOFace> map = new HashMap<>();
+			for (Direction dir : Direction.values()) {
+				map.put(dir, IOFace.NONE);
+			}
+			return map;
 		}
 	}
 
-	public EnumProperty<IOFace> getProperty(Direction dir) {
-		return faces.get(dir);
+	private IOFace getFace(World world, BlockPos pos, Direction dir) {
+		return getFaces(world, pos).get(dir);
+	}
+
+	private void setFace(World world, BlockPos pos, Direction dir, IOFace face) {
+		BlockEntity be = world.getBlockEntity(pos);
+		if (be instanceof BlockEntityPipe) {
+			((BlockEntityPipe) be).setFace(dir, face);
+		}
 	}
 
 	public boolean hasNodes(World world, BlockPos pos) {
@@ -85,9 +92,9 @@ public class BlockPipe extends Block implements NetworkElement {
 
 	public Set<NetworkNode> getNodes(World world, BlockPos pos) {
 		HashSet<NetworkNode> nodes = new HashSet<>();
-		BlockState state = world.getBlockState(pos);
+		Map<Direction, IOFace> faces = getFaces(world, pos);
 		for (Direction dir : faces.keySet()) {
-			IOFace face = state.get(faces.get(dir));
+			IOFace face = faces.get(dir);
 			if (face.isNode()) {
 				nodes.add(new NetworkNode(world, face.getType(), pos, dir));
 			}
@@ -95,9 +102,9 @@ public class BlockPipe extends Block implements NetworkElement {
 		return nodes;
 	}
 
-	public boolean faceOpen(BlockState state, Direction dir) {
-		if (state.getBlock() == this) {
-			IOFace face = state.get(getProperty(dir));
+	public boolean faceOpen(World world, BlockPos pos, Direction dir) {
+		if (world.getBlockState(pos).getBlock() == this) {
+			IOFace face = getFace(world, pos, dir);
 			return (face == IOFace.NONE || face == IOFace.CONNECT);
 		} else {
 			return false;
@@ -105,9 +112,9 @@ public class BlockPipe extends Block implements NetworkElement {
 	}
 
 	public boolean isConnected(World world, BlockPos pos, Direction dir) {
-		BlockState state = world.getBlockState(pos);
-		BlockState other = world.getBlockState(pos.offset(dir));
-		return (state.get(faces.get(dir)) == IOFace.CONNECT && other.get(faces.get(dir.getOpposite())) == IOFace.CONNECT);
+		Map<Direction, IOFace> theseFaces = getFaces(world, pos);
+		Map<Direction, IOFace> otherFaces = getFaces(world, pos.offset(dir));
+		return (theseFaces.get(dir) == IOFace.CONNECT && otherFaces.get(dir.getOpposite()) == IOFace.CONNECT);
 	}
 
 	public boolean isConnected(World world, BlockPos pos1, BlockPos pos2) {
@@ -120,10 +127,12 @@ public class BlockPipe extends Block implements NetworkElement {
 		return false;
 	}
 
-	public Set<BlockPos> getConnections(BlockState state, BlockPos pos) {
+	@Override
+	public Set<BlockPos> getConnections(World world, BlockPos pos) {
 		Set<BlockPos> connections = new HashSet<>();
+		Map<Direction, IOFace> faces = getFaces(world, pos);
 		for (Direction dir : faces.keySet()) {
-			if (state.get(getProperty(dir)) == IOFace.CONNECT) {
+			if (faces.get(dir) == IOFace.CONNECT) {
 				connections.add(pos.offset(dir));
 			}
 		}
@@ -131,36 +140,27 @@ public class BlockPipe extends Block implements NetworkElement {
 	}
 
 	@Override
-	public Set<BlockPos> getConnections(World world, BlockPos pos) {
-		return getConnections(world.getBlockState(pos), pos);
-	}
-
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		BlockState state = super.getPlacementState(ctx);
+	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+		super.neighborUpdate(state, world, pos, block, fromPos, notify);
 		for (Direction dir : Direction.values()) {
-			BlockState other = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(dir));
-			if (faceOpen(other, dir)) {
-				state.with(getProperty(dir), IOFace.CONNECT);
+			if (fromPos.subtract(pos) == dir.getVector()) {
+				if (faceOpen(world, pos, dir) && faceOpen(world, fromPos, dir.getOpposite())) {
+					setFace(world, pos, dir, IOFace.CONNECT);
+				} else if (getFace(world, pos, dir) == IOFace.CONNECT) {
+					setFace(world, pos, dir, IOFace.NONE);
+				}
 			}
 		}
-		return state;
 	}
-
-	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-		if (faceOpen(state, direction) && faceOpen(newState, direction.getOpposite())) {
-			return state.with(getProperty(direction), IOFace.CONNECT);
-		} else if (state.get(getProperty(direction)) == IOFace.CONNECT) {
-			return state.with(getProperty(direction), IOFace.NONE);
-		} else {
-			return state;
-		}
- 	}
 
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
+		for (Direction dir : Direction.values()) {
+			if (faceOpen(world, pos.offset(dir), dir)) {
+				setFace(world, pos, dir, IOFace.CONNECT);
+			}
+		}
 		if (!world.isClient()) {
 			EssentiaNetworker.get((ServerWorld) world).add(pos);
 		}
@@ -169,8 +169,9 @@ public class BlockPipe extends Block implements NetworkElement {
 	@Override
 	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		super.onBroken(world, pos, state);
+		Map<Direction, IOFace> faces = getFaces(world.getWorld(), pos);
 		for (Direction dir : faces.keySet()) {
-			dropStack((World) world, pos, new ItemStack(ItemEssentiaPort.getItem(state.get(getProperty(dir)))));
+			dropStack(world.getWorld(), pos, new ItemStack(ItemEssentiaPort.getItem(faces.get(dir))));
 		}
 	}
 
@@ -186,13 +187,13 @@ public class BlockPipe extends Block implements NetworkElement {
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean notify) {
 		super.onStateReplaced(state, world, pos, newState, notify);
 		if (!world.isClient()) {
-			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(state, pos));
+			EssentiaNetworker.get((ServerWorld) world).remove(pos, getConnections(world, pos));
 		}
 	}
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		Direction side = player.isSneaking() ? hit.getSide().getOpposite() : hit.getSide();
+		Direction dir = player.isSneaking() ? hit.getSide().getOpposite() : hit.getSide();
 		ItemStack heldStack = player.getStackInHand(hand);
 		if (heldStack.getItem() == AoAItems.MYSTERIOUS_SIGIL) {
 			if (!world.isClient()) {
@@ -208,18 +209,18 @@ public class BlockPipe extends Block implements NetworkElement {
 		if (TagRegistry.item(ArtOfAlchemy.id("usable_on_pipes")).contains(heldStack.getItem())) {
 			return ActionResult.PASS;
 		}
-		EnumProperty<IOFace> property = getProperty(side);
-		switch (state.get(property)) {
+		IOFace face = getFace(world, pos, dir);
+		switch (face) {
 			case NONE:
 			case CONNECT:
 				world.playSound(null, pos, SoundEvents.BLOCK_NETHERITE_BLOCK_FALL, SoundCategory.BLOCKS, 0.6f, 1.0f);
 				if (heldStack.getItem() instanceof ItemEssentiaPort) {
-					world.setBlockState(pos, state.with(property,  ((ItemEssentiaPort) heldStack.getItem()).IOFACE));
+					setFace(world, pos, dir, ((ItemEssentiaPort) heldStack.getItem()).IOFACE);
 					if (!player.abilities.creativeMode) {
 						heldStack.decrement(1);
 					}
 				} else {
-					world.setBlockState(pos, state.with(property,  IOFace.BLOCK));
+					setFace(world, pos, dir, IOFace.BLOCK);
 				}
 				break;
 			case BLOCK:
@@ -228,56 +229,26 @@ public class BlockPipe extends Block implements NetworkElement {
 			case PASSIVE:
 				world.playSound(null, pos, SoundEvents.BLOCK_NETHERITE_BLOCK_HIT, SoundCategory.BLOCKS, 0.6f, 1.0f);
 				if (!player.abilities.creativeMode) {
-					ItemStack stack = new ItemStack(ItemEssentiaPort.getItem(state.get(property)));
+					ItemStack stack = new ItemStack(ItemEssentiaPort.getItem(face));
 					dropStack(world, pos, stack);
 				}
-				if (faceOpen(world.getBlockState(pos.offset(side)), side.getOpposite())) {
-					world.setBlockState(pos, state.with(property,  IOFace.CONNECT));
+				if (faceOpen(world, pos.offset(dir), dir.getOpposite())) {
+					setFace(world, pos, dir, IOFace.CONNECT);
 				} else {
-					world.setBlockState(pos, state.with(property,  IOFace.NONE));
+					setFace(world, pos, dir, IOFace.NONE);
 				}
 				break;
 		}
 		if (!world.isClient()) {
 			EssentiaNetworker networker = EssentiaNetworker.get((ServerWorld) world);
-			networker.remove(pos, getConnections(state, pos));
+			networker.remove(pos, getConnections(world, pos));
 			networker.add(pos);
 		}
 		return ActionResult.SUCCESS;
 	}
 
-	public enum IOFace implements StringIdentifiable {
-		NONE,
-		CONNECT,
-		BLOCK,
-		INSERTER(NetworkNode.Type.PULL),
-		EXTRACTOR(NetworkNode.Type.PUSH),
-		PASSIVE(NetworkNode.Type.PASSIVE);
-		
-		private final String string;
-		private final NetworkNode.Type type;
-
-		IOFace() {
-			this(null);
-		}
-
-		IOFace(NetworkNode.Type type) {
-			this.string = toString().toLowerCase();
-			this.type = type;
-		}
-
-		public NetworkNode.Type getType() {
-			return type;
-		}
-
-		public boolean isNode() {
-			return type != null;
-		}
-
-		@Override
-		public String asString() {
-			return string;
-		}
+	@Override
+	public BlockEntity createBlockEntity(BlockView world) {
+		return new BlockEntityPipe();
 	}
-
 }
