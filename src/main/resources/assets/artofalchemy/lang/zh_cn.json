@@ -122,7 +122,7 @@
 	"item.artofalchemy.essentia_vessel.tooltip_locked": "锁定",
 	"item.artofalchemy.essentia_vessel.tooltip_pulled": "已注入%d基质",
 	"item.artofalchemy.essentia_vessel.tooltip_pushed": "已输出%d基质",
-	"item.artofalchemy.essentia_vessel.tooltip_deprecated": "Deprecated！",
+	"item.artofalchemy.essentia_vessel.tooltip_deprecated": "已废弃！",
 	
 	"gui.artofalchemy.alkahest_tooltip": "万能溶剂 §7(%d/%d)",
 	"gui.artofalchemy.alkahest_warning": "需要万能溶剂！",
