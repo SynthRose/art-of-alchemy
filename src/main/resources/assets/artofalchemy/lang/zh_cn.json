@@ -8,9 +8,9 @@
 
 	"item.artofalchemy.alchemical_journal": "炼金日志",
 	"item.artofalchemy.alchemical_journal.tooltip_entries": "%d条日志",
-	"item.artofalchemy.alchemy_formula": "嬗变方程式",
-	"item.artofalchemy.brewing_formula": "酿造方程式",
-	"item.artofalchemy.enchantment_formula": "附魔方程式",
+	"item.artofalchemy.alchemy_formula": "嬗变配方",
+	"item.artofalchemy.brewing_formula": "酿造配方",
+	"item.artofalchemy.enchantment_formula": "附魔配方",
 	
 	"block.artofalchemy.calcination_furnace": "煅烧炉",
 	"block.artofalchemy.dissolution_chamber": "溶解室",
@@ -141,7 +141,7 @@
 	
 	"text.autoconfig.artofalchemy.title": "炼金术",
 	"text.autoconfig.artofalchemy.option.networkProcessingLimit": "基质网络运行限制",
-	"text.autoconfig.artofalchemy.option.formulaLoot": "将贤者之石方程式添加到战利品表内",
+	"text.autoconfig.artofalchemy.option.formulaLoot": "将贤者之石配方添加到战利品表内",
 	"text.autoconfig.artofalchemy.option.vesselCapacity": "基质容器容量",
 	"text.autoconfig.artofalchemy.option.tankCapacity": "基质储罐容量",
 	"text.autoconfig.artofalchemy.option.centrifugeCapacity": "离心机容量",
